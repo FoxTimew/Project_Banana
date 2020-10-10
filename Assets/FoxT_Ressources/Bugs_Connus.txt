@@ -1,0 +1,1 @@
+Dash : Le vecteur lastDirection n'a pas une bonne synergie avec les touches au clavier. Si on va en diagonale et qu'on lache en même temps les touches puis ont dash, le PJ ne dash pas en diagonale.
