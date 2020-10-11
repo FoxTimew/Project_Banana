@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyInfo : MonoBehaviour
 {
-	public Enemies type;
+	public enemies type;
 }
 
-public enum Enemies
+public enum enemies
 { 
 	Guerrier,
 	Dasher
