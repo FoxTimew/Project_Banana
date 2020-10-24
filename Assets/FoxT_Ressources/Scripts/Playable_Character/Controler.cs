@@ -22,6 +22,8 @@ public class Controler : MonoBehaviour
 
     public Attack attack;
 
+    public Animator anim;
+
     void Start()
     {
         pcRB = this.GetComponent<Rigidbody2D>();
@@ -44,7 +46,7 @@ public class Controler : MonoBehaviour
     {
         moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-        movement = Vector3.Normalize(moveInput) * vitesse * Time.deltaTime;
+        movement = Vector3.Normalize(moveInput) * vitesse;
 
         if (Input.GetButtonDown("Dash")) DashTest();
 
@@ -76,7 +78,7 @@ public class Controler : MonoBehaviour
         if (!isDashing) return;
         if (movement == new Vector3(0f, 0f, 0f)) movement = currentDirection;
 
-        movement = Vector3.Normalize(movement * 10) * dashCurve.Evaluate(dashingTimeElapsed) * Time.deltaTime;
+        movement = Vector3.Normalize(movement * 10) * dashCurve.Evaluate(dashingTimeElapsed);
         dashingTimeElapsed += Time.deltaTime;
 
         if (dashingTimeElapsed > dashCurve.keys[dashCurve.keys.Length - 1].time)
@@ -104,11 +106,40 @@ public class Controler : MonoBehaviour
     void Move()
     {
         if (movement != new Vector3(0f, 0f, 0f)) currentDirection = Vector3.Normalize(movement * 10);
-        pcRB.velocity = movement;
+        pcRB.velocity = movement * Time.fixedDeltaTime;
+        AnimationControler();
     }
 
     void AnimationControler()
-    { 
-        //Play animation;
+    {
+        if (movement.normalized.x > 0f && movement.normalized.y > -0.5 && movement.normalized.y < 0.5f)
+        {
+            anim.SetBool("RUN_Right", true);
+            anim.SetBool("RUN_Left", false);
+            anim.SetBool("RUN_Backward", false);
+        }
+        
+        if (movement.normalized.x < 0f && movement.normalized.y >= -0.5f && movement.normalized.y <= 0.5f)
+        {
+            anim.SetBool("RUN_Left", true);
+            anim.SetBool("RUN_Backward", false);
+            anim.SetBool("RUN_Right", false);
+        }
+
+        if (movement.normalized.x > -0.5f && movement.normalized.x < 0.5f && movement.y < 0f)
+        {
+            anim.SetBool("RUN_Backward", true);
+            anim.SetBool("RUN_Left", false);
+            anim.SetBool("RUN_Right", false);
+        }
+        if (movement.x == 0f && movement.y == 0f) ResetAnimation();
+    }
+
+
+    void ResetAnimation()
+    {
+        anim.SetBool("RUN_Right", false);
+        anim.SetBool("RUN_Left", false);
+        anim.SetBool("RUN_Backward", false);
     }
 }
