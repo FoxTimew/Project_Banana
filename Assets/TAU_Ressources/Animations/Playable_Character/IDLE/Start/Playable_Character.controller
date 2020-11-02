@@ -1,5 +1,39 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1101 &-8985098015533772445
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: RUN_Left
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: RUN_Right
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: RUN_Backward
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: RUN_Up
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 8275878760702954892}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 0
 --- !u!1101 &-8862004068093520761
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -22,6 +56,32 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &-5603561728081331586
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PJ_RUN_Side_Down_Left
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 9a871c2b7dc746f4d82c3c3987f8c783, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &-5115720688059123203
 AnimatorState:
   serializedVersion: 5
@@ -117,6 +177,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: RUN_Backward
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Run_BackToRight
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: RUN_Up
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 9085308488972108960}
   m_Solo: 0
@@ -147,6 +213,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: RUN_Right
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: RUN_Up
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1740840189761677226}
@@ -189,6 +258,24 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+  - m_Name: Run_BackToLeft
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: Run_BackToRight
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: RUN_Up
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -202,6 +289,32 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+--- !u!1102 &375179716273759622
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PJ_RUN_Side_Down
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 94337b8bf3c5b5c4ba779d1a7ce2c819, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &1740840189761677226
 AnimatorState:
   serializedVersion: 5
@@ -279,6 +392,31 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &4783317975810310498
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: RUN_Up
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 5598585403578280300}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0.516129
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1107 &4788488588633846687
 AnimatorStateMachine:
   serializedVersion: 5
@@ -303,11 +441,21 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 9085308488972108960}
     m_Position: {x: -160, y: -50, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 375179716273759622}
+    m_Position: {x: 330, y: 40, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -5603561728081331586}
+    m_Position: {x: 50, y: 20, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8275878760702954892}
+    m_Position: {x: 200, y: -400, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -1750272080709012388}
   - {fileID: 7954508210029324240}
   - {fileID: -269238911555018950}
+  - {fileID: -8985098015533772445}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
@@ -360,6 +508,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: RUN_Backward
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Run_BackToLeft
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: RUN_Up
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5115720688059123203}
   m_Solo: 0
@@ -374,6 +528,33 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 0
+--- !u!1102 &8275878760702954892
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PJ_RUN_Up
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: 4783317975810310498}
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 7f1fd0bae99c1c24fb8b4b4f6a76aa86, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &9085308488972108960
 AnimatorState:
   serializedVersion: 5

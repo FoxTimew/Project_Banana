@@ -117,6 +117,7 @@ public class Controler : MonoBehaviour
             anim.SetBool("RUN_Right", true);
             anim.SetBool("RUN_Left", false);
             anim.SetBool("RUN_Backward", false);
+            anim.SetBool("RUN_Up", false);
         }
         
         if (movement.normalized.x < 0f && movement.normalized.y >= -0.5f && movement.normalized.y <= 0.5f)
@@ -124,22 +125,52 @@ public class Controler : MonoBehaviour
             anim.SetBool("RUN_Left", true);
             anim.SetBool("RUN_Backward", false);
             anim.SetBool("RUN_Right", false);
+            anim.SetBool("RUN_Up", false);
         }
 
-        if (movement.normalized.x > -0.5f && movement.normalized.x < 0.5f && movement.y < 0f)
+        if (movement.normalized.x > -0.5f && movement.normalized.x < 0.5f && movement.normalized.y < 0f)
         {
             anim.SetBool("RUN_Backward", true);
             anim.SetBool("RUN_Left", false);
             anim.SetBool("RUN_Right", false);
+            anim.SetBool("RUN_Up", false);
         }
+
+        if (movement.normalized.x > -0.5f && movement.normalized.x < 0.5f && movement.normalized.y > 0f)
+        {
+            anim.SetBool("RUN_Up", true);
+            anim.SetBool("RUN_Backward", false);
+            anim.SetBool("RUN_Left", false);
+            anim.SetBool("RUN_Right", false);
+        }
+
+        /*if (movement.normalized.x > 0f && movement.normalized.y > 0f)
+        { 
+        
+        }
+
+        if (movement.normalized.x > 0f && movement.normalized.y < 0f)
+        { 
+        
+        }
+
+        if (movement.normalized.x < 0f && movement.normalized.y > 0f)
+        {
+
+        }
+
+        if (movement.normalized.x < 0f && movement.normalized.y < 0f)
+        {
+
+        }*/
         if (movement.x == 0f && movement.y == 0f) ResetAnimation();
     }
-
 
     void ResetAnimation()
     {
         anim.SetBool("RUN_Right", false);
         anim.SetBool("RUN_Left", false);
+        anim.SetBool("RUN_Up", false);
         anim.SetBool("RUN_Backward", false);
     }
 }
