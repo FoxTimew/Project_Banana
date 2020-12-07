@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa22a4ae8f1de6544896d51ed44fc47d, type: 3}
+  m_Name: RoomGeneration
+  m_EditorClassIdentifier: 
+  start:
+  - {fileID: 8138300038174113805, guid: 749815a81bd88974c8539a26e237f998, type: 3}
+  enemy:
+  - {fileID: 8138300038174113805, guid: 749815a81bd88974c8539a26e237f998, type: 3}
+  seller:
+  - {fileID: 8138300038174113805, guid: 749815a81bd88974c8539a26e237f998, type: 3}
+  blackSeller:
+  - {fileID: 8138300038174113805, guid: 749815a81bd88974c8539a26e237f998, type: 3}
+  chest:
+  - {fileID: 8138300038174113805, guid: 749815a81bd88974c8539a26e237f998, type: 3}
+  challenge:
+  - {fileID: 8138300038174113805, guid: 749815a81bd88974c8539a26e237f998, type: 3}
+  boss:
+  - {fileID: 8138300038174113805, guid: 749815a81bd88974c8539a26e237f998, type: 3}
