@@ -28,6 +28,9 @@ public class LevelGeneration : MonoBehaviour
 
     private List<Vector2> bossPath = new List<Vector2>();
 
+    private List<float> sizeX = new List<float>();
+    private List<float> sizeY = new List<float>();
+
     private Dictionary<string, Vector2> cellule = new Dictionary<string, Vector2>();
 
     /*
@@ -134,7 +137,7 @@ public class LevelGeneration : MonoBehaviour
         if (nombreDeCoffreMin < 2) nombreDeDefiMin = 2;
         if (nombreDeCoffreMax < nombreDeCoffreMin) nombreDeDefiMin = nombreDeDefiMax;
 
-        nombreDeCoffre = TirageAuSort(nombreDeDefiMin, nombreDeCoffreMax);
+        nombreDeCoffre = TirageAuSort(nombreDeCoffreMin, nombreDeCoffreMax);
 
         //nombreDeDefiCheck
         if (nombreDeDefiMin < 2) nombreDeDefiMin = 2;
@@ -171,8 +174,6 @@ public class LevelGeneration : MonoBehaviour
         DungeonPathGenerationStart();
 
         SortingVector();
-
-        RoomInstantiate();
     }
 
     int TirageAuSort(int min, int max)
@@ -210,10 +211,10 @@ public class LevelGeneration : MonoBehaviour
 
     void BossPathRoomGenerationStart()
     {
-        cellule.Add("boss", bossPath[0]);
+        cellule.Add("boss1", bossPath[0]);
         cellule.Add("seller1", bossPath[1]);
         cellule.Add("challenge1", bossPath[2]);
-        cellule.Add("start", bossPath[distanceBoss - 1]);
+        cellule.Add("start1", bossPath[distanceBoss - 1]);
         cellule.Add("enemy1", bossPath[distanceBoss - 2]);
 
         CheckPossibility();
@@ -694,20 +695,28 @@ public class LevelGeneration : MonoBehaviour
         {
             enemyNode.Add(node);
         }
-
+        Debug.Log(nombreDeCoffre);
         for (int i = 1; i <= nombreDeCoffre; i++)
         {
             Vector2 roomSelected = chestPossibilityTemp[TirageAuSort(0, chestPossibilityTemp.Count - 1)];
 
             chestPossibilityTemp.Remove(roomSelected);
 
+            /*for (int x = 1; x > 0; x++)
+            {
+                if (!cellule.ContainsKey("chest" + x.ToString()))
+                {
+                    cellule.Add("chest" + x.ToString(), roomSelected);
+                    x = -1;
+                }
+            }*/
             foreach (Vector2 dir in direction)
             {
                 if (chestPossibilityTemp.Contains(roomSelected + dir)) chestPossibilityTemp.Remove(roomSelected + dir);
             }
 
             float possibilityleft = chestPossibilityTemp.Count;
-            if (chestPossibilityTemp.Count == defiBoss - i)
+            if (chestPossibilityTemp.Count == nombreDeCoffre - i)
             {
                 bool neighbours = false;
                 foreach (Vector2 node in chestPossibilityTemp)
@@ -729,11 +738,11 @@ public class LevelGeneration : MonoBehaviour
                 }
                 else
                 {
-                    for (int x = 2; x > 0; x++)
+                    for (int x = 1; x > 0; x++)
                     {
-                        if (!cellule.ContainsKey("seller" + x.ToString()))
+                        if (!cellule.ContainsKey("chest" + x.ToString()))
                         {
-                            cellule.Add("seller" + x.ToString(), roomSelected);
+                            cellule.Add("chest" + x.ToString(), roomSelected);
                             chestPossibility = new List<Vector2>();
                             foreach (Vector2 node in chestPossibilityTemp)
                             {
@@ -744,7 +753,7 @@ public class LevelGeneration : MonoBehaviour
                     }
                 }
             }
-            else if (possibilityleft / 2 < nombreDeMarchand - i - 0.5f)
+            else if (possibilityleft / 2 < nombreDeCoffre - i - 0.5f)
             {
                 chestPossibility.Remove(roomSelected);
                 chestPossibilityTemp = new List<Vector2>();
@@ -756,11 +765,11 @@ public class LevelGeneration : MonoBehaviour
             }
             else
             {
-                for (int x = 2; x > 0; x++)
+                for (int x = 1; x > 0; x++)
                 {
-                    if (!cellule.ContainsKey("seller" + x.ToString()))
+                    if (!cellule.ContainsKey("chest" + x.ToString()))
                     {
-                        cellule.Add("seller" + x.ToString(), roomSelected);
+                        cellule.Add("chest" + x.ToString(), roomSelected);
                         chestPossibility = new List<Vector2>();
                         foreach (Vector2 node in chestPossibilityTemp)
                         {
@@ -791,7 +800,7 @@ public class LevelGeneration : MonoBehaviour
             }
 
             float possibilityleft = challengePossibilityTemp.Count;
-            if (challengePossibilityTemp.Count == defiBoss - i)
+            if (challengePossibilityTemp.Count == nombreDeDefi - i)
             {
                 bool neighbours = false;
                 foreach (Vector2 node in challengePossibilityTemp)
@@ -828,7 +837,7 @@ public class LevelGeneration : MonoBehaviour
                     }
                 }
             }
-            else if (possibilityleft / 2 < defiBoss - i - 0.5f)
+            else if (possibilityleft / 2 < nombreDeDefi - i - 0.5f)
             {
                 challengePossibility.Remove(roomSelected);
                 challengePossibilityTemp = new List<Vector2>();
@@ -874,7 +883,7 @@ public class LevelGeneration : MonoBehaviour
             }
 
             float possibilityleft = sellerPossibilityTemp.Count;
-            if (sellerPossibilityTemp.Count == defiBoss - i)
+            if (sellerPossibilityTemp.Count == nombreDeMarchand - i)
             {
                 bool neighbours = false;
                 foreach (Vector2 node in sellerPossibilityTemp)
@@ -979,7 +988,7 @@ public class LevelGeneration : MonoBehaviour
                 }
                 else
                 {
-                    for (int x = 2; x > 0; x++)
+                    for (int x = 1; x > 0; x++)
                     {
                         if (!cellule.ContainsKey("blackSeller" + x.ToString()))
                         {
@@ -1006,7 +1015,7 @@ public class LevelGeneration : MonoBehaviour
             }
             else
             {
-                for (int x = 2; x > 0; x++)
+                for (int x = 1; x > 0; x++)
                 {
                     if (!cellule.ContainsKey("blackSeller" + x.ToString()))
                     {
@@ -1041,6 +1050,14 @@ public class LevelGeneration : MonoBehaviour
 
     void SortingVector()
     {
+
+        Debug.Log("cellule " + cellule.Count);
+
+        foreach (string name in cellule.Keys)
+        {
+            Debug.Log(name + cellule[name]);
+        }
+
         List<Vector2> nodePos = new List<Vector2>();
         List<Vector2> nodePosSorted = new List<Vector2>();
         float[] posX = new float[cellule.Count], posY = new float[cellule.Count];
@@ -1058,21 +1075,140 @@ public class LevelGeneration : MonoBehaviour
         System.Array.Sort(posX);
         System.Array.Sort(posY);
 
-        for (float y = posY[0]; y < posY[posY.Length -1]; y++)
+        Debug.Log("posX " + posX.Length);
+        Debug.Log("posY " + posY.Length);
+        Debug.Log("nodePos " + nodePos.Count);
+        Debug.Log("cellule " + cellule.Count);
+
+        for (float y = posY[0]; y <= posY[posY.Length - 1]; y++)
         {
-            for (float x = posX[0]; x < posX[posX.Length - 1]; x++)
+            for (float x = posX[0]; x <= posX[posX.Length - 1]; x++)
             {
                 if (cellule.ContainsValue(new Vector2(x, y))) //nodePosSorted.Add(new Vector2(x, y));
                 {
                     //placement des salles
-                    GameObject.Instantiate<GameObject>(startRoom[TirageAuSort(0, startRoom.Count - 1)], new Vector3(x, y, 0f), new Quaternion(0f, 0f, 0f, 0f));
+                    for (int i = 1; i <= nombreDeSalle + distanceBoss; i++)
+                    {
+                        if (cellule.ContainsKey("enemy" + i.ToString()))
+                        {
+                            if (cellule["enemy" + i.ToString()] == new Vector2(x, y))
+                            {
+                                RoomInstantiate("enemy", new Vector3(x, y, 0f));
+                                i = nombreDeSalle + distanceBoss;
+                            }
+                        }
+
+                        if (cellule.ContainsKey("challenge" + i.ToString()))
+                        {
+                            if (cellule["challenge" + i.ToString()] == new Vector2(x, y))
+                            {
+                                RoomInstantiate("challenge", new Vector3(x, y, 0f));
+                                i = nombreDeSalle + distanceBoss;
+                            }
+                        }
+
+                        if (cellule.ContainsKey("seller" + i.ToString()))
+                        {
+                            if (cellule["seller" + i.ToString()] == new Vector2(x, y))
+                            {
+                                RoomInstantiate("seller", new Vector3(x, y, 0f));
+                                i = nombreDeSalle + distanceBoss;
+                            }
+                        }
+
+                        if (cellule.ContainsKey("chest" + i.ToString()))
+                        {
+                            if (cellule["chest" + i.ToString()] == new Vector2(x, y))
+                            {
+                                RoomInstantiate("chest", new Vector3(x, y, 0f));
+                                i = nombreDeSalle + distanceBoss;
+                            }
+                        }
+
+                        if (cellule.ContainsKey("blackSeller" + i.ToString()))
+                        {
+                            if (cellule["blackSeller" + i.ToString()] == new Vector2(x, y))
+                            {
+                                RoomInstantiate("darkSeller", new Vector3(x, y, 0f));
+                                i = nombreDeSalle + distanceBoss;
+                            }
+                        }
+
+                        if (cellule.ContainsKey("start" + i.ToString()))
+                        {
+                            if (cellule["start" + i.ToString()] == new Vector2(x, y))
+                            {
+                                RoomInstantiate("start", new Vector3(x, y, 0f));
+                                i = nombreDeSalle + distanceBoss;
+                            }
+                        }
+
+                        if (cellule.ContainsKey("boss" + i.ToString()))
+                        {
+                            if (cellule["boss" + i.ToString()] == new Vector2(x, y))
+                            {
+                                RoomInstantiate("boss", new Vector3(x, y, 0f));
+                                i = nombreDeSalle + distanceBoss;
+                            }
+                        }
+                    }
+
                 }
             }
         }
     }
 
-    void RoomInstantiate()
+    void RoomInstantiate(string roomName, Vector3 pos)
     {
-
+        int roomSelected;
+        if (roomName == "enemy")
+        {
+            roomSelected = TirageAuSort(0, enemyRoom.Count - 1);
+            GameObject.Instantiate<GameObject>(enemyRoom[roomSelected], pos, new Quaternion(0f, 0f, 0f, 0f));
+            sizeX.Add(enemyRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
+            sizeY.Add(enemyRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
+        }
+        else if (roomName == "challenge")
+        {
+            roomSelected = TirageAuSort(0, challengeRoom.Count - 1);
+            GameObject.Instantiate<GameObject>(challengeRoom[TirageAuSort(0, challengeRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            sizeX.Add(challengeRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
+            sizeY.Add(challengeRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
+        }
+        else if (roomName == "seller")
+        {
+            roomSelected = TirageAuSort(0, sellerRoom.Count - 1);
+            GameObject.Instantiate<GameObject>(sellerRoom[TirageAuSort(0, sellerRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            sizeX.Add(sellerRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
+            sizeY.Add(sellerRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
+        }
+        else if (roomName == "chest")
+        {
+            roomSelected = TirageAuSort(0, chestRoom.Count - 1);
+            GameObject.Instantiate<GameObject>(chestRoom[TirageAuSort(0, chestRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            sizeX.Add(chestRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
+            sizeY.Add(chestRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
+        }
+        else if (roomName == "darkSeller")
+        {
+            roomSelected = TirageAuSort(0, darkSellerRoom.Count - 1);
+            GameObject.Instantiate<GameObject>(darkSellerRoom[TirageAuSort(0, darkSellerRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            sizeX.Add(darkSellerRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
+            sizeY.Add(darkSellerRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
+        }
+        else if (roomName == "start")
+        {
+            roomSelected = TirageAuSort(0, startRoom.Count - 1);
+            GameObject.Instantiate<GameObject>(startRoom[TirageAuSort(0, startRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            sizeX.Add(startRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
+            sizeY.Add(startRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
+        }
+        else
+        {
+            roomSelected = TirageAuSort(0, bossRoom.Count - 1);
+            GameObject.Instantiate<GameObject>(bossRoom[TirageAuSort(0, bossRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            sizeX.Add(bossRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
+            sizeY.Add(bossRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
+        }
     }
 }
