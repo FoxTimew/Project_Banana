@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 7518700305194292604}
   - component: {fileID: 357501141758096252}
   - component: {fileID: -5412251652422764655}
-  m_Layer: 0
+  - component: {fileID: -3247437844338837742}
+  m_Layer: 15
   m_Name: ChallengeRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,5 +96,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc14da8a0c17e5419ee6570a9e969de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sixeX: 10
-  sizeY: 5
+  sixeX: 5
+  sizeY: 1
+--- !u!61 &-3247437844338837742
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9107332984215411296}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.5, y: 0.5}
+    newSize: {x: 0.5, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5}
+  m_EdgeRadius: 0

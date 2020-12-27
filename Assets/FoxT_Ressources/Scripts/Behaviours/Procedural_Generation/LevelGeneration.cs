@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LevelGeneration : MonoBehaviour
 {
+    Vector2 superStart, fromTo;
+
     public RoomGenerationInfo roomID;
 
     private List<GameObject> startRoom = new List<GameObject>();
@@ -16,8 +18,6 @@ public class LevelGeneration : MonoBehaviour
 
     private Vector2[] direction = new Vector2[] { new Vector2(0, 1), new Vector2(0, -1), new Vector2(1, 0), new Vector2(-1, 0) };
 
-    private int[] test = new int[] { 50, 35, 75, 100, 8, 67, 4, 20 };
-
     private List<Vector2> blackList = new List<Vector2>();
     private List<Vector2> defiBossNodePos = new List<Vector2>();
     private List<Vector2> marchandBossNodePos = new List<Vector2>();
@@ -28,6 +28,10 @@ public class LevelGeneration : MonoBehaviour
 
     private List<Vector2> bossPath = new List<Vector2>();
 
+    private List<GameObject> roomPos = new List<GameObject>();
+    private List<GameObject> roomTransf = new List<GameObject>();
+    private List<GameObject> xExtremis = new List<GameObject>();
+    private List<GameObject> yExtremis = new List<GameObject>();
     private List<float> sizeX = new List<float>();
     private List<float> sizeY = new List<float>();
 
@@ -75,7 +79,13 @@ public class LevelGeneration : MonoBehaviour
     public int nombreDeDefiMin = 2;
     public int nombreDeDefi = 2;
 
+    public float marge = 2f;
+
     private int nombreAssigneDeSalle = 6;
+    private bool lineNumber = false;
+    public LayerMask roomLayer;
+
+    public GameObject[] refObj;
 
     void Start()
     {
@@ -695,7 +705,6 @@ public class LevelGeneration : MonoBehaviour
         {
             enemyNode.Add(node);
         }
-        Debug.Log(nombreDeCoffre);
         for (int i = 1; i <= nombreDeCoffre; i++)
         {
             Vector2 roomSelected = chestPossibilityTemp[TirageAuSort(0, chestPossibilityTemp.Count - 1)];
@@ -1050,17 +1059,12 @@ public class LevelGeneration : MonoBehaviour
 
     void SortingVector()
     {
-
-        Debug.Log("cellule " + cellule.Count);
-
-        foreach (string name in cellule.Keys)
-        {
-            Debug.Log(name + cellule[name]);
-        }
-
         List<Vector2> nodePos = new List<Vector2>();
         List<Vector2> nodePosSorted = new List<Vector2>();
         float[] posX = new float[cellule.Count], posY = new float[cellule.Count];
+        int[] roomPerFloor;
+        float[] biggestSizeY, biggestSizeX;
+        int currentLine;
 
         foreach (Vector2 node in cellule.Values)
         {
@@ -1075,11 +1079,11 @@ public class LevelGeneration : MonoBehaviour
         System.Array.Sort(posX);
         System.Array.Sort(posY);
 
-        Debug.Log("posX " + posX.Length);
-        Debug.Log("posY " + posY.Length);
-        Debug.Log("nodePos " + nodePos.Count);
-        Debug.Log("cellule " + cellule.Count);
-
+        //Debug.Log(Mathf.RoundToInt(posY[posY.Length - 1]) + Mathf.Abs(Mathf.RoundToInt(posY[0])) + 1);
+        roomPerFloor = new int[Mathf.RoundToInt(posY[posY.Length - 1]) + Mathf.Abs(Mathf.RoundToInt(posY[0])) + 1];
+        biggestSizeY = new float[Mathf.RoundToInt(posY[posY.Length - 1]) + Mathf.Abs(Mathf.RoundToInt(posY[0])) + 1];
+        biggestSizeX = new float[Mathf.RoundToInt(posX[posX.Length - 1]) + Mathf.Abs(Mathf.RoundToInt(posX[0])) + 1];
+        currentLine = Mathf.RoundToInt(posY[0]);
         for (float y = posY[0]; y <= posY[posY.Length - 1]; y++)
         {
             for (float x = posX[0]; x <= posX[posX.Length - 1]; x++)
@@ -1152,63 +1156,178 @@ public class LevelGeneration : MonoBehaviour
                             }
                         }
                     }
-
                 }
             }
+        }
+        GameObject.Instantiate<GameObject>(refObj[0], new Vector3(posX[0], posY[posY.Length - 1], 0f), new Quaternion(0f, 0f, 0f, 0f));
+        GameObject.Instantiate<GameObject>(refObj[1], new Vector3(posX[posX.Length - 1], posY[0], 0f), new Quaternion(0f, 0f, 0f, 0f));
+
+        //Trouver les salles les plus gauches par lignes.
+        float currentStage = posY[0];
+        xExtremis.Add(roomTransf[0]);
+        foreach (GameObject room in roomTransf)
+        {
+            if (room.transform.position.y != currentStage)
+            {
+                currentStage++;
+                xExtremis.Add(room);
+            }
+        }
+
+        //Trouver les salles les plus hautes
+        for (float i = posX[0]; i <= posX[posX.Length - 1]; i++)
+        {
+            RaycastHit2D[] hit = Physics2D.BoxCastAll(new Vector2(i, posY[posY.Length - 1]), new Vector2(0.1f, 0.1f), 0f, Vector2.down, nombreDeSalle, roomLayer);
+
+            yExtremis.Add(hit[0].collider.gameObject);
+        }
+
+        for (int i = 0; i < xExtremis.Count; i++)
+        {
+            RayCastDetection(Vector2.right, xExtremis[i].transform.position, new Vector2(posX[0], posY[0]));
+        }
+
+        /*foreach (GameObject obj in xExtremis)
+        {
+            if (posX[0] > obj.transform.position.x) posX[0] = obj.transform.position.x;
+        }*/
+
+        for (int i = 0; i < yExtremis.Count; i++)
+        {
+            RayCastDetection(Vector2.down, yExtremis[i].transform.position, new Vector2(posX[posX.Length - 1], posY[0]));
         }
     }
 
     void RoomInstantiate(string roomName, Vector3 pos)
     {
+        Collider2D collider;
         int roomSelected;
         if (roomName == "enemy")
         {
             roomSelected = TirageAuSort(0, enemyRoom.Count - 1);
-            GameObject.Instantiate<GameObject>(enemyRoom[roomSelected], pos, new Quaternion(0f, 0f, 0f, 0f));
+
+            roomPos.Add(enemyRoom[roomSelected]);
+            GameObject.Instantiate<GameObject>(roomPos[roomPos.Count - 1], pos, new Quaternion(0f, 0f, 0f, 0f));
             sizeX.Add(enemyRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
             sizeY.Add(enemyRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
         }
         else if (roomName == "challenge")
         {
             roomSelected = TirageAuSort(0, challengeRoom.Count - 1);
-            GameObject.Instantiate<GameObject>(challengeRoom[TirageAuSort(0, challengeRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            roomPos.Add(challengeRoom[roomSelected]);
+            GameObject.Instantiate<GameObject>(roomPos[roomPos.Count - 1], pos, new Quaternion(0f, 0f, 0f, 0f));
             sizeX.Add(challengeRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
             sizeY.Add(challengeRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
         }
         else if (roomName == "seller")
         {
             roomSelected = TirageAuSort(0, sellerRoom.Count - 1);
-            GameObject.Instantiate<GameObject>(sellerRoom[TirageAuSort(0, sellerRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            roomPos.Add(sellerRoom[roomSelected]);
+            GameObject.Instantiate<GameObject>(roomPos[roomPos.Count - 1], pos, new Quaternion(0f, 0f, 0f, 0f));
             sizeX.Add(sellerRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
             sizeY.Add(sellerRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
         }
         else if (roomName == "chest")
         {
             roomSelected = TirageAuSort(0, chestRoom.Count - 1);
-            GameObject.Instantiate<GameObject>(chestRoom[TirageAuSort(0, chestRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            roomPos.Add(chestRoom[roomSelected]);
+            GameObject.Instantiate<GameObject>(roomPos[roomPos.Count - 1], pos, new Quaternion(0f, 0f, 0f, 0f));
             sizeX.Add(chestRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
             sizeY.Add(chestRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
         }
         else if (roomName == "darkSeller")
         {
             roomSelected = TirageAuSort(0, darkSellerRoom.Count - 1);
-            GameObject.Instantiate<GameObject>(darkSellerRoom[TirageAuSort(0, darkSellerRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            roomPos.Add(darkSellerRoom[roomSelected]);
+            GameObject.Instantiate<GameObject>(roomPos[roomPos.Count - 1], pos, new Quaternion(0f, 0f, 0f, 0f));
             sizeX.Add(darkSellerRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
             sizeY.Add(darkSellerRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
         }
         else if (roomName == "start")
         {
             roomSelected = TirageAuSort(0, startRoom.Count - 1);
-            GameObject.Instantiate<GameObject>(startRoom[TirageAuSort(0, startRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            roomPos.Add(startRoom[roomSelected]);
+            GameObject.Instantiate<GameObject>(roomPos[roomPos.Count - 1], pos, new Quaternion(0f, 0f, 0f, 0f));
             sizeX.Add(startRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
             sizeY.Add(startRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
         }
         else
         {
             roomSelected = TirageAuSort(0, bossRoom.Count - 1);
-            GameObject.Instantiate<GameObject>(bossRoom[TirageAuSort(0, bossRoom.Count - 1)], pos, new Quaternion(0f, 0f, 0f, 0f));
+            roomPos.Add(bossRoom[roomSelected]);
+            GameObject.Instantiate<GameObject>(roomPos[roomPos.Count - 1], pos, new Quaternion(0f, 0f, 0f, 0f));
             sizeX.Add(bossRoom[roomSelected].GetComponent<tailleDeLaSalle>().sixeX);
             sizeY.Add(bossRoom[roomSelected].GetComponent<tailleDeLaSalle>().sizeY);
+        }
+        collider = Physics2D.OverlapCircle(pos, 0.1f);
+        roomTransf.Add(collider.gameObject);
+    }
+
+    void RayCastDetection(Vector2 direction, Vector2 pos, Vector2 deep)
+    {
+        Transform[] refPos = new Transform[2];
+        refPos[0] = GameObject.Find("RoomReference1(Clone)").GetComponent<Transform>();
+        refPos[1] = GameObject.Find("RoomReference2(Clone)").GetComponent<Transform>();
+
+
+        RaycastHit2D[] hit = Physics2D.BoxCastAll(pos, new Vector2(0.1f, 0.1f), 0f, direction, nombreDeSalle, roomLayer);
+
+        for (int i = 0; i < hit.Length - 1; i++)
+        {
+            float[] sizeX = new float[2], sizeY = new float[2], posX = new float[2], posY = new float[2];
+
+            sizeX[0] = hit[i].collider.GetComponent<tailleDeLaSalle>().sixeX;
+            sizeX[1] = hit[i + 1].collider.GetComponent<tailleDeLaSalle>().sixeX;
+
+            sizeY[0] = hit[i].collider.GetComponent<tailleDeLaSalle>().sizeY;
+            sizeY[1] = hit[i + 1].collider.GetComponent<tailleDeLaSalle>().sizeY;
+
+            posX[0] = hit[i].collider.transform.position.x;
+            posX[1] = hit[i + 1].collider.transform.position.x;
+            
+            posY[0] = hit[i].collider.transform.position.y;
+            posY[1] = hit[i + 1].collider.transform.position.y;
+
+            if (direction == Vector2.right)
+            {
+                if ((sizeX[0] + sizeX[1]) / 2 > Mathf.Abs(posX[1] - posX[0]))
+                {
+                    Vector2 start = new Vector2((refPos[0].position.x - posX[0]) / 2 + posX[0], posY[0]);
+                    Vector2 size = new Vector2(Mathf.Abs(refPos[0].position.x - posX[0]) + 0.1f, (refPos[0].position.y - deep.y) * 2 + 0.1f);
+                    float newDistance = (sizeX[0] + sizeX[1]) / 2 + marge;
+
+                    Collider2D[] roomCol = Physics2D.OverlapBoxAll(start, size, 0f, roomLayer);
+                    if (roomCol.Length != 0)
+                    {
+                        foreach (Collider2D col in roomCol)
+                        {
+                            col.transform.position -= new Vector3(newDistance, 0f, 0f);
+                        }
+                        refPos[0].position -= new Vector3(newDistance, 0f, 0f);
+                    }
+                }
+            }
+            else
+            {
+                if ((sizeY[0] + sizeY[1]) / 2 > Mathf.Abs(posY[1] - posY[0]))
+                {
+                    Vector2 start = new Vector2(posX[0], (refPos[0].position.y - posY[0]) / 2 + posY[0]);
+                    Vector2 size = new Vector2(Mathf.Abs(deep.x - refPos[0].position.x) * 2 + 0.1f, Mathf.Abs(refPos[0].position.y - posY[0]) + 0.1f);
+                    float newDistance = (sizeY[0] + sizeY[1]) / 2 + marge;
+
+                    Collider2D[] roomCol = Physics2D.OverlapBoxAll(start, size, 0f, roomLayer);
+
+                    Debug.Log(roomCol.Length);
+                    if (roomCol.Length != 0)
+                    {
+                        foreach (Collider2D col in roomCol)
+                        {
+                            col.transform.position += new Vector3(0f, newDistance, 0f);
+                        }
+                        refPos[0].position += new Vector3(0f, newDistance, 0f);
+                    }
+                }
+            }
         }
     }
 }

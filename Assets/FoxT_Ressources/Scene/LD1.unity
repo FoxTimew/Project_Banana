@@ -223,6 +223,13 @@ MonoBehaviour:
   nombreDeDefiMax: 5
   nombreDeDefiMin: 5
   nombreDeDefi: 2
+  marge: 2
+  roomLayer:
+    serializedVersion: 2
+    m_Bits: 32768
+  refObj:
+  - {fileID: 3368452626328680430, guid: 1ca7ac2784c723a4da30e179a09f0f24, type: 3}
+  - {fileID: 3959917089536714577, guid: bd70d0adee045134f91d495cff992e1d, type: 3}
 --- !u!1 &1057233356
 GameObject:
   m_ObjectHideFlags: 0
