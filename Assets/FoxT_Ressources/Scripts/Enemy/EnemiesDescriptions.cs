@@ -6,20 +6,25 @@ using UnityEngine;
 
 public class EnemiesDescriptions : ScriptableObject
 {
+	public enemies enemy;
 
-		public enemies enemy;
+	public Sprite sprite;
 
-		public Sprite sprite;
+	public int hp;
 
-		public int hp;
+	public int attack;
 
-		public int attack;
+	public float range;
 
-		public float range;
+	public float poussee;
 
-		public float poussee;
+	public int resistance;
 
-		public int resistance;
+	public int hpArmor;
 
-		public int hpArmor;
+	public float[] stunReduction;
+
+	public float vitesseDisplacement;
+
+	public float vitesseAttack;
 }

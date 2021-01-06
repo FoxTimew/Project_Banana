@@ -9,11 +9,19 @@ public class WeaponsInfos : ScriptableObject
 
 	public int[] damageCombos;
 
-	public float[] pousseeCombos;
+	public AnimationCurve[] pousseeCombos;
+
+	public float[] stunTime;
 
 	public int damageSpecial;
 
 	public float pousseeSpecial;
 
 	public float range;
+
+	public float vitesse;
+
+	public float annulerCombosTemps;
+
+	public float poids;
 }

@@ -20,3 +20,7 @@ MonoBehaviour:
   poussee: 0
   resistance: 0
   hpArmor: 0
+  stunReduction:
+  - 0
+  - 1
+  - 1

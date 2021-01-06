@@ -325,6 +325,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: eb0e743f4af737e48908ca9b133ca67d, type: 2}
   damageCombos: 
   pousseeCombos: []
+  stunTime: []
   damageSpecial: 0
   pousseeSpecial: 0
   range: 0
@@ -332,6 +333,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
+  annulerCombosTemps: 0
+  vitesse: 0
+  combos: 0
 --- !u!114 &323760829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,6 +485,150 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1767626908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1767626910}
+  - component: {fileID: 1767626909}
+  m_Layer: 0
+  m_Name: test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1767626909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767626908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66382fdff7098543ab914e4201acd41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 99
+  off: 98
+  time: 5
+  isEnabled: 0
+--- !u!4 &1767626910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767626908}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.11903939, y: 0.6971116, z: -210.12111}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1842717246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1842717248}
+  - component: {fileID: 1842717247}
+  - component: {fileID: 1842717250}
+  - component: {fileID: 1842717249}
+  m_Layer: 0
+  m_Name: Wall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1842717247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842717246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0f0b2ba59d5f1340bb2aee3bc642dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallPosition: N
+  marge: 0.01
+  layer:
+    serializedVersion: 2
+    m_Bits: 768
+--- !u!4 &1842717248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842717246}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.26, y: 4.51, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1842717249
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842717246}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 14.3, y: 1}
+  m_EdgeRadius: 0
+--- !u!50 &1842717250
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842717246}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1871844337
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,6 +746,7 @@ GameObject:
   - component: {fileID: 1892610413}
   - component: {fileID: 1892610414}
   - component: {fileID: 1892610415}
+  - component: {fileID: 1892610416}
   m_Layer: 9
   m_Name: Guerrier
   m_TagString: Untagged
@@ -718,17 +867,19 @@ MonoBehaviour:
   poussee: 0
   resistance: 0
   armor: 0
+  stunReduction: []
+  pause: 0
   pcTransform: {fileID: 323760824}
   self: {fileID: 1892610410}
   checkPoint: {fileID: 1930986843}
   closedDistance: 2
   unclosedDistance: 2.5
   vitesse: 500
-  attackTimer: 1
   enemyRB: {fileID: 1892610414}
   pcLayer:
     serializedVersion: 2
     m_Bits: 256
+  attackDelay: 0
 --- !u!50 &1892610414
 Rigidbody2D:
   serializedVersion: 4
@@ -766,6 +917,26 @@ MonoBehaviour:
   cristal: {fileID: 11400000, guid: 51021d35e1d94f343aa753052ceb6d21, type: 2}
   goldObject: {fileID: 688448267176961016, guid: 27d5265f3a01cd74da321ef7cce2faf2, type: 3}
   cristalObject: {fileID: 3686302844755001002, guid: ffb2868581530ee44a5b7399b165ce3e, type: 3}
+--- !u!114 &1892610416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892610409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb57ea72a122804a968912c769ee674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pousseForce:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  direction: {x: 0, y: 0}
+  timeElapsed: 0
 --- !u!1 &1930986842
 GameObject:
   m_ObjectHideFlags: 0

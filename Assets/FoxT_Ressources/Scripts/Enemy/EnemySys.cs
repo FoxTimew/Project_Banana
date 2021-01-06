@@ -22,11 +22,15 @@ public class EnemySys : MonoBehaviour
 
     public int armor;
 
+    public List<float> stunReduction = new List<float>();
+
+    public bool pause;
+
     EnnemyLoot loot;
 
     bool pcDeteced { get { return GetComponentInChildren<EnemyVision>().pcDetected; } }
 
-    bool closed, isAttacking;
+    bool closed, isAttacking, stuned;
 
     public Transform pcTransform, self, checkPoint;
 
@@ -34,13 +38,15 @@ public class EnemySys : MonoBehaviour
 
     public float closedDistance, unclosedDistance, vitesse;
 
-    public int attackTimer;
-
     float currentDistance;
 
     public Rigidbody2D enemyRB;
 
     public LayerMask pcLayer;
+
+    private Coroutine stunCoroutine;
+
+    public float attackDelay;
 
     void Start()
     {
@@ -51,6 +57,13 @@ public class EnemySys : MonoBehaviour
         poussee = stats.poussee;
         resistance = stats.resistance;
         armor = stats.hpArmor;
+        vitesse = stats.vitesseDisplacement;
+        attackDelay = stats.vitesseAttack;
+
+        for (int i = 0; i < stats.stunReduction.Length; i++)
+        {
+            stunReduction.Add(stats.stunReduction[i]);
+        }
 
         loot = this.GetComponent<EnnemyLoot>();
 
@@ -59,6 +72,7 @@ public class EnemySys : MonoBehaviour
 
     void Update()
     {
+        if (stuned) return;
         if (pcDeteced)
         {
             PCFocus();
@@ -69,7 +83,7 @@ public class EnemySys : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, float stunTime)
     {
         if (armor <= 0)
         {
@@ -80,7 +94,16 @@ public class EnemySys : MonoBehaviour
         else
             armor -= damage / 2;
 
-        if (health <= 0) Die();
+        if (health <= 0)
+        {
+            Die();
+            return;
+        }
+        else
+        {
+            if (stunCoroutine != null) StopCoroutine(stunCoroutine);
+            stunCoroutine = StartCoroutine(StunUpdate(stunTime));
+        }
     }
 
     void Die()
@@ -110,7 +133,8 @@ public class EnemySys : MonoBehaviour
 
     void MoveToPlayer()
     {
-        enemyRB.velocity = orientation * vitesse * Time.deltaTime; 
+        enemyRB.velocity = orientation * vitesse * Time.deltaTime;
+        Debug.Log(enemyRB.velocity);
     }
 
     private void OnDrawGizmosSelected()
@@ -129,14 +153,21 @@ public class EnemySys : MonoBehaviour
     void AttackStart()
     {
         isAttacking = true;
-        StartCoroutine(AttackUpdate(attackTimer));
+        StartCoroutine(AttackUpdate(attackDelay));
     }
 
-    IEnumerator AttackUpdate(int time)
+    IEnumerator AttackUpdate(float time)
     {
         enemyRB.velocity = new Vector2(0f, 0f);
         yield return new WaitForSeconds(time);
         CoupDroit();
         isAttacking = false;
+    }
+
+    IEnumerator StunUpdate(float time)
+    {
+        stuned = true;
+        yield return new WaitForSeconds(time);
+        stuned = false;
     }
 }
