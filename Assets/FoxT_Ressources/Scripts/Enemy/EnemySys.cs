@@ -30,7 +30,7 @@ public class EnemySys : MonoBehaviour
 
     bool pcDeteced { get { return GetComponentInChildren<EnemyVision>().pcDetected; } }
 
-    bool closed, isAttacking, stuned;
+    public bool closed, isAttacking, stuned;
 
     public Transform pcTransform, self, checkPoint;
 
@@ -47,6 +47,8 @@ public class EnemySys : MonoBehaviour
     private Coroutine stunCoroutine;
 
     public float attackDelay;
+
+    public Vector3 VectorDirector;
 
     void Start()
     {
@@ -72,6 +74,7 @@ public class EnemySys : MonoBehaviour
 
     void Update()
     {
+
         if (stuned) return;
         if (pcDeteced)
         {
@@ -79,11 +82,16 @@ public class EnemySys : MonoBehaviour
             if (currentDistance <= closedDistance) closed = true;
             if (currentDistance >= unclosedDistance) closed = false;
             if (closed) AttackTest();
-            else MoveToPlayer();
+            //else 
         }
     }
 
-    public void TakeDamage(int damage, float stunTime)
+	private void FixedUpdate()
+	{
+        MoveToPlayer();
+    }
+
+	public void TakeDamage(int damage, float stunTime)
     {
         if (armor <= 0)
         {
@@ -133,8 +141,7 @@ public class EnemySys : MonoBehaviour
 
     void MoveToPlayer()
     {
-        enemyRB.velocity = orientation * vitesse * Time.deltaTime;
-        Debug.Log(enemyRB.velocity);
+        enemyRB.velocity = VectorDirector.normalized * vitesse * Time.fixedDeltaTime;
     }
 
     private void OnDrawGizmosSelected()

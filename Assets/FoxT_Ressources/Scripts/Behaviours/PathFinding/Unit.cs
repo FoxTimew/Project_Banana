@@ -4,33 +4,97 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-	public Transform target;
-	float speed = 5;
-	Vector2[] path;
-	int targetIndex;
+	const float minPathUpdateTime = 0.1f;
+	const float pathUpdateMoveThreshold = 0.5f;
 
-	private void Update()
+	public Transform target;
+	public float speed = 5;
+	public float turnSpeed = 3;
+	public float turnDst = 5;
+	public float stoppindDst = 10;
+	/*Vector2[] path;
+	int targetIndex;*/
+	Path path;
+	EnemySys sys;
+	private void Awake()
 	{
-		PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+		sys = this.GetComponentInParent<EnemySys>();
 	}
 
-	public void OnPathFound(Vector2[] newPath, bool pathSuccessful)
+	private void Start()
+	{
+		StartCoroutine(UpdtaePath());
+	}
+
+	public void OnPathFound(Vector2[] waypoints/*newPath*/, bool pathSuccessful)
 	{
 		if (pathSuccessful)
 		{
-			path = newPath;
+			path = new Path(waypoints, transform.position, turnDst, stoppindDst);//newPath;
 			StopCoroutine("FollowPath");
 			StartCoroutine("FollowPath");
+		}
+	}
+	IEnumerator UpdtaePath()
+	{
+		if (Time.timeSinceLevelLoad < 0.3f)
+		{
+			yield return new WaitForSeconds(0.3f);
+		}
+		PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+
+		float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
+		Vector2 targetPosOld = target.position;
+
+		while (true)
+		{
+			yield return new WaitForSeconds(minPathUpdateTime);
+			if ((new Vector2(target.position.x, target.position.y) - targetPosOld).sqrMagnitude > sqrMoveThreshold)
+			{
+				PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+				targetPosOld = new Vector2(target.position.x, target.position.y);
+			}
 		}
 	}
 
 	IEnumerator FollowPath()
 	{
-		Vector2 currentWaypoint = path[0];
+		//Vector2 currentWaypoint = path[0];
+		bool followingPath = true;
+		int pathIndex = 0;
+		transform.LookAt(path.lookPoints[0]);
 
-		while (true)
+		float speedPercent = 1;
+
+		while (followingPath)
 		{
-			if (new Vector2 (transform.position.x, transform.position.y) == currentWaypoint)
+			Vector2 pos2D = new Vector2(transform.position.x, transform.position.y);
+			while (path.turnBoundaries[pathIndex].HasCrossedLine(pos2D))
+			{
+				if (pathIndex == path.finishLineIndex)
+				{
+					followingPath = false;
+					sys.VectorDirector = Vector3.zero;
+					break;
+				}
+				else
+				{
+					pathIndex++;
+				}
+			}
+
+			if (followingPath)
+			{
+				Vector3 targetPos = rotationTrick(path.lookPoints[pathIndex]);
+				Vector3 selfPof = rotationTrick(new Vector2 (transform.position.x, transform.position.y));
+				Quaternion targetRotation = Quaternion.LookRotation(targetPos - selfPof/*path.lookPoints[pathIndex] - new Vector2(transform.position.x, transform.position.y)*/);
+				targetRotation = new Quaternion(0f, 0f, -targetRotation.y, targetRotation.w);
+				transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+				transform.Translate(Vector2.up, Space.Self);
+				sys.VectorDirector = (transform.localPosition * 10);
+				transform.localPosition = Vector3.zero;
+			}
+			/*if (new Vector2 (transform.position.x, transform.position.y) == currentWaypoint)
 			{
 				targetIndex++;
 				if (targetIndex >= path.Length)
@@ -38,16 +102,22 @@ public class Unit : MonoBehaviour
 					yield break;
 				}
 			}
-			transform.position = Vector2.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+			transform.position = Vector2.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);*/
 			yield return null;
 		}
+	}
+
+	Vector3 rotationTrick(Vector2 v)
+	{
+		return new Vector3(v.x, 0f, v.y);
 	}
 
 	public void OnDrawGizmos()
 	{
 		if (path != null)
 		{
-			for (int i = targetIndex; i < path.Length; i++)
+			path.DrawWithGizmos();
+			/*for (int i = targetIndex; i < path.Length; i++)
 			{
 				Gizmos.color = Color.black;
 				Gizmos.DrawCube(path[i], Vector2.one);
@@ -60,7 +130,7 @@ public class Unit : MonoBehaviour
 				{
 					Gizmos.DrawLine(path[i - 1], path[i]);
 				}
-			}
+			}*/
 		}
 	}
 }

@@ -24,3 +24,5 @@ MonoBehaviour:
   - 0
   - 1
   - 1
+  vitesseDisplacement: 250
+  vitesseAttack: 0
