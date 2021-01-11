@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1095a6fa3cfb67c42899537cffe86be8, type: 3}
+  m_Name: Data
+  m_EditorClassIdentifier: 
+  amuletteCombos: {fileID: 11400000, guid: 9c34f871580893248a2ba450038248c9, type: 2}
+  amuletteDash: {fileID: 11400000, guid: c89b37d0079e13141a2cc69289355009, type: 2}
+  amuletteDegatInfligee: {fileID: 11400000, guid: d7953bd5c43d0794084533e187914f80, type: 2}
+  amuletteMDegatInfligee: {fileID: 11400000, guid: 062730e7161aaa84496acbb85730c936, type: 2}
+  amuletteExplosion: {fileID: 11400000, guid: 1659055824b7eb3489fea8efd2d9d806, type: 2}
+  amuletteLoot: {fileID: 11400000, guid: b45ee8a18c5e66a418a1d8717af88be2, type: 2}
+  amuletteMaxHP: {fileID: 11400000, guid: b6d48dc3a6e89824aa2aac6f9fe08a68, type: 2}
+  amulettePoussee: {fileID: 11400000, guid: 928d306b7abfed64b92e5ab73b76b301, type: 2}
+  amuletteRefusDeLaMort: {fileID: 11400000, guid: 145e3e76451cb214f971ec4a7e16185e, type: 2}
+  amuletteResistance: {fileID: 11400000, guid: e672242dbbc88c84cab26829fe2f4b07, type: 2}
+  amuletteVolDeVie: {fileID: 11400000, guid: 49d9ee529037c944f91149abce5f9898, type: 2}
+  amuletteVulnerabilite: {fileID: 11400000, guid: a9aac89e57a73ba40a928d11527297b7, type: 2}
+  amuletteMPoussee: {fileID: 11400000, guid: 49b389a5e79201a4cad5f95e8d030cd1, type: 2}
+  amuletteMLoot: {fileID: 11400000, guid: d722a0bbba4b6c34fabd5dfefb67daad, type: 2}

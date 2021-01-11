@@ -5,13 +5,16 @@ using UnityEngine;
 public class CollectibleSys : MonoBehaviour
 {
 	public Data data;
+	public int gold;
+	public int cristal;
+	public int maudite;
 
 	public collectible collectible;
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collectible == collectible.gold) data.gold++;
-		else if (collectible == collectible.cristal) data.cristal++;
-		else data.meaudite++;
+		data.gold += gold;
+		data.cristal+= cristal;
+		data.meaudite += maudite;
 		Destroy(this.gameObject);
 	}
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class EnemySys : MonoBehaviour
 {
     Health pcHealth;
-
+    Attack attackPC;
+    
     public EnemiesDescriptions stats;
 
     public int health;
@@ -16,7 +17,7 @@ public class EnemySys : MonoBehaviour
 
     public float range;
 
-    public float poussee;
+    public AnimationCurve poussee;
 
     public int resistance;
 
@@ -36,7 +37,7 @@ public class EnemySys : MonoBehaviour
 
     Vector3 orientation;
 
-    public float closedDistance, unclosedDistance, vitesse;
+    public float closedDistance, unclosedDistance, vitesse, dammageBonus;
 
     float currentDistance;
 
@@ -50,10 +51,13 @@ public class EnemySys : MonoBehaviour
 
     public Vector3 VectorDirector;
 
+    public int maxHealth;
+
     void Start()
     {
         sprite = stats.sprite;
-        health = stats.hp;
+        maxHealth = stats.hp;
+        health = maxHealth;
         attack = stats.attack;
         range = stats.range;
         poussee = stats.poussee;
@@ -70,6 +74,7 @@ public class EnemySys : MonoBehaviour
         loot = this.GetComponent<EnnemyLoot>();
 
         pcHealth = GameObject.Find("Playable_Character").GetComponent<Health>();
+        attackPC = GameObject.Find("Playable_Character").GetComponent<Attack>();
     }
 
     void Update()
@@ -117,6 +122,7 @@ public class EnemySys : MonoBehaviour
     void Die()
     {
         // play animation
+        attackPC.UpgradeCharmCombos();
         loot.Loot();
         Destroy(this.gameObject);
     }
@@ -135,7 +141,7 @@ public class EnemySys : MonoBehaviour
         if (pc == null) Debug.Log("Rien n'est detecte.");
         foreach (Collider2D pcTouche in pc)
         {
-            pcHealth.TakeDamage(attack);
+            pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus));
         }
     }
 
@@ -161,6 +167,14 @@ public class EnemySys : MonoBehaviour
     {
         isAttacking = true;
         StartCoroutine(AttackUpdate(attackDelay));
+    }
+
+    public void Heal(float value, bool pourcent)
+    {
+        if (pourcent) health += Mathf.RoundToInt(health * value);
+        else health += Mathf.RoundToInt(value);
+
+        if (health > maxHealth) health = maxHealth;
     }
 
     IEnumerator AttackUpdate(float time)
