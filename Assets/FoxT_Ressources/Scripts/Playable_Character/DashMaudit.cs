@@ -4,15 +4,42 @@ using UnityEngine;
 
 public class DashMaudit : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int valueDammage;
+
+    List<Collider2D> enemyCol = new List<Collider2D>();
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+        if (collision.gameObject.tag == "Enemy")
+        {
+            enemyCol.Add(collision);
+            StartCoroutine(DashDammage(1, collision));
+        }
+	}
+
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+        if (collision.gameObject.tag == "Enemy" && enemyCol.Contains(collision))
+        {
+            enemyCol.Remove(collision);
+        }
+	}
+
+	private void OnEnable()
+	{
+        StartCoroutine(DashAttack(4));
+	}
+
+    IEnumerator DashDammage(float time, Collider2D col)
     {
-        
+        col.GetComponent<EnemySys>().TakeDamage(valueDammage, 0f);
+        yield return new WaitForSeconds(time);
+        if (enemyCol.Contains(col)) StartCoroutine(DashDammage(valueDammage, col));
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator DashAttack(float time)
     {
-        
+        yield return new WaitForSeconds(time);
+        Destroy(this.gameObject);
     }
 }
