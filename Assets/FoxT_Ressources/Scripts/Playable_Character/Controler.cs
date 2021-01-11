@@ -14,7 +14,7 @@ public class Controler : MonoBehaviour
 
     Vector2 moveInput;
 
-    Vector3 movement, currentDirection;
+    Vector3 movement, currentDirection, dashCharmObject;
 
     Rigidbody2D pcRB;
 
@@ -23,6 +23,9 @@ public class Controler : MonoBehaviour
     public Attack attack;
 
     public Animator anim;
+
+    [SerializeField]
+    GameObject dashObject;
 
     void Start()
     {
@@ -70,6 +73,7 @@ public class Controler : MonoBehaviour
     void DashStart()
     {
         dashingTimeElapsed = 0f;
+        dashCharmObject = this.transform.position;
         isDashing = true;
     }
 
@@ -84,7 +88,9 @@ public class Controler : MonoBehaviour
         if (dashingTimeElapsed > dashCurve.keys[dashCurve.keys.Length - 1].time)
         {
             isDashing = false;
+            Object.Instantiate(dashObject, dashCharmObject + (transform.position - dashCharmObject), transform.rotation);
         }
+
     }
 
     void AttackTest()
