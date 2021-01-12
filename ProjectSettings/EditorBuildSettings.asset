@@ -8,13 +8,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/GRL_Ressources/GRL_Scene/MainMenu.unity
     guid: c8a48048e2bc4f8478599e0876fdcba8
   - enabled: 0
-    path: Assets/GRL_Ressources/GRL_Scene/PlayScene.unity
+    path: Assets/GRL_Ressources/GRL_Scene/playscene osef.unity
     guid: 6b35328f0fa71bd41a71fbce7f9c2b71
-  - enabled: 1
+  - enabled: 0
     path: Assets/FoxT_Ressources/Temp/Build.unity
     guid: a0fd77fcb2385f74fb43e2cb382979ff
+  - enabled: 1
+    path: Assets/GRL_Ressources/GRL_Scene/PlayScene 1.unity
+    guid: 7fb2382ab81f0a6469e718673014c52f
   m_configObjects: {}
