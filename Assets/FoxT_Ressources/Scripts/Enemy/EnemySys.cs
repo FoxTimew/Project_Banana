@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySys : MonoBehaviour
 {
     Health pcHealth;
+    Attack attackPC;
 
     public EnemiesDescriptions stats;
 
@@ -14,9 +15,9 @@ public class EnemySys : MonoBehaviour
 
     public int attack;
 
-    public float range;
+    public float range, timeBeforeDePop;
 
-    public float poussee;
+    public AnimationCurve poussee;
 
     public int resistance;
 
@@ -28,15 +29,18 @@ public class EnemySys : MonoBehaviour
 
     EnnemyLoot loot;
 
+    [SerializeField]
+    Unit displacement;
+
     bool pcDeteced { get { return GetComponentInChildren<EnemyVision>().pcDetected; } }
 
-    bool closed, isAttacking, stuned;
+    public bool closed, isAttacking, stuned, EnemyExplosionCharm;
 
     public Transform pcTransform, self, checkPoint;
 
     Vector3 orientation;
 
-    public float closedDistance, unclosedDistance, vitesse;
+    public float closedDistance, unclosedDistance, vitesse, dammageBonus;
 
     float currentDistance;
 
@@ -46,12 +50,33 @@ public class EnemySys : MonoBehaviour
 
     private Coroutine stunCoroutine;
 
-    public float attackDelay;
+    public string currentState, lastDirectionState;
+
+    public float attackDelay, explosionRadius;
+
+    public Vector3 VectorDirector;
+
+    public int maxHealth, explosionCharmDamage;
+
+    Animator anim;
+
+    public bool dying;
+
+
+    //------------------------------------------
+    //Anim 
+    //------------------------------------------
+    public string idleLeft, idleRight, runLeft, runRight, attackLeft, attackRight, deathLeft, deathRight;
+
 
     void Start()
     {
+        anim = GetComponent<Animator>();
+        displacement = this.GetComponentInChildren<Unit>();
+        displacement.enabled = false;
         sprite = stats.sprite;
-        health = stats.hp;
+        maxHealth = stats.hp;
+        health = maxHealth;
         attack = stats.attack;
         range = stats.range;
         poussee = stats.poussee;
@@ -68,19 +93,30 @@ public class EnemySys : MonoBehaviour
         loot = this.GetComponent<EnnemyLoot>();
 
         pcHealth = GameObject.Find("Playable_Character").GetComponent<Health>();
+        attackPC = GameObject.Find("Playable_Character").GetComponent<Attack>();
     }
 
     void Update()
     {
-        if (stuned) return;
-        if (pcDeteced)
+        if (!dying)
         {
-            PCFocus();
-            if (currentDistance <= closedDistance) closed = true;
-            if (currentDistance >= unclosedDistance) closed = false;
-            if (closed) AttackTest();
-            else MoveToPlayer();
+            if (stuned) return;
+            if (pcDeteced)
+            {
+                displacement.enabled = true;
+                PCFocus();
+                if (currentDistance <= closedDistance) closed = true;
+                if (currentDistance >= unclosedDistance) closed = false;
+                if (closed) AttackTest();
+                //else 
+            }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!dying) MoveToPlayer();
+        else enemyRB.velocity = Vector2.zero;
     }
 
     public void TakeDamage(int damage, float stunTime)
@@ -108,8 +144,31 @@ public class EnemySys : MonoBehaviour
 
     void Die()
     {
-        // play animation
+        if (EnemyExplosionCharm)
+        {
+            //jouer autre animation
+            Collider2D[] enemi = Physics2D.OverlapCircleAll(this.transform.position, explosionRadius);
+            foreach (Collider2D col in enemi)
+            {
+                col.GetComponent<EnemySys>().TakeDamage(explosionCharmDamage, 0f);
+            }
+        }
+        else
+        {
+            if (lastDirectionState == runLeft || lastDirectionState == idleLeft) ChangeAnimationState(deathLeft);
+            else ChangeAnimationState(deathRight);
+        }
+        dying = true;
+        displacement.enabled = false;
+        this.GetComponent<Ejecting>().enabled = false;
+        StartCoroutine(Destroyed());
+        attackPC.UpgradeCharmCombos();
         loot.Loot();
+    }
+
+    IEnumerator Destroyed()
+    {
+        yield return new WaitForSeconds(timeBeforeDePop);
         Destroy(this.gameObject);
     }
 
@@ -127,14 +186,27 @@ public class EnemySys : MonoBehaviour
         if (pc == null) Debug.Log("Rien n'est detecte.");
         foreach (Collider2D pcTouche in pc)
         {
-            pcHealth.TakeDamage(attack);
+            pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus));
+            if (lastDirectionState == runLeft || lastDirectionState == idleLeft)
+            {
+                ChangeAnimationState(attackLeft);
+                currentState = idleLeft;
+            }
+            else
+            {
+                ChangeAnimationState(attackRight);
+                currentState = idleRight;
+            }
         }
     }
 
     void MoveToPlayer()
     {
-        enemyRB.velocity = orientation * vitesse * Time.deltaTime;
-        Debug.Log(enemyRB.velocity);
+        enemyRB.velocity = VectorDirector.normalized * vitesse * Time.fixedDeltaTime;
+        if (enemyRB.velocity.x > 0) ChangeAnimationState(runRight);
+        else if (enemyRB.velocity.x < 0) ChangeAnimationState(runLeft);
+        else if (enemyRB.velocity.x == 0 && currentState == runLeft) ChangeAnimationState(idleLeft);
+        else if (enemyRB.velocity.x == 0 && currentState == runRight) ChangeAnimationState(idleRight);
     }
 
     private void OnDrawGizmosSelected()
@@ -154,6 +226,23 @@ public class EnemySys : MonoBehaviour
     {
         isAttacking = true;
         StartCoroutine(AttackUpdate(attackDelay));
+    }
+
+    public void Heal(float value, bool pourcent)
+    {
+        if (pourcent) health += Mathf.RoundToInt(health * value);
+        else health += Mathf.RoundToInt(value);
+
+        if (health > maxHealth) health = maxHealth;
+    }
+
+    void ChangeAnimationState(string newState)
+    {
+        if (dying) return;
+        if (currentState == newState) return;
+        if (newState == runLeft || newState == idleRight || newState == runRight || newState == idleLeft) lastDirectionState = newState;
+        anim.Play(newState);
+        currentState = newState;
     }
 
     IEnumerator AttackUpdate(float time)

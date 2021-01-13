@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: Gold
   m_EditorClassIdentifier: 
   collectible: 0
-  chance: 50
+  value:
+  - bourse: 1
+    probability: 50
+  - bourse: 2
+    probability: 35
+  - bourse: 3
+    probability: 15

@@ -8,4 +8,8 @@ public class PlayableCharacterInfos : ScriptableObject
 	public int HP;
 
 	public int resitance;
+
+	public int force;
+
+	public float pousseeForce;
 }

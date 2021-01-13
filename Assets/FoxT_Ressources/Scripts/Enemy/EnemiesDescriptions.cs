@@ -16,7 +16,7 @@ public class EnemiesDescriptions : ScriptableObject
 
 	public float range;
 
-	public float poussee;
+	public AnimationCurve poussee;
 
 	public int resistance;
 

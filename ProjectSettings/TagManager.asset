@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - Door at North
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -21,9 +22,9 @@ TagManager:
   - 
   - 
   - 
-  - Test
+  - Wall
   - Room
-  - 
+  - Rebond
   - 
   - 
   - 

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Meaudite
   m_EditorClassIdentifier: 
   collectible: 1
-  chance: 0
+  value: []

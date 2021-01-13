@@ -41,7 +41,7 @@ public class Boutique : MonoBehaviour
             boutique.SetActive(false);
             Open = false;
             Time.timeScale = 1f;
-            menuPause.GetComponent<PauseMenu>().Open = false;
+            //menuPause.GetComponent<PauseMenu>().Open = false;
         }
 
         if(Here == true && Input.GetKeyDown(KeyCode.M) && Open == false)
@@ -49,7 +49,7 @@ public class Boutique : MonoBehaviour
             boutique.SetActive(true);
             Open = true;
             Time.timeScale = 0f;
-            menuPause.GetComponent<PauseMenu>().Open = true;
+            //menuPause.GetComponent<PauseMenu>().Open = true;
         } 
     }
 }

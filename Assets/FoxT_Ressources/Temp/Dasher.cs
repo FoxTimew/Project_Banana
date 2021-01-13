@@ -16,7 +16,7 @@ public class _Dasher : MonoBehaviour
 
     public float range;
 
-    public float poussee;
+    public AnimationCurve poussee;
 
     public int resistance;
 

@@ -8,30 +8,30 @@ public class PathFinding : MonoBehaviour
 {
 
 	//public Transform seeker, target;
-	PathRequestManager requestManager;
+	//PathRequestManager requestManager;
 	Grid grid;
 
 	private void Awake()
 	{
-		requestManager = GetComponent<PathRequestManager>();
+		//requestManager = GetComponent<PathRequestManager>();
 		grid = GetComponent<Grid>();
 	}
 
-	public void StartFindPath(Vector2 startPos, Vector2 targetPos)
+	/*public void StartFindPath(Vector2 startPos, Vector2 targetPos)
 	{
 		StartCoroutine(FindPath(startPos, targetPos));
-	}
+	}*/
 
-	IEnumerator FindPath(Vector2 startPos, Vector2 targetPos)
+	public void /*IEnumerator*/ FindPath(PathRequest request, Action<PathResult> callbak/*Vector2 startPos, Vector2 targetPos*/)
 	{
-		Stopwatch sw = new Stopwatch();
-		sw.Start();
+		/*Stopwatch sw = new Stopwatch();
+		sw.Start();*/
 
 		Vector2[] waypoints = new Vector2[0];
 		bool pathSuccess = false;
 
-		Node2D startNode = grid.NodeFromWorldPoint(startPos);
-		Node2D targetNode = grid.NodeFromWorldPoint(targetPos);
+		Node2D startNode = grid.NodeFromWorldPoint(request.pathStart/*startPos*/);
+		Node2D targetNode = grid.NodeFromWorldPoint(request.pathEnd/*targetPos*/);
 
 		if (/*startNode.walkable &&*/ targetNode.walkable)
 		{
@@ -46,8 +46,8 @@ public class PathFinding : MonoBehaviour
 
 				if (currentNode == targetNode)
 				{
-					sw.Stop();
-					print("Path found : " + sw.ElapsedMilliseconds + " ms");
+					/*sw.Stop();
+					print("Path found : " + sw.ElapsedMilliseconds + " ms");*/
 					pathSuccess = true;
 					break;
 				}
@@ -69,9 +69,14 @@ public class PathFinding : MonoBehaviour
 				}
 			}
 		}
-		yield return null;
-		if (pathSuccess) waypoints = RetracePath(startNode, targetNode);
-		requestManager.FinishProcessingPath(waypoints, pathSuccess);
+		//yield return null;
+		if (pathSuccess)
+		{
+			waypoints = RetracePath(startNode, targetNode);
+			pathSuccess = waypoints.Length > 0;
+		}
+		//requestManager.FinishProcessingPath(waypoints, pathSuccess);
+		callbak(new PathResult(waypoints, pathSuccess, request.callback));
 	}
 
 	Vector2[] RetracePath(Node2D startNode, Node2D endNode)

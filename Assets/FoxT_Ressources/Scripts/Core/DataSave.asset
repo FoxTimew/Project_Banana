@@ -15,3 +15,17 @@ MonoBehaviour:
   gold: 0
   cristal: 0
   meaudite: 0
+  niveauCombos: 0
+  niveauDash: 0
+  niveauDegatInflige: 0
+  niveauMDegatInflige: 0
+  niveauExplosion: 0
+  niveauLoot: 0
+  niveauMLoot: 0
+  niveauMaxHP: 0
+  niveauPoussee: 0
+  niveauMPoussee: 0
+  niveauRefus: 0
+  niveauResistance: 0
+  niveauMVoldeVie: 0
+  niveauVulnerabilite: 0

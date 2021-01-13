@@ -8,13 +8,13 @@ public class Controler : MonoBehaviour
 
     float dashingTimeElapsed;
 
-    public bool isDashing, isAttacking;
+    public bool isDashing, isAttacking, isEjected;
 
     public AnimationCurve dashCurve = AnimationCurve.Constant(0f, 0.25f, 1f);
 
     Vector2 moveInput;
 
-    Vector3 movement, currentDirection;
+    Vector3 movement, currentDirection, dashCharmObject;
 
     Rigidbody2D pcRB;
 
@@ -23,6 +23,9 @@ public class Controler : MonoBehaviour
     public Attack attack;
 
     public Animator anim;
+
+    [SerializeField]
+    GameObject dashObject;
 
     void Start()
     {
@@ -85,6 +88,7 @@ public class Controler : MonoBehaviour
         {
             isDashing = false;
         }
+
     }
 
     void AttackTest()
