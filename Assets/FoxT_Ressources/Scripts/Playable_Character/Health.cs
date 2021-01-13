@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public bool RefusDeLaMort;
+    public bool RefusDeLaMort, berzerkCharm, mLootCharm;
     public float charmValue;
 
     public PlayableCharacterInfos stats;
@@ -29,11 +29,22 @@ public class Health : MonoBehaviour
     public void TakeDamage(int damage)
     {
         int tempResistance = resistance;
+        if (mLootCharm)
+        {
+            int gold = core.data.gold;
+            gold -= 10;
+            while (gold <= 0)
+            {
+                tempResistance--;
+                gold -= 10;
+            }
+        }
 
         if (tempResistance > damage) tempResistance = damage;
 
         health -= (damage - tempResistance);
 
+        BerzerkUpdate();
         //HUD update
 
         if (health <= 0)
@@ -47,6 +58,7 @@ public class Health : MonoBehaviour
 
             }
         }
+        if (berzerkCharm) BerzerkUpdate();
     }
 
     public void Heal(float value, bool pourcent)
@@ -55,6 +67,11 @@ public class Health : MonoBehaviour
         else health += Mathf.RoundToInt(value);
 
         if (health > maxHealth) health = maxHealth;
+    }
+
+    public void BerzerkUpdate()
+    {
+        attack.berzerkValue = Mathf.RoundToInt((((maxHealth - health) * 100) / maxHealth) / 100);
     }
 
     void Die()

@@ -8,15 +8,21 @@ public class EnnemyLoot : MonoBehaviour
 	public CollectibleDescription cristal;
 	public CollectibleDescription maudite;
 
-	public GameObject bourseObject;
+	public GameObject bourseObject, healPotion;
+
+	public bool mLootCharm;
 
 	Transform self;
 
 	public bool charmLoot;
 	public int value;
 
+	Core core;
+	float healCharmProba { get { return core.heamCharmProbability; } }
+	bool healPotionCharm {get { return core.healCharm; } }
 	private void Awake()
 	{
+		core = GameObject.Find("Core").GetComponent<Core>();
 		self = this.GetComponent<Transform>();
 	}
 
@@ -30,11 +36,15 @@ public class EnnemyLoot : MonoBehaviour
 		{
 			if (chance <= gold.value[i].probability)
 			{
-				GameObject.Find("Bourse").GetComponent<CollectibleSys>().gold = gold.value[i].bourse;
+				GameObject.Find("Bourse(Clone)").GetComponent<CollectibleSys>().gold = gold.value[i].bourse;
+				if (mLootCharm)
+				{
+					GameObject.Find("Bourse(Clone)").GetComponent<CollectibleSys>().gold += Mathf.RoundToInt(gold.value[i].bourse * .5f);
+				}
 				if (charmLoot)
 				{
 					chance = Random.Range(1, 101);
-					if (chance <= value) GameObject.Find("Bourse").GetComponent<CollectibleSys>().gold++;
+					if (chance <= value) GameObject.Find("Bourse(Clone)").GetComponent<CollectibleSys>().gold++;
 				}
 				i = gold.value.Length;
 			}
@@ -44,11 +54,15 @@ public class EnnemyLoot : MonoBehaviour
 		{
 			if (chance <= cristal.value[i].probability)
 			{
-				GameObject.Find("Bourse").GetComponent<CollectibleSys>().cristal = cristal.value[i].bourse;
+				GameObject.Find("Bourse(Clone)").GetComponent<CollectibleSys>().cristal = cristal.value[i].bourse;
+				if (mLootCharm)
+				{
+					GameObject.Find("Bourse(Clone)").GetComponent<CollectibleSys>().cristal += Mathf.RoundToInt(cristal.value[i].bourse* .5f);
+				}
 				if (charmLoot)
 				{
 					chance = Random.Range(1, 101);
-					if (chance <= value) GameObject.Find("Bourse").GetComponent<CollectibleSys>().cristal++;
+					if (chance <= value) GameObject.Find("Bourse(Clone)").GetComponent<CollectibleSys>().cristal++;
 				}
 				i = cristal.value.Length;
 			}
@@ -58,9 +72,19 @@ public class EnnemyLoot : MonoBehaviour
 		{
 			if (chance <= maudite.value[i].probability)
 			{
-				GameObject.Find("Bourse").GetComponent<CollectibleSys>().maudite = maudite.value[i].bourse;
+				GameObject.Find("Bourse(Clone)").GetComponent<CollectibleSys>().maudite = maudite.value[i].bourse;
+				if (mLootCharm)
+				{
+					GameObject.Find("Bourse(Clone)").GetComponent<CollectibleSys>().maudite++;
+				}
 				i = maudite.value[i].probability;
 			}
+		}
+
+		if (healPotionCharm)
+		{
+			chance = Random.Range(1, 101);
+			if (chance < healCharmProba) Object.Instantiate(healPotion, new Vector2(transform.position.x - .25f, transform.position.y - .25f), transform.rotation);
 		}
 	}
 }

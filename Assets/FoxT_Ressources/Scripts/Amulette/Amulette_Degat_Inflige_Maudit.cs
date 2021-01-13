@@ -13,13 +13,11 @@ public class Amulette_Degat_Inflige_Maudit : ScriptableObject
 	[System.Serializable]
 	public class DegatMauditInfligeAmulette
 	{
-		public bool pourcent;
-		public float value;
+		public float valuePourcent;
 		public int prix;
-		public DegatMauditInfligeAmulette(float _value, bool _pourcent, int _prix)
+		public DegatMauditInfligeAmulette(float _value, int _prix)
 		{
-			pourcent = _pourcent;
-			value = _value;
+			valuePourcent = _value;
 			prix = _prix;
 		}
 		public int GetPrix() { return prix; }

@@ -24,24 +24,27 @@ public class Attack : MonoBehaviour
 
     public LayerMask enemyLayer;
 
-    public float annulerCombosTemps, annulerCharmCombosTemps, charmCausticRadius, charmCausticValue;
+    public float annulerCombosTemps, annulerCharmCombosTemps, charmCausticRadius, charmCausticValue, berzerkValue;
 
-    public float vitesse, forceBonus, pousseeForce, charmCombosDamage;
+    public float vitesse, forceBonus, pousseeForce, charmCombosDamage, mCharmPousseeValue, volDeVieValue;
     public float[] dammageBonus;
 
     Controler controler;
 
     public int combos, force, charmCombos = 1;
 
-    public bool charmCombosEnable, causticCharmEnable, causticCharmPourcent, combosCharmEnable;
+    public bool charmCombosEnable, causticCharmEnable, causticCharmPourcent, combosCharmEnable, volDeVieCharm;
 
     private Coroutine combosCoroutine;
     private Coroutine charmCombosCoroutine;
+
+    Health heal;
 
     private bool attackBlocked;
 
     private void Start()
     {
+        heal = this.GetComponent<Health>();
         controler = this.GetComponent<Controler>();
 
         for (int i = 0; i < stats.damageCombos.Length; i++)
@@ -78,9 +81,14 @@ public class Attack : MonoBehaviour
         if (enemy == null) return;
         foreach (Collider2D enemyTouche in enemy)
         {
-            enemyTouche.gameObject.GetComponent<EnemySys>().TakeDamage((damageCombos[combos] + force) + Mathf.RoundToInt((damageCombos[combos] + force) * dammageBonus[0]), stunTime[combos]);
+            int finalDamage = (damageCombos[combos] + force) + Mathf.RoundToInt((damageCombos[combos] + force) * dammageBonus[0]) + Mathf.RoundToInt((damageCombos[combos] + force) + Mathf.RoundToInt((damageCombos[combos] + force) * dammageBonus[0]) * berzerkValue);
+            enemyTouche.gameObject.GetComponent<EnemySys>().TakeDamage(finalDamage, stunTime[combos]);
             PousseeEnnemi(pousseeCombos[combos], enemyTouche.gameObject, attackPoint);
             if (combosCharmEnable) if (combos == damageCombos.Count - 1) enemyTouche.gameObject.GetComponent<EnemySys>().TakeDamage(Mathf.RoundToInt(charmCombos), 0f);
+            if (volDeVieCharm)
+            {
+                heal.Heal(finalDamage * (volDeVieValue / 100), false);
+            }
         }
 
         if (combos == damageCombos.Count - 1)
@@ -99,7 +107,6 @@ public class Attack : MonoBehaviour
 
     void PousseeEnnemi(AnimationCurve force, GameObject enemy, Transform attackDirection)
     {
-        Debug.Log("Attack");
         float angle = CalculArcTangante(attackDirection);
         Vector2 direction;
 
@@ -139,6 +146,7 @@ public class Attack : MonoBehaviour
         enemy.GetComponent<Ejecting>().pousseForce = force;
         enemy.GetComponent<Ejecting>().bonusForce = forceBonus;
         enemy.GetComponent<Ejecting>().forcePoussee = pousseeForce;
+        enemy.GetComponent<Ejecting>().mauditBonusPoussee = mCharmPousseeValue / 100;
         enemy.GetComponent<Ejecting>().timeElapsed = 0f;
         enemy.GetComponent<Ejecting>().enabled = true;
 

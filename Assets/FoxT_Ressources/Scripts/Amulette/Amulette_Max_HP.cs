@@ -13,10 +13,10 @@ public class Amulette_Max_HP : ScriptableObject
 	[System.Serializable]
 	public class Max_HP_Amulette
 	{
-		public bool pourcent;
+		public float pourcent;
 		public float value;
 		public int prix;
-		public Max_HP_Amulette(float _value, bool _pourcent, int _prix)
+		public Max_HP_Amulette(float _value, float _pourcent, int _prix)
 		{
 			pourcent = _pourcent;
 			value = _value;

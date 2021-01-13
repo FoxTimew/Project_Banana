@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166dc07431ce1ff4a8189c0572dfbed0, type: 3}
   m_Name: "New Pous\xE9e Amulette"
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
   tauxSurCent: 10
-  level: []
+  level:
+  - value: 0
+    prix: 0

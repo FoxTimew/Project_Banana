@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f2023f542846e4bbb6d5cad067545c, type: 3}
   m_Name: New Explosion Amulette
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
   tauxSurCent: 10
-  level: []
+  level:
+  - value: 0
+    prix: 0

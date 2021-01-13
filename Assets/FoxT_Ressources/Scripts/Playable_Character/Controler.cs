@@ -8,7 +8,7 @@ public class Controler : MonoBehaviour
 
     float dashingTimeElapsed;
 
-    public bool isDashing, isAttacking;
+    public bool isDashing, isAttacking, isEjected;
 
     public AnimationCurve dashCurve = AnimationCurve.Constant(0f, 0.25f, 1f);
 
@@ -73,7 +73,6 @@ public class Controler : MonoBehaviour
     void DashStart()
     {
         dashingTimeElapsed = 0f;
-        dashCharmObject = this.transform.position;
         isDashing = true;
     }
 
@@ -88,7 +87,6 @@ public class Controler : MonoBehaviour
         if (dashingTimeElapsed > dashCurve.keys[dashCurve.keys.Length - 1].time)
         {
             isDashing = false;
-            Object.Instantiate(dashObject, dashCharmObject + (transform.position - dashCharmObject), transform.rotation);
         }
 
     }

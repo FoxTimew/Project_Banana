@@ -9,12 +9,15 @@ public class CollectibleSys : MonoBehaviour
 	public int cristal;
 	public int maudite;
 
-	public collectible collectible;
+	//public collectible collectible;
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		data.gold += gold;
-		data.cristal+= cristal;
-		data.meaudite += maudite;
-		Destroy(this.gameObject);
+		if(collision.gameObject.tag == "Player")
+		{
+			data.gold += gold;
+			data.cristal+= cristal;
+			data.meaudite += maudite;
+			Destroy(this.gameObject);
+		}
 	}
 }

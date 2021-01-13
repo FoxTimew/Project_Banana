@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4132b0b0921696439800aeecfb0b3df, type: 3}
   m_Name: New Dash Amulette
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
   tauxSurCent: 10
-  level: []
+  level:
+  - pourcent: 0
+    value: 0
+    prix: 0

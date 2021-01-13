@@ -13,13 +13,13 @@ public class Amulette_Poussee_Maudit : ScriptableObject
 	[System.Serializable]
 	public class PousseeMauditAmulette
 	{
-		public bool pourcent;
-		public float value;
+		public float valueJoueurPourcent;
+		public float valueEnemiPourcent;
 		public int prix;
-		public PousseeMauditAmulette(float _value, bool _pourcent, int _prix)
+		public PousseeMauditAmulette(float _valueJoueur, float _valueEnemi, int _prix)
 		{
-			pourcent = _pourcent;
-			value = _value;
+			valueJoueurPourcent = _valueJoueur;
+			valueEnemiPourcent = _valueEnemi;
 			prix = _prix;
 		}
 		public int GetPrix() { return prix; }

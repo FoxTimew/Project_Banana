@@ -6,7 +6,7 @@ public class EnemySys : MonoBehaviour
 {
     Health pcHealth;
     Attack attackPC;
-    
+
     public EnemiesDescriptions stats;
 
     public int health;
@@ -15,7 +15,7 @@ public class EnemySys : MonoBehaviour
 
     public int attack;
 
-    public float range;
+    public float range, timeBeforeDePop;
 
     public AnimationCurve poussee;
 
@@ -29,9 +29,12 @@ public class EnemySys : MonoBehaviour
 
     EnnemyLoot loot;
 
+    [SerializeField]
+    Unit displacement;
+
     bool pcDeteced { get { return GetComponentInChildren<EnemyVision>().pcDetected; } }
 
-    public bool closed, isAttacking, stuned;
+    public bool closed, isAttacking, stuned, EnemyExplosionCharm;
 
     public Transform pcTransform, self, checkPoint;
 
@@ -47,14 +50,30 @@ public class EnemySys : MonoBehaviour
 
     private Coroutine stunCoroutine;
 
-    public float attackDelay;
+    public string currentState, lastDirectionState;
+
+    public float attackDelay, explosionRadius;
 
     public Vector3 VectorDirector;
 
-    public int maxHealth;
+    public int maxHealth, explosionCharmDamage;
+
+    Animator anim;
+
+    public bool dying;
+
+
+    //------------------------------------------
+    //Anim 
+    //------------------------------------------
+    public string idleLeft, idleRight, runLeft, runRight, attackLeft, attackRight, deathLeft, deathRight;
+
 
     void Start()
     {
+        anim = GetComponent<Animator>();
+        displacement = this.GetComponentInChildren<Unit>();
+        displacement.enabled = false;
         sprite = stats.sprite;
         maxHealth = stats.hp;
         health = maxHealth;
@@ -79,24 +98,28 @@ public class EnemySys : MonoBehaviour
 
     void Update()
     {
-
-        if (stuned) return;
-        if (pcDeteced)
+        if (!dying)
         {
-            PCFocus();
-            if (currentDistance <= closedDistance) closed = true;
-            if (currentDistance >= unclosedDistance) closed = false;
-            if (closed) AttackTest();
-            //else 
+            if (stuned) return;
+            if (pcDeteced)
+            {
+                displacement.enabled = true;
+                PCFocus();
+                if (currentDistance <= closedDistance) closed = true;
+                if (currentDistance >= unclosedDistance) closed = false;
+                if (closed) AttackTest();
+                //else 
+            }
         }
     }
 
-	private void FixedUpdate()
-	{
-        MoveToPlayer();
+    private void FixedUpdate()
+    {
+        if (!dying) MoveToPlayer();
+        else enemyRB.velocity = Vector2.zero;
     }
 
-	public void TakeDamage(int damage, float stunTime)
+    public void TakeDamage(int damage, float stunTime)
     {
         if (armor <= 0)
         {
@@ -121,9 +144,31 @@ public class EnemySys : MonoBehaviour
 
     void Die()
     {
-        // play animation
+        if (EnemyExplosionCharm)
+        {
+            //jouer autre animation
+            Collider2D[] enemi = Physics2D.OverlapCircleAll(this.transform.position, explosionRadius);
+            foreach (Collider2D col in enemi)
+            {
+                col.GetComponent<EnemySys>().TakeDamage(explosionCharmDamage, 0f);
+            }
+        }
+        else
+        {
+            if (lastDirectionState == runLeft || lastDirectionState == idleLeft) ChangeAnimationState(deathLeft);
+            else ChangeAnimationState(deathRight);
+        }
+        dying = true;
+        displacement.enabled = false;
+        this.GetComponent<Ejecting>().enabled = false;
+        StartCoroutine(Destroyed());
         attackPC.UpgradeCharmCombos();
         loot.Loot();
+    }
+
+    IEnumerator Destroyed()
+    {
+        yield return new WaitForSeconds(timeBeforeDePop);
         Destroy(this.gameObject);
     }
 
@@ -142,12 +187,26 @@ public class EnemySys : MonoBehaviour
         foreach (Collider2D pcTouche in pc)
         {
             pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus));
+            if (lastDirectionState == runLeft || lastDirectionState == idleLeft)
+            {
+                ChangeAnimationState(attackLeft);
+                currentState = idleLeft;
+            }
+            else
+            {
+                ChangeAnimationState(attackRight);
+                currentState = idleRight;
+            }
         }
     }
 
     void MoveToPlayer()
     {
         enemyRB.velocity = VectorDirector.normalized * vitesse * Time.fixedDeltaTime;
+        if (enemyRB.velocity.x > 0) ChangeAnimationState(runRight);
+        else if (enemyRB.velocity.x < 0) ChangeAnimationState(runLeft);
+        else if (enemyRB.velocity.x == 0 && currentState == runLeft) ChangeAnimationState(idleLeft);
+        else if (enemyRB.velocity.x == 0 && currentState == runRight) ChangeAnimationState(idleRight);
     }
 
     private void OnDrawGizmosSelected()
@@ -175,6 +234,15 @@ public class EnemySys : MonoBehaviour
         else health += Mathf.RoundToInt(value);
 
         if (health > maxHealth) health = maxHealth;
+    }
+
+    void ChangeAnimationState(string newState)
+    {
+        if (dying) return;
+        if (currentState == newState) return;
+        if (newState == runLeft || newState == idleRight || newState == runRight || newState == idleLeft) lastDirectionState = newState;
+        anim.Play(newState);
+        currentState = newState;
     }
 
     IEnumerator AttackUpdate(float time)

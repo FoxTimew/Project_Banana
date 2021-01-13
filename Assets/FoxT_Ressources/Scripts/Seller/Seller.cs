@@ -28,7 +28,6 @@ public class Seller : MonoBehaviour
 
 	private void OnEnable()
 	{
-		Debug.Log("ok");
 		if (marchandMaudit) RandomAmulette(amulettesMaudit, randomValue);
 		else RandomAmulette(amulettes, randomValue);
 		EndReset();
@@ -132,64 +131,64 @@ public class Seller : MonoBehaviour
 			switch (aVendre[i])
 		{
 			case "Vulnerabilite":
-				prix[i] = amulette.amuletteVulnerabilite.level[core.data.niveauVulnerabilite].GetPrix();
+				prix[core.data.niveauVulnerabilite] = amulette.amuletteVulnerabilite.level[core.data.niveauVulnerabilite].GetPrix();
 				Debug.Log("Vulnerabilite");
 				break;
 			case "Combos":
-				prix[i] = amulette.amuletteCombos.level[core.data.niveauCombos].GetPrix();
+				prix[core.data.niveauCombos] = amulette.amuletteCombos.level[core.data.niveauCombos].GetPrix();
 				Debug.Log("Combos");
 				break;
 			case "Dash":
-				prix[i] = amulette.amuletteDash.level[core.data.niveauDash].GetPrix();
+				prix[core.data.niveauDash] = amulette.amuletteDash.level[core.data.niveauDash].GetPrix();
 				Debug.Log("Dash");
 				break;
 			case "Degat inflige":
-				prix[i] = amulette.amuletteDegatInfligee.level[core.data.niveauDegatInflige].GetPrix();
+				prix[core.data.niveauDegatInflige] = amulette.amuletteDegatInfligee.level[core.data.niveauDegatInflige].GetPrix();
 				Debug.Log("Degat inflige");
 				break;
 			case "Degat inflige maudit":
-				prix[i] = amulette.amuletteMDegatInfligee.level[core.data.niveauMDegatInflige].GetPrix();
+				prix[core.data.niveauMDegatInflige] = amulette.amuletteMDegatInfligee.level[core.data.niveauMDegatInflige].GetPrix();
 				Debug.Log("Degat inflige maudit");
 				break;
 			case "Explosion":
-				prix[i] = amulette.amuletteExplosion.level[core.data.niveauExplosion].GetPrix();
+				prix[core.data.niveauExplosion] = amulette.amuletteExplosion.level[core.data.niveauExplosion].GetPrix();
 				Debug.Log("Explosion");
 				break;
 			case "Loot":
-				prix[i] = amulette.amuletteLoot.level[core.data.niveauLoot].GetPrix();
+				prix[core.data.niveauLoot] = amulette.amuletteLoot.level[core.data.niveauLoot].GetPrix();
 				Debug.Log("Loot");
 				break;
 			case "Loot Maudit":
-				prix[i] = amulette.amuletteMLoot.level[core.data.niveauMLoot].GetPrix();
+				prix[core.data.niveauMLoot] = amulette.amuletteMLoot.level[core.data.niveauMLoot].GetPrix();
 				Debug.Log("Loot Maudit");
 				break;
 			case "Max HP":
-				prix[i] = amulette.amuletteMaxHP.level[core.data.niveauMaxHP].GetPrix();
+				prix[core.data.niveauMaxHP] = amulette.amuletteMaxHP.level[core.data.niveauMaxHP].GetPrix();
 				Debug.Log("Max HP");
 				break;
 			case "Poussee":
-				prix[i] = amulette.amulettePoussee.level[core.data.niveauPoussee].GetPrix();
+				prix[core.data.niveauPoussee] = amulette.amulettePoussee.level[core.data.niveauPoussee].GetPrix();
 				Debug.Log("Poussee");
 				break;
 			case "Poussee Maudit":
-				prix[i] = amulette.amuletteMPoussee.level[core.data.niveauMPoussee].GetPrix();
+				prix[core.data.niveauMPoussee] = amulette.amuletteMPoussee.level[core.data.niveauMPoussee].GetPrix();
 				Debug.Log("Poussee Maudit");
 				break;
 			case "Refus de la mort":
-				prix[i] = amulette.amuletteRefusDeLaMort.level[core.data.niveauRefus].GetPrix();
+				prix[core.data.niveauRefus] = amulette.amuletteRefusDeLaMort.level[core.data.niveauRefus].GetPrix();
 				Debug.Log("Refus de la mort");
 				break;
 			case "Vol de vie":
-				prix[i] = amulette.amuletteVolDeVie.level[core.data.niveauMVoldeVie].GetPrix();
+				prix[core.data.niveauMVoldeVie] = amulette.amuletteVolDeVie.level[core.data.niveauMVoldeVie].GetPrix();
 				Debug.Log("Vol de vie");
 				break;
 			case "Resistance":
-				prix[i] = amulette.amuletteResistance.level[core.data.niveauResistance].GetPrix();
+				prix[core.data.niveauResistance] = amulette.amuletteResistance.level[core.data.niveauResistance].GetPrix();
 				Debug.Log("Resistance");
 				break;
 			default:
 				break;
-		}
+			}
 		}
 	}
 
@@ -210,6 +209,8 @@ public class Seller : MonoBehaviour
 				Debug.Log("Combos");
 				break;
 			case "Dash":
+				core.luckyCharm = true;
+				core.luckyCharmValue = amulette.amuletteDash.level[core.data.niveauDash].value / 100; 
 				core.data.niveauDash++;
 
 				Debug.Log("Dash");
@@ -222,12 +223,14 @@ public class Seller : MonoBehaviour
 				Debug.Log("Degat inflige");
 				break;
 			case "Degat inflige maudit":
+				GameObject.Find("Playable_Character").GetComponent<Health>().berzerkCharm = true;
+				GameObject.Find("Playable_Character").GetComponent<Health>().BerzerkUpdate();
 				core.data.niveauMDegatInflige++;
 
 				Debug.Log("Degat inflige maudit");
 				break;
 			case "Explosion":
-				core.data.niveauExplosion++;
+				if (!charmActive.Contains("Explosion")) charmActive.Add("Explosion");
 
 				Debug.Log("Explosion");
 				break;
@@ -238,25 +241,15 @@ public class Seller : MonoBehaviour
 				Debug.Log("Loot");
 				break;
 			case "Loot Maudit":
-				core.data.niveauMLoot++;
+				if (!charmActive.Contains("Loot Maudit")) charmActive.Add("Loot Maudit");
+				GameObject.Find("Playable_Character").GetComponent<Health>().mLootCharm = true;
 
 				Debug.Log("Loot Maudit");
 				break;
 			case "Max HP":
-				/*float value = 0f;
-				if (amulette.amuletteMaxHP.level[core.data.niveauMaxHP].pourcent)
-				{
-					value = amulette.amuletteMaxHP.level[core.data.niveauMaxHP].value / 100;
-					GameObject.Find("Playable_Character").GetComponent<Health>().maxHealth += Mathf.RoundToInt(GameObject.Find("Playable_Character").GetComponent<Health>().maxHealth * value);
-					GameObject.Find("Playable_Character").GetComponent<Health>().Heal(value, true);
-				}
-				else
-				{
-					value = amulette.amuletteMaxHP.level[core.data.niveauMaxHP].value;
-					GameObject.Find("Playable_Character").GetComponent<Health>().maxHealth += Mathf.RoundToInt(value);
-					GameObject.Find("Playable_Character").GetComponent<Health>().Heal(value, false);
-				}*/
-
+				core.healCharm = true;
+				core.heamCharmProbability = amulette.amuletteMaxHP.level[core.data.niveauMaxHP].pourcent;
+				core.heamCharmValue = amulette.amuletteMaxHP.level[core.data.niveauMaxHP].value;
 				core.data.niveauMaxHP++;
 
 				Debug.Log("Max HP");
@@ -268,7 +261,8 @@ public class Seller : MonoBehaviour
 				Debug.Log("Poussee");
 				break;
 			case "Poussee Maudit":
-
+				if (!charmActive.Contains("Poussee Maudit")) charmActive.Add("Poussee Maudit");
+				GameObject.Find("Playable_Character").GetComponent<Attack>().mCharmPousseeValue = amulette.amuletteMPoussee.level[core.data.niveauMPoussee].valueJoueurPourcent;
 				core.data.niveauMPoussee++;
 
 				Debug.Log("Poussee Maudit");
@@ -280,7 +274,8 @@ public class Seller : MonoBehaviour
 				Debug.Log("Refus de la mort");
 				break;
 			case "Vol de vie":
-				core.data.niveauMVoldeVie++;
+				GameObject.Find("Playable_Character").GetComponent<Attack>().volDeVieValue = amulette.amuletteVolDeVie.level[core.data.niveauMVoldeVie].value;
+				GameObject.Find("Playable_Character").GetComponent<Attack>().volDeVieCharm = true;
 
 				Debug.Log("Vol de vie");
 				break;
@@ -317,6 +312,25 @@ public class Seller : MonoBehaviour
 					{
 						obj.GetComponent<EnnemyLoot>().value = Mathf.RoundToInt(amulette.amuletteLoot.level[core.data.niveauLoot - 1].value);
 						obj.GetComponent<EnnemyLoot>().charmLoot = true;
+					}
+					break;
+				case "Explosion":
+					foreach (GameObject obj in enemies)
+					{
+						obj.GetComponent<EnemySys>().EnemyExplosionCharm = true;
+						obj.GetComponent<EnemySys>().explosionCharmDamage = Mathf.RoundToInt(amulette.amuletteExplosion.level[core.data.niveauExplosion - 1].value);
+					}
+					break;
+				case "Poussee Maudit":
+					foreach (GameObject obj in enemies)
+					{
+						//AjouterPoussee
+					}
+					break;
+				case "Loot Maudit":
+					foreach (GameObject obj in enemies)
+					{
+						obj.GetComponent<EnnemyLoot>().mLootCharm = true;
 					}
 					break;
 				default:
