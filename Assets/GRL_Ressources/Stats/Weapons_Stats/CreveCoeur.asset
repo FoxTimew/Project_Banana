@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CreveCoeur
   m_EditorClassIdentifier: 
   weapon: 0
-  damageCombos: 010000000200000003000000
+  damageCombos: 090000000900000005000000
   pousseeCombos:
   - serializedVersion: 2
     m_Curve:
@@ -49,9 +49,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   stunTime:
-  - 2
-  - 3
-  - 5
+  - 0.25
+  - 0.25
+  - 10
   damageSpecial: 0
   pousseeSpecial: 0
   range: 1

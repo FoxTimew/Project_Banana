@@ -17,7 +17,7 @@ public class Boutique : MonoBehaviour
         Debug.Log("té la");
         Here = true;
         //press.SetActive(true);
-        anim.SetBool("here", true);
+        anim.SetBool("Here", true);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -25,7 +25,7 @@ public class Boutique : MonoBehaviour
         Debug.Log("té po la");
         Here = false;
         //press.SetActive(false);
-        anim.SetBool("here", false);
+        anim.SetBool("Here", false);
     }
     // Start is called before the first frame update
     void Start()
@@ -41,7 +41,7 @@ public class Boutique : MonoBehaviour
             boutique.SetActive(false);
             Open = false;
             Time.timeScale = 1f;
-            //menuPause.GetComponent<PauseMenu>().Open = false;
+            menuPause.GetComponent<PauseMenu>().Open = false;
         }
 
         if(Here == true && Input.GetKeyDown(KeyCode.M) && Open == false)
@@ -49,7 +49,7 @@ public class Boutique : MonoBehaviour
             boutique.SetActive(true);
             Open = true;
             Time.timeScale = 0f;
-            //menuPause.GetComponent<PauseMenu>().Open = true;
+            menuPause.GetComponent<PauseMenu>().Open = true;
         } 
     }
 }
