@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dac4594f74b1ba4095401112b9290d3, type: 3}
   m_Name: New Amulette_Degat_Inflige
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 5a3a9d1bbf93a534294e5b3707c057be, type: 3}
   tauxSurCent: 10
   level:
   - value: 0

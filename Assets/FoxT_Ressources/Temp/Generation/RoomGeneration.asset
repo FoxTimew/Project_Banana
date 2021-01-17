@@ -17,9 +17,9 @@ MonoBehaviour:
   enemy:
   - {fileID: 8936931973787130413, guid: f36d4f5ad4ab8474796baf354d0d061f, type: 3}
   seller:
-  - {fileID: 6916349801564304285, guid: 5ac792aee827c124a9103aa5cc1b3ff2, type: 3}
+  - {fileID: 1763074410475140206, guid: e8eac74e232ba184daf8669c333465a5, type: 3}
   blackSeller:
-  - {fileID: 2974797076062367066, guid: b199ee4ffecb0d049821cf13f3f42538, type: 3}
+  - {fileID: 1306087103224471686, guid: 91415fe51c14c4140b6307ccb98392c7, type: 3}
   chest:
   - {fileID: 2743713124551171800, guid: 7673b3761a8f07344a564f7799d90c61, type: 3}
   challenge:

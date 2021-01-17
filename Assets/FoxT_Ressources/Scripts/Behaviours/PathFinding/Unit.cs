@@ -19,6 +19,7 @@ public class Unit : MonoBehaviour
 	private void Awake()
 	{
 		sys = this.GetComponentInParent<EnemySys>();
+		target = GameObject.Find("Playable_Character").transform;
 	}
 
 	private void Start()
@@ -35,7 +36,7 @@ public class Unit : MonoBehaviour
 			StartCoroutine("FollowPath");
 		}
 	}
-	IEnumerator UpdtaePath()
+	public IEnumerator UpdtaePath()
 	{
 		if (Time.timeSinceLevelLoad < 0.3f)
 		{

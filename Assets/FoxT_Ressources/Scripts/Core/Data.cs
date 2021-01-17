@@ -28,4 +28,19 @@ public class Data : ScriptableObject
 	public int niveauResistance;
 	public int niveauMVoldeVie;
 	public int niveauVulnerabilite;
+
+	public int combienCombos;
+	public int combienDash;
+	public int combienDegatInflige;
+	public int combienMDegatInfligee;
+	public int combienExplosion;
+	public int combienLoot;
+	public int combienMLoot;
+	public int combienMaxHP;
+	public int combienPoussee;
+	public int combienMPoussee;
+	public int combienRefus;
+	public int combienResistance;
+	public int combienVolDeVie;
+	public int combienVulnerabilite;
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45bbf96afef09d7449b81159e66d284d, type: 3}
   m_Name: New Vol De Vie Amulette
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: c12c03cf5533f9140b9cdbf088f638e6, type: 3}
   tauxSurCent: 25
   level:
   - pourcent: 0

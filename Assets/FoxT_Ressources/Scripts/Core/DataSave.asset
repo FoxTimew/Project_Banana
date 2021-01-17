@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e134ac4ecb87a47a33f15f50749f3a, type: 3}
   m_Name: DataSave
   m_EditorClassIdentifier: 
-  gold: 0
-  cristal: 0
+  gold: 96
+  cristal: 20
   meaudite: 0
   niveauCombos: 0
   niveauDash: 0
@@ -29,3 +29,17 @@ MonoBehaviour:
   niveauResistance: 0
   niveauMVoldeVie: 0
   niveauVulnerabilite: 0
+  combienCombos: 0
+  combienDash: 0
+  combienDegatInflige: 0
+  combienMDegatInfligee: 0
+  combienExplosion: 0
+  combienLoot: 0
+  combienMLoot: 0
+  combienMaxHP: 0
+  combienPoussee: 0
+  combienMPoussee: 0
+  combienRefus: 0
+  combienResistance: 0
+  combienVolDeVie: 0
+  combienVulnerabilite: 0

@@ -1329,5 +1329,6 @@ public class LevelGeneration : MonoBehaviour
                 }
             }
         }
+        this.GetComponent<Core>().SellerStart();
     }
 }

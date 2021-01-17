@@ -8,7 +8,7 @@ public class Controler : MonoBehaviour
 
     float dashingTimeElapsed;
 
-    public bool isDashing, isAttacking, isEjected;
+    public bool isDashing, isAttacking, isEjected, isTouched, isDie, refusDeLaMort, refusDeLaMortCheck, waitForDying, isInteracting;
 
     public AnimationCurve dashCurve = AnimationCurve.Constant(0f, 0.25f, 1f);
 
@@ -24,8 +24,21 @@ public class Controler : MonoBehaviour
 
     public Animator anim;
 
+    public Vector2 pousseeDirection;
+
     [SerializeField]
     GameObject dashObject;
+
+    [SerializeField]
+    string[] animName;
+
+    string currentState, lastDirectionState;
+
+    float knockBackTimeElapsed;
+
+    public AnimationCurve knockBackForce;
+
+    public Vector2 direction;
 
     void Start()
     {
@@ -39,10 +52,32 @@ public class Controler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        AttackPointPosition();
-        DashUpdate();
-        AttackUpdate();
-        Move();
+        if (isDie)
+        {
+            this.GetComponent<BoxCollider2D>().enabled = false;
+            ChangeAnimationState(animName[18]);
+            isDie = false;
+            waitForDying = true;
+            return;
+        }
+        else if (waitForDying)
+        {
+            if (refusDeLaMortCheck)
+            {
+                RefusDeLaMort();
+                isTouched = false;
+                return;
+            }
+            else return; //EndGame
+        }
+        if (!isEjected)
+        {
+            AttackPointPosition();
+            DashUpdate();
+            AttackUpdate();
+            Move();
+        }
+        else Ejecting();
     }
 
     void InputHandler()
@@ -54,6 +89,9 @@ public class Controler : MonoBehaviour
         if (Input.GetButtonDown("Dash")) DashTest();
 
         if (Input.GetButtonDown("Attack")) AttackTest();
+
+        if (Input.GetButtonDown("Interaction")) isInteracting = true;
+        else isInteracting = false;
 
     }
 
@@ -110,71 +148,159 @@ public class Controler : MonoBehaviour
     void Move()
     {
         if (movement != new Vector3(0f, 0f, 0f)) currentDirection = Vector3.Normalize(movement * 10);
-        pcRB.velocity = movement * Time.fixedDeltaTime;
-        AnimationControler();
+        if (!isTouched && !isEjected) pcRB.velocity = movement * Time.fixedDeltaTime;
+
+        //---------------------------------------
+        //Modifier Animation
+        //---------------------------------------
+        Vector2 playerDirection = (movement * 10).normalized;
+        if (isTouched)
+        {
+            pcRB.velocity = Vector2.zero;
+            if (lastDirectionState == animName[0])
+            {
+                ChangeAnimationState(animName[10]);
+            }
+            else if (lastDirectionState == animName[1])
+            {
+                ChangeAnimationState(animName[11]);
+            }
+            else if (lastDirectionState == animName[2])
+            {
+                ChangeAnimationState(animName[12]);
+            }
+            else if (lastDirectionState == animName[3])
+            {
+                ChangeAnimationState(animName[13]);
+            }
+        }
+        else if ((playerDirection.x > 0 && playerDirection.y <= 0.71f && playerDirection.y >= -0.71f))
+        {
+            if (isDashing) ChangeAnimationState(animName[15]);
+            else ChangeAnimationState(animName[1]);
+        }
+        else if ((playerDirection.x < 0 && playerDirection.y <= 0.71f && playerDirection.y >= -0.71f))
+        {
+            if (isDashing) ChangeAnimationState(animName[17]);
+            else ChangeAnimationState(animName[3]);
+        }
+        else if ((playerDirection.y > 0 && playerDirection.x <= 0.71f && playerDirection.x >= -0.7f))
+        {
+            if (isDashing) ChangeAnimationState(animName[14]);
+            else ChangeAnimationState(animName[0]);
+        }
+        else if ((playerDirection.y < 0 && playerDirection.x <= 0.71f && playerDirection.x >= -0.71f))
+        {
+            if (isDashing) ChangeAnimationState(animName[16]);
+            else ChangeAnimationState(animName[2]);
+        }
+        else if (playerDirection == Vector2.zero)
+        {
+            if (lastDirectionState == animName[0])
+            {
+                ChangeAnimationState(animName[4]);
+            }
+            else if (lastDirectionState == animName[1])
+            {
+                ChangeAnimationState(animName[5]);
+            }
+            else if (lastDirectionState == animName[2])
+            {
+                ChangeAnimationState(animName[6]);
+            }
+            else if (lastDirectionState == animName[3])
+            {
+                ChangeAnimationState(animName[7]);
+            }
+        }
     }
 
-    void AnimationControler()
+    public void Ejecting()
     {
-        if (movement.normalized.x > 0f && movement.normalized.y > -0.5 && movement.normalized.y < 0.5f)
+        if (isDie) return;
+        if (knockBackForce.keys.Length == 0) return;
+        isEjected = true;
+        PousseeEnnemi();
+        pcRB.velocity = Vector2.zero;
+        pcRB.AddForce(knockBackForce.Evaluate(knockBackTimeElapsed) * pousseeDirection * Time.fixedDeltaTime);
+        knockBackTimeElapsed += Time.fixedDeltaTime;
+
+        if (knockBackTimeElapsed > knockBackForce.keys[knockBackForce.keys.Length - 1].time)
         {
-            anim.SetBool("RUN_Right", true);
-            anim.SetBool("RUN_Left", false);
-            anim.SetBool("RUN_Backward", false);
-            anim.SetBool("RUN_Up", false);
+            isEjected = false;
+            knockBackTimeElapsed = 0f;
         }
-        
-        if (movement.normalized.x < 0f && movement.normalized.y >= -0.5f && movement.normalized.y <= 0.5f)
-        {
-            anim.SetBool("RUN_Left", true);
-            anim.SetBool("RUN_Backward", false);
-            anim.SetBool("RUN_Right", false);
-            anim.SetBool("RUN_Up", false);
-        }
-
-        if (movement.normalized.x > -0.5f && movement.normalized.x < 0.5f && movement.normalized.y < 0f)
-        {
-            anim.SetBool("RUN_Backward", true);
-            anim.SetBool("RUN_Left", false);
-            anim.SetBool("RUN_Right", false);
-            anim.SetBool("RUN_Up", false);
-        }
-
-        if (movement.normalized.x > -0.5f && movement.normalized.x < 0.5f && movement.normalized.y > 0f)
-        {
-            anim.SetBool("RUN_Up", true);
-            anim.SetBool("RUN_Backward", false);
-            anim.SetBool("RUN_Left", false);
-            anim.SetBool("RUN_Right", false);
-        }
-
-        /*if (movement.normalized.x > 0f && movement.normalized.y > 0f)
-        { 
-        
-        }
-
-        if (movement.normalized.x > 0f && movement.normalized.y < 0f)
-        { 
-        
-        }
-
-        if (movement.normalized.x < 0f && movement.normalized.y > 0f)
-        {
-
-        }
-
-        if (movement.normalized.x < 0f && movement.normalized.y < 0f)
-        {
-
-        }*/
-        if (movement.x == 0f && movement.y == 0f) ResetAnimation();
     }
 
-    void ResetAnimation()
+    void ChangeAnimationState(string newState)
     {
-        anim.SetBool("RUN_Right", false);
-        anim.SetBool("RUN_Left", false);
-        anim.SetBool("RUN_Up", false);
-        anim.SetBool("RUN_Backward", false);
+        if (newState == currentState) return;
+        currentState = newState;
+
+        if (currentState == animName[0] || currentState == animName[1] || currentState == animName[2] || currentState == animName[3]) lastDirectionState = currentState;
+        if (currentState == animName[10] || currentState == animName[11] || currentState == animName[12] || currentState == animName[13]) StartCoroutine(HitAnimation());
+
+        anim.Play(newState);
+    }
+
+    IEnumerator HitAnimation()
+    {
+        yield return new WaitForSeconds(0.25f);
+        isTouched = false;
+    }
+
+    void RefusDeLaMort()
+    {
+        if (!refusDeLaMort) return;
+        refusDeLaMortCheck = false;
+        ChangeAnimationState(animName[9]);
+        StartCoroutine(EndRespawn());
+    }
+    IEnumerator EndRespawn()
+    {
+        yield return new WaitForSeconds(1.55f);
+        waitForDying = false;
+        this.GetComponent<BoxCollider2D>().enabled = false;
+    }
+    void PousseeEnnemi()
+    {
+        float angle = CalculArcTangante(pousseeDirection);
+
+        if ((angle > -22.5f && angle < 0.0f) || (angle >= 0.0f && angle < 22.5f))
+        {
+            pousseeDirection = Vector2.up;
+        }
+        else if (angle >= 22.5f && angle < 67.5f)
+        {
+            pousseeDirection = new Vector2(1f, 1f).normalized;
+        }
+        else if (angle >= 67.5f && angle < 112.5f)
+        {
+            pousseeDirection = Vector2.right;
+        }
+        else if (angle >= 112.5f && angle < 157.5f)
+        {
+            pousseeDirection = new Vector2(1f, -1f).normalized;
+        }
+        else if ((angle >= 157.5 && angle <= 180) || (angle > -180 && angle < -157.5))
+        {
+            pousseeDirection = Vector2.down;
+        }
+        else if (angle >= -157.5f && angle < -112.5f)
+        {
+            pousseeDirection = new Vector2(-1f, -1f).normalized;
+        }
+        else if (angle >= -112.5f && angle < -67.5f)
+        {
+            pousseeDirection = Vector2.left;
+        }
+        else
+        {
+            pousseeDirection = new Vector2(-1f, 1f).normalized;
+        }
+    }
+    float CalculArcTangante(Vector2 position)
+    {
+        return Mathf.Atan2(position.x, position.y) * Mathf.Rad2Deg;
     }
 }

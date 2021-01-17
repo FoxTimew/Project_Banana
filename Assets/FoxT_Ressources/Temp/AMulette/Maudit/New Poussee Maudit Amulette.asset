@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f011b1b9d426fb48b8a3a620438cd75, type: 3}
   m_Name: New Poussee Maudit Amulette
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 074080b9ae5504a4d94484e884c8cf3e, type: 3}
   tauxSurCent: 25
   level:
   - valueJoueurPourcent: 0

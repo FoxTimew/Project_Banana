@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d0c68861927aff45a869bab79016c03, type: 3}
+  m_Name: Spawner
+  m_EditorClassIdentifier: 
+  enemy: 7
+  sprite: {fileID: 0}
+  hp: 1
+  attack: 0
+  range: 0
+  poussee:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
+  hpArmor: 0
+  stunReduction:
+  - 1
+  - 2
+  - 3
+  vitesseDisplacement: 200
+  vitesseAttack: 1

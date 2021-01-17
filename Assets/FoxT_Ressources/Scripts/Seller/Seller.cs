@@ -20,21 +20,35 @@ public class Seller : MonoBehaviour
 	[SerializeField]
 	bool marchandMaudit = false;
 
-	string objetChoisi;
+	public string objetChoisi;
 
 	Core core;
 
 	public GameObject[] enemies;
 
-	private void OnEnable()
+	[SerializeField]
+	GameObject[] emplacements;
+
+	/*private void OnEnable()
 	{
-		if (marchandMaudit) RandomAmulette(amulettesMaudit, randomValue);
-		else RandomAmulette(amulettes, randomValue);
 		EndReset();
 		this.GetComponent<Seller>().enabled = false;
-	}
+	}*/
 
 	private void Awake()
+	{
+		amulette.amuletteCombos.tauxSurCent = 10;
+		amulette.amuletteDegatInfligee.tauxSurCent = 10;
+		amulette.amuletteExplosion.tauxSurCent = 10;
+		amulette.amuletteLoot.tauxSurCent = 10;
+		amulette.amuletteMaxHP.tauxSurCent = 10;
+		amulette.amulettePoussee.tauxSurCent = 10;
+		amulette.amuletteRefusDeLaMort.tauxSurCent = 10;
+		amulette.amuletteResistance.tauxSurCent = 10;
+		amulette.amuletteVulnerabilite.tauxSurCent = 10;
+	}
+
+	public void RandomAwake()
 	{
 		prix = new int[howManyToSell];
 		//Ajouter toutes les amulettes possibles
@@ -43,9 +57,8 @@ public class Seller : MonoBehaviour
 				/*amulette.amuletteMDegatInfligee.tauxSurCent + */amulette.amuletteMLoot.tauxSurCent,
 					/*amulette.amuletteMDegatInfligee.tauxSurCent + amulette.amuletteMLoot.tauxSurCent + */amulette.amuletteMPoussee.tauxSurCent,
 						/*amulette.amuletteMDegatInfligee.tauxSurCent + amulette.amuletteMLoot.tauxSurCent + amulette.amuletteMPoussee.tauxSurCent + */amulette.amuletteVolDeVie.tauxSurCent};
-		else randomValue = new int[11] {0,
+		else randomValue = new int[10] {0,
 			amulette.amuletteCombos.tauxSurCent,
-			/*amulette.amuletteCombos.tauxSurCent + */amulette.amuletteDash.tauxSurCent,
 				/*amulette.amuletteCombos.tauxSurCent + amulette.amuletteDash.tauxSurCent + */amulette.amuletteDegatInfligee.tauxSurCent,
 					/*amulette.amuletteCombos.tauxSurCent + amulette.amuletteDash.tauxSurCent + amulette.amuletteDegatInfligee.tauxSurCent + */amulette.amuletteExplosion.tauxSurCent,
 						/*amulette.amuletteCombos.tauxSurCent + amulette.amuletteDash.tauxSurCent + amulette.amuletteDegatInfligee.tauxSurCent + amulette.amuletteExplosion.tauxSurCent + */amulette.amuletteLoot.tauxSurCent,
@@ -56,7 +69,6 @@ public class Seller : MonoBehaviour
 											/*amulette.amuletteCombos.tauxSurCent + amulette.amuletteDash.tauxSurCent + amulette.amuletteDegatInfligee.tauxSurCent + amulette.amuletteExplosion.tauxSurCent + amulette.amuletteLoot.tauxSurCent + amulette.amuletteMaxHP.tauxSurCent + amulette.amulettePoussee.tauxSurCent + amulette.amuletteRefusDeLaMort.tauxSurCent + amulette.amuletteResistance.tauxSurCent +*/ amulette.amuletteVulnerabilite.tauxSurCent};
 
 		amulettes.Add(amulette.amuletteCombos.GetName);
-		amulettes.Add(amulette.amuletteDash.GetName);
 		amulettes.Add(amulette.amuletteDegatInfligee.GetName);
 		amulettes.Add(amulette.amuletteExplosion.GetName);
 		amulettes.Add(amulette.amuletteLoot.GetName);
@@ -71,6 +83,9 @@ public class Seller : MonoBehaviour
 		amulettes.Add(amulette.amuletteVulnerabilite.GetName);
 
 		core = GameObject.Find("Core").GetComponent<Core>();
+
+		if (marchandMaudit) RandomAmulette(amulettesMaudit, randomValue);
+		else RandomAmulette(amulettes, randomValue);
 	}
 
 	//Selection des items au hasards selon leurs taux d'apparission
@@ -86,23 +101,50 @@ public class Seller : MonoBehaviour
 		{
 			_random.Add(i);
 		}
-		for (int i = 0; i < howManyToSell; i++)
+		Debug.Log(_random.Count);
+		Debug.Log(list.Count);
+		for (int i = list.Count - 1; i > -1; i--)
 		{
-			int []value = new int[_random.Count];
-			for (int x = 1; x < _random.Count; x++)
+			if (_random[i + 1] == 0)
 			{
-				value[x] = _random[x] + value[x - 1];
+				Debug.Log(i);
+				list.Remove(list[i]);
+				_random.Remove(_random[i+1]);
 			}
-
-			int nombreChoisi = Random.Range(1, value[value.Length - 1] + 1);
-			for (int x = 1; x <= value.Length; x++)
+		}
+		if (list.Count <= 3 && list.Count > 0)
+		{
+			foreach (string name in list)
 			{
-				if (nombreChoisi > value[x - 1] && nombreChoisi <= value[x])
+				Debug.Log("testr " + name);
+				aVendre.Add(name);
+			}
+		}
+		else if (list.Count == 0)
+		{
+			Debug.Log("Here");
+			return;
+		}
+		else
+		{
+			for (int i = 0; i < howManyToSell; i++)
+			{
+				int[] value = new int[_random.Count];
+				for (int x = 1; x < _random.Count; x++)
 				{
-					aVendre.Add(list[x - 1]);
-					list.Remove(list[x - 1]);
-					_random.Remove(_random[x]);
-					x = value.Length;
+					value[x] = _random[x] + value[x - 1];
+				}
+
+				int nombreChoisi = Random.Range(1, value[value.Length - 1] + 1);
+				for (int x = 1; x < value.Length; x++)
+				{
+					if (nombreChoisi <= value[x]  /*&& nombreChoisi <= value[x]*/)
+					{
+						aVendre.Add(list[x - 1]);
+						list.Remove(list[x - 1]);
+						_random.Remove(_random[x]);
+						x = value.Length;
+					}
 				}
 			}
 		}
@@ -131,68 +173,91 @@ public class Seller : MonoBehaviour
 			switch (aVendre[i])
 		{
 			case "Vulnerabilite":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteVulnerabilite.sprite;
+				core.data.combienVulnerabilite++;
 				prix[core.data.niveauVulnerabilite] = amulette.amuletteVulnerabilite.level[core.data.niveauVulnerabilite].GetPrix();
 				Debug.Log("Vulnerabilite");
 				break;
 			case "Combos":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteCombos.sprite;
+				core.data.combienCombos++;
 				prix[core.data.niveauCombos] = amulette.amuletteCombos.level[core.data.niveauCombos].GetPrix();
 				Debug.Log("Combos");
 				break;
-			case "Dash":
-				prix[core.data.niveauDash] = amulette.amuletteDash.level[core.data.niveauDash].GetPrix();
-				Debug.Log("Dash");
-				break;
 			case "Degat inflige":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteDegatInfligee.sprite;
+				core.data.combienDegatInflige++;
 				prix[core.data.niveauDegatInflige] = amulette.amuletteDegatInfligee.level[core.data.niveauDegatInflige].GetPrix();
 				Debug.Log("Degat inflige");
 				break;
 			case "Degat inflige maudit":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteMDegatInfligee.sprite;
+				core.data.combienMDegatInfligee++;
 				prix[core.data.niveauMDegatInflige] = amulette.amuletteMDegatInfligee.level[core.data.niveauMDegatInflige].GetPrix();
 				Debug.Log("Degat inflige maudit");
 				break;
 			case "Explosion":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteExplosion.sprite;
+				core.data.combienExplosion++;
 				prix[core.data.niveauExplosion] = amulette.amuletteExplosion.level[core.data.niveauExplosion].GetPrix();
 				Debug.Log("Explosion");
 				break;
 			case "Loot":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteLoot.sprite;
+				core.data.combienLoot++;
 				prix[core.data.niveauLoot] = amulette.amuletteLoot.level[core.data.niveauLoot].GetPrix();
 				Debug.Log("Loot");
 				break;
 			case "Loot Maudit":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteMLoot.sprite;
+				core.data.combienMLoot++;
 				prix[core.data.niveauMLoot] = amulette.amuletteMLoot.level[core.data.niveauMLoot].GetPrix();
 				Debug.Log("Loot Maudit");
 				break;
 			case "Max HP":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteMaxHP.sprite;
+				core.data.combienMaxHP++;
 				prix[core.data.niveauMaxHP] = amulette.amuletteMaxHP.level[core.data.niveauMaxHP].GetPrix();
 				Debug.Log("Max HP");
 				break;
 			case "Poussee":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amulettePoussee.sprite;
+				core.data.combienPoussee++;
 				prix[core.data.niveauPoussee] = amulette.amulettePoussee.level[core.data.niveauPoussee].GetPrix();
 				Debug.Log("Poussee");
 				break;
 			case "Poussee Maudit":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteMPoussee.sprite;
+				core.data.combienMPoussee++;
 				prix[core.data.niveauMPoussee] = amulette.amuletteMPoussee.level[core.data.niveauMPoussee].GetPrix();
 				Debug.Log("Poussee Maudit");
 				break;
 			case "Refus de la mort":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteRefusDeLaMort.sprite;
+				core.data.combienRefus++;
 				prix[core.data.niveauRefus] = amulette.amuletteRefusDeLaMort.level[core.data.niveauRefus].GetPrix();
 				Debug.Log("Refus de la mort");
 				break;
 			case "Vol de vie":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteVolDeVie.sprite;
+				core.data.combienVolDeVie++;
 				prix[core.data.niveauMVoldeVie] = amulette.amuletteVolDeVie.level[core.data.niveauMVoldeVie].GetPrix();
 				Debug.Log("Vol de vie");
 				break;
 			case "Resistance":
+				emplacements[i].GetComponent<SpriteRenderer>().sprite = amulette.amuletteResistance.sprite;
+				core.data.combienResistance++;
 				prix[core.data.niveauResistance] = amulette.amuletteResistance.level[core.data.niveauResistance].GetPrix();
 				Debug.Log("Resistance");
 				break;
 			default:
 				break;
 			}
+			END();
 		}
 	}
 
-	void ValueUpdate()
+	public void ValueUpdate()
 	{
 		switch (objetChoisi)
 		{
@@ -342,5 +407,18 @@ public class Seller : MonoBehaviour
 	void EndReset()
 	{
 		aVendre = new List<string>();
+	}
+
+	void END()
+	{
+		if (core.data.combienCombos >= 3) amulette.amuletteCombos.tauxSurCent = 0;
+		if (core.data.combienDegatInflige >= 3) amulette.amuletteDegatInfligee.tauxSurCent = 0;
+		if (core.data.combienExplosion >= 3) amulette.amuletteExplosion.tauxSurCent = 0;
+		if (core.data.combienLoot >= 3) amulette.amuletteLoot.tauxSurCent = 0;
+		if (core.data.combienMaxHP >= 3) amulette.amuletteMaxHP.tauxSurCent = 0;
+		if (core.data.combienPoussee >= 3) amulette.amulettePoussee.tauxSurCent = 0;
+		if (core.data.combienRefus >= 3) amulette.amuletteRefusDeLaMort.tauxSurCent = 0;
+		if (core.data.combienResistance >= 3) amulette.amuletteResistance.tauxSurCent = 0;
+		if (core.data.combienVulnerabilite >= 3) amulette.amuletteVulnerabilite.tauxSurCent = 0;
 	}
 }

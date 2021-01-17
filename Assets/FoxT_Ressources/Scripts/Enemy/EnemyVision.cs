@@ -14,8 +14,8 @@ public class EnemyVision : MonoBehaviour
 		if (collision.gameObject.layer == 8) pcDetected = true;
 	}
 
-	private void OnTriggerExit2D(Collider2D collision)
+	/*private void OnTriggerExit2D(Collider2D collision)
 	{
 		if (collision.gameObject.layer == 8) pcDetected = false;
-	}
+	}*/
 }

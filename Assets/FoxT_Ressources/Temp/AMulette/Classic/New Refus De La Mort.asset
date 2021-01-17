@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2430d0d165f2aab4f8df5bebc3948ee4, type: 3}
   m_Name: New Refus De La Mort
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: f95574013b2f83740a1bef9aace8e798, type: 3}
   tauxSurCent: 10
   level:
   - pourcentOfMaxHP: 0

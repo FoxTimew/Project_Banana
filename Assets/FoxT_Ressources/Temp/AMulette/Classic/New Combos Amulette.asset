@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd40011f4b9e78d4e956eed84e75f704, type: 3}
   m_Name: New Combos Amulette
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: a640f1318edd1904ca4d0d41cace1f5e, type: 3}
   tauxSurCent: 10
   level:
   - value: 0

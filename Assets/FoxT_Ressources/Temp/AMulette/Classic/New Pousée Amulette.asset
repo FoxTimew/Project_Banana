@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166dc07431ce1ff4a8189c0572dfbed0, type: 3}
   m_Name: "New Pous\xE9e Amulette"
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: c0ab346765b227247bd5a6c66ad4b917, type: 3}
   tauxSurCent: 10
   level:
   - value: 0

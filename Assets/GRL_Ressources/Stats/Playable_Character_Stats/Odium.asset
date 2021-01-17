@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 100
   resitance: 0
-  force: 1
+  force: 0
   pousseeForce: 0
