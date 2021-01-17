@@ -2098,7 +2098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76373683a620fc342bc9292810c9f8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: ca1e6c1efdaf8304e936af21186e32c6, type: 2}
   health: 0
   sprite: {fileID: 21300000, guid: b5f6202f0f50e824b90529667b0f8cd3, type: 3}
   attack: 0
@@ -3039,7 +3039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76373683a620fc342bc9292810c9f8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: 2acf8b64a0721a6409d4b1950e7428c6, type: 2}
   health: 0
   sprite: {fileID: 21300000, guid: 539eb648027a1844589f9f43010ab570, type: 3}
   attack: 0
@@ -3316,7 +3316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76373683a620fc342bc9292810c9f8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: d81e03f16bf0f8f4e95db6df5ea1dc30, type: 2}
   health: 0
   sprite: {fileID: 0}
   attack: 0
@@ -6676,7 +6676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76373683a620fc342bc9292810c9f8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: fadcd81fe3b74384e9a70b492e69b997, type: 2}
   health: 0
   sprite: {fileID: 21300000, guid: 0a0f6be008710c04e82485a5e38ce685, type: 3}
   attack: 0
@@ -10754,7 +10754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76373683a620fc342bc9292810c9f8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: a9b8288ca4997bc42975bad1efe9c3dd, type: 2}
   health: 0
   sprite: {fileID: 21300000, guid: a8d50752f47ff1742ae63f7c835bdb01, type: 3}
   attack: 0
@@ -16265,7 +16265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76373683a620fc342bc9292810c9f8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: 9cc069c28bf56564aae82d0d74c42c94, type: 2}
   health: 0
   sprite: {fileID: 21300000, guid: 5316026349102ce4d87adffab2de524b, type: 3}
   attack: 0
