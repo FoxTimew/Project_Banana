@@ -62,6 +62,10 @@ public class EnemySys : MonoBehaviour
 
     public bool dying, isEjected;
 
+    Controler controler;
+
+    bool playerisPoussing {get { return controler.isEjected; } }
+
     [SerializeField]
     bool isArmorGuardian, isSpawner, isKamikaze, spawnDone, dyingdone;
 
@@ -78,6 +82,7 @@ public class EnemySys : MonoBehaviour
 	private void OnEnable()
 	{
         pcTransform = GameObject.Find("Playable_Character").transform;
+        controler = pcTransform.GetComponent<Controler>();
 	}
 
 	void Start()
@@ -118,7 +123,7 @@ public class EnemySys : MonoBehaviour
                 PCFocus();
                 if (currentDistance <= closedDistance) closed = true;
                 if (currentDistance >= unclosedDistance) closed = false;
-                if (closed || isSpawner)
+                if ((closed || isSpawner) && !playerisPoussing)
                 {
                     AttackTest();
                     if (lastDirectionState == runLeft || lastDirectionState == idleLeft) ChangeAnimationState(idleLeft);
@@ -210,6 +215,7 @@ public class EnemySys : MonoBehaviour
 
     void CoupDroit()
     {
+        Debug.Log("test");
         if (isKamikaze)
         {
             StartCoroutine(Explosion());
@@ -268,12 +274,14 @@ public class EnemySys : MonoBehaviour
 
     void AttackTest()
     {
+        if (dying) return;
         if (isAttacking) return;
         AttackStart();
     }
 
     void AttackStart()
     {
+        Debug.Log(closed);
         isAttacking = true;
         StartCoroutine(AttackUpdate(attackDelay));
     }

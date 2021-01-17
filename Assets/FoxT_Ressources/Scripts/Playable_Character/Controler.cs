@@ -8,13 +8,15 @@ public class Controler : MonoBehaviour
 
     float dashingTimeElapsed;
 
-    public bool isDashing, isAttacking, isEjected, isTouched, isDie, refusDeLaMort, refusDeLaMortCheck, waitForDying, isInteracting;
+    public bool isDashing, isAttacking, isEjected, isTouched, isDie, refusDeLaMort, refusDeLaMortCheck, waitForDying, isInteracting, isSpecialing;
 
     public AnimationCurve dashCurve = AnimationCurve.Constant(0f, 0.25f, 1f);
 
     Vector2 moveInput;
 
-    Vector3 movement, currentDirection, dashCharmObject;
+    Vector3 movement, dashCharmObject;
+
+    public Vector3 currentDirection;
 
     Rigidbody2D pcRB;
 
@@ -92,6 +94,9 @@ public class Controler : MonoBehaviour
 
         if (Input.GetButtonDown("Interaction")) isInteracting = true;
         else isInteracting = false;
+
+        if (Input.GetButtonDown("Special")) isSpecialing = true;
+        else if(Input.GetButtonUp("Special")) isSpecialing = false;
 
     }
 
