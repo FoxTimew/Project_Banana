@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: 2
   sprite: {fileID: 21300000, guid: 43d38bc3f8a850e43a9eacc04cb8e42f, type: 3}
-  hp: 1
-  attack: 25
-  range: 3
+  hp: 75
+  attack: 30
+  range: 2.5
   poussee:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.0057361377
-      value: 100000
+      time: 0
+      value: 35000
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -30,8 +30,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.0016315
-      value: 7500
+      time: 0.75
+      value: 0
       inSlope: 0.076017335
       outSlope: 0.076017335
       tangentMode: 0
@@ -41,11 +41,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  resistance: 2
+  resistance: 0
   hpArmor: 0
   stunReduction:
-  - 0
-  - 1
   - 1
   vitesseDisplacement: 150
-  vitesseAttack: 5
+  vitesseAttack: 7

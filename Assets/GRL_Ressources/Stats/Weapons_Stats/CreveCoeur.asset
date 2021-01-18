@@ -58,9 +58,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   stunTime:
+  - 0.25
+  - 0.25
   - 2
-  - 3
-  - 5
   damageSpecial: 0
   pousseeSpecial:
     serializedVersion: 2

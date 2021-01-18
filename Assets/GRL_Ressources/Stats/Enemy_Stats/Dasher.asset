@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: 1
   sprite: {fileID: 0}
-  hp: 1
-  attack: 1
-  range: 1
+  hp: 5
+  attack: 10
+  range: 4
   poussee:
     serializedVersion: 2
     m_Curve:
@@ -44,6 +44,6 @@ MonoBehaviour:
   resistance: 0
   hpArmor: 0
   stunReduction:
-  - 1
-  vitesseDisplacement: 250
-  vitesseAttack: 1
+  - 0
+  vitesseDisplacement: 350
+  vitesseAttack: 3
