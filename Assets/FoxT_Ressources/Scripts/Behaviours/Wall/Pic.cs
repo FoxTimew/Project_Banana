@@ -33,7 +33,7 @@ public class Pic : MonoBehaviour
 		{
 			int charmDamage = 0;
 			if (core.luckyCharm) charmDamage = Mathf.RoundToInt(charmDamageBackup);
-			if (obj.gameObject.tag == "Player") obj.GetComponent<Health>().TakeDamage(Mathf.RoundToInt(damage));
+			if (obj.gameObject.tag == "Player") obj.GetComponent<Health>().TakeDamage(Mathf.RoundToInt(damage), null);
 			else obj.GetComponent<EnemySys>().TakeDamage(Mathf.RoundToInt(damage) + Mathf.RoundToInt(damage * charmDamage), 0f);
 			StartCoroutine(AttackStupideThing(time, obj));
 		}

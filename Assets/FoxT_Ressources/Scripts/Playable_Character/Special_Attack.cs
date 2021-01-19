@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Special_Attack : MonoBehaviour
 {
+    public float animationDelay;
     Controler control;
 
     Vector2 direction;
@@ -50,9 +51,10 @@ public class Special_Attack : MonoBehaviour
             Time.timeScale = 1;
             isSlowMotion = false;
             Time.fixedDeltaTime = deltaTimeBackup;
-            EjectingOn();
-            enemy = null;
-            control.isSpecialing = false;
+            StartCoroutine(AnimationDelay(enemy.tag));
+            //EjectingOn();
+            /*enemy = null;
+            control.isSpecialing = false;*/
             ResetFleche();
         }
         if (isSlowMotion)
@@ -130,14 +132,26 @@ public class Special_Attack : MonoBehaviour
         }
     }
 
-    void EjectingOn()
+    IEnumerator AnimationDelay(string tag)
     {
-        enemy.GetComponent<Ejecting>().direction = direction;
+        yield return new WaitForSeconds(animationDelay);
+        EjectingOn(tag);
+        enemy = null;
+        control.isSpecialing = false;
+    }
+
+    void EjectingOn(string tag)
+    {
+        if (tag == "Enemy")
+        {
+            enemy.GetComponent<Ejecting>().direction = direction;
         enemy.GetComponent<Ejecting>().pousseForce = this.GetComponent<Attack>().pousseeSpecial;
         enemy.GetComponent<Ejecting>().bonusForce = this.GetComponent<Attack>().forceBonus;
         enemy.GetComponent<Ejecting>().forcePoussee = this.GetComponent<Attack>().pousseeForce;
         enemy.GetComponent<Ejecting>().mauditBonusPoussee = this.GetComponent<Attack>().mCharmPousseeValue / 100;
         enemy.GetComponent<Ejecting>().timeElapsed = 0f;
         enemy.GetComponent<Ejecting>().enabled = true;
+        }
+        else enemy.GetComponent<Barril_Sys>().EjectingStart(this.GetComponent<Attack>().pousseeSpecial, direction);
     }
 }

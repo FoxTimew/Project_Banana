@@ -190,6 +190,7 @@ public class EnemySys : MonoBehaviour
             if (lastDirectionState == runLeft || lastDirectionState == idleLeft) ChangeAnimationState(deathLeft);
             else ChangeAnimationState(deathRight);
         }
+        GetComponent<BoxCollider2D>().enabled = false;
         dying = true;
         displacement.enabled = false;
         this.GetComponent<Ejecting>().enabled = false;
@@ -215,7 +216,6 @@ public class EnemySys : MonoBehaviour
 
     void CoupDroit()
     {
-        Debug.Log("test");
         if (isKamikaze)
         {
             StartCoroutine(Explosion());
@@ -227,7 +227,7 @@ public class EnemySys : MonoBehaviour
             if (pc == null) Debug.Log("Rien n'est detecte.");
             foreach (Collider2D pcTouche in pc)
             {
-                pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus));
+                pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus), this.GetComponent<BoxCollider2D>());
             }
         }
         else
@@ -281,7 +281,6 @@ public class EnemySys : MonoBehaviour
 
     void AttackStart()
     {
-        Debug.Log(closed);
         isAttacking = true;
         StartCoroutine(AttackUpdate(attackDelay));
     }
@@ -328,7 +327,7 @@ public class EnemySys : MonoBehaviour
         if (pc == null) Debug.Log("Rien n'est detecte.");
         foreach (Collider2D pcTouche in pc)
         {
-            if (pcTouche.gameObject.tag == "Player") pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus));
+            if (pcTouche.gameObject.tag == "Player") pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus), this.GetComponent<BoxCollider2D>());
             else pcTouche.GetComponent<EnemySys>().TakeDamage(attack + Mathf.RoundToInt(dammageBonus), 2f);
         }
         Destroy(this.gameObject);

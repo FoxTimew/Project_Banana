@@ -15,9 +15,9 @@ public class WallReboundN : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<Controler>().isEjected)
             {
-                if(collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(1, 1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(-1, 1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == Vector2.up)
+                if (collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(1, 1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(-1, 1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == Vector2.up)
                 {
-                    DirectionAtribution(collision, true);
+                    DirectionAtribution(collision, 1);
                 }
             }
         }
@@ -27,15 +27,25 @@ public class WallReboundN : MonoBehaviour
             {
                 if (collision.gameObject.GetComponent<Ejecting>().direction == new Vector2(1, 1).normalized || collision.gameObject.GetComponent<Ejecting>().direction == new Vector2(-1, 1).normalized || collision.gameObject.GetComponent<Ejecting>().direction == Vector2.up)
                 {
-                    DirectionAtribution(collision, false);
+                    DirectionAtribution(collision, 2);
+                }
+            }
+        }
+        else if (collision.tag == "Barril")
+        {
+            if (collision.GetComponentInParent<Barril_Sys>().isEjected)
+            {
+                if (collision.GetComponentInParent<Barril_Sys>().direction == new Vector2(1, 1).normalized || collision.gameObject.GetComponentInParent<Barril_Sys>().direction == new Vector2(-1, 1).normalized || collision.gameObject.GetComponentInParent<Barril_Sys>().direction == Vector2.up)
+                {
+                    DirectionAtribution(collision, 3);
                 }
             }
         }
     }
 
-    void DirectionAtribution(Collider2D col, bool player)
+    void DirectionAtribution(Collider2D col, int player)
     {
-        if (player)
+        if (player == 1)
         {
             if (col.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(1, 1).normalized)
             {
@@ -50,7 +60,7 @@ public class WallReboundN : MonoBehaviour
                 col.gameObject.GetComponent<Controler>().pousseeDirection = Vector2.down;
             }
         }
-        else
+        else if (player == 2)
         {
             if (col.gameObject.GetComponent<Ejecting>().direction == new Vector2(1, 1).normalized)
             {
@@ -63,6 +73,21 @@ public class WallReboundN : MonoBehaviour
             else
             {
                 col.gameObject.GetComponent<Ejecting>().direction = Vector2.down;
+            }
+        }
+        else
+        {
+            if (col.gameObject.GetComponentInParent<Barril_Sys>().direction == new Vector2(1, 1).normalized)
+            {
+                col.gameObject.GetComponentInParent<Barril_Sys>().direction = new Vector2(1, -1).normalized;
+            }
+            else if (col.gameObject.GetComponentInParent<Barril_Sys>().direction == new Vector2(-1, 1).normalized)
+            {
+                col.gameObject.GetComponentInParent<Barril_Sys>().direction = new Vector2(-1, -1).normalized;
+            }
+            else
+            {
+                col.gameObject.GetComponentInParent<Barril_Sys>().direction = Vector2.down;
             }
         }
     }

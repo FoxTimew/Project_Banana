@@ -17,9 +17,13 @@ public class Health : MonoBehaviour
 
     public int resistance;
 
+    Controler controler;
+    bool isParrying {get{ return controler.isParrying; } }
+
 	private void Awake()
 	{
         UI_Life = GameObject.Find("Main Camera").GetComponentInChildren<InventoryManager>();
+        controler = GetComponent<Controler>();
 	}
 
 	void Start()
@@ -34,8 +38,20 @@ public class Health : MonoBehaviour
         attack.pousseeForce = stats.pousseeForce;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Collider2D col)
     {
+        if (isParrying)
+        {
+            if (damage > 0)
+            {
+                if(col.tag == "Enemy") col.GetComponent<EnemySys>().TakeDamage(1, 0f);
+                else if (col.tag == "BossHand" && (col.gameObject.name == "Main_1" || col.gameObject.name == "Main_0")) col.gameObject.GetComponent<PoinAttaque>().TakeDammage(attack.force);
+                else if (col.tag == "BossHand" && (col.gameObject.name == "Main_2" || col.gameObject.name == "Main_3")) col.gameObject.GetComponent<SlapAttaque>().TakeDammage(attack.force);
+                controler.ejectionCancel = true;
+                StartCoroutine(controler.RepostAnimationDelay());
+            }
+            return;
+        }
         int tempResistance = resistance;
         if (mLootCharm)
         {

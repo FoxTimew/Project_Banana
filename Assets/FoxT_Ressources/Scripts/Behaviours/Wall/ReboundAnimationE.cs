@@ -35,6 +35,16 @@ public class ReboundAnimationE : MonoBehaviour
                 }
             }
         }
+        else if (collision.tag == "Barril")
+        {
+            if (collision.GetComponentInParent<Barril_Sys>().isEjected)
+            {
+                if (collision.GetComponentInParent<Barril_Sys>().direction == new Vector2(1, 1).normalized || collision.gameObject.GetComponentInParent<Barril_Sys>().direction == new Vector2(1, -1).normalized || collision.gameObject.GetComponentInParent<Barril_Sys>().direction == Vector2.right)
+                {
+                    obj.Add(collision);
+                }
+            }
+        }
 
         //-----------------------------------
         //Jouer animation

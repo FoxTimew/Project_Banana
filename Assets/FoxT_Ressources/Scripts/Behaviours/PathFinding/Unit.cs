@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour
 	public float turnSpeed = 3;
 	public float turnDst = 5;
 	public float stoppindDst = 10;
+	public bool hand;
 	/*Vector2[] path;
 	int targetIndex;*/
 	Path path;
@@ -92,7 +93,8 @@ public class Unit : MonoBehaviour
 				targetRotation = new Quaternion(0f, 0f, -targetRotation.y, targetRotation.w);
 				transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
 				transform.Translate(Vector2.up, Space.Self);
-				sys.VectorDirector = (transform.localPosition * 10);
+				if (!hand) sys.VectorDirector = (transform.localPosition * 10);
+				else this.GetComponentInParent<SlapAttaque>().direction = (transform.localPosition * 10);
 				transform.localPosition = Vector3.zero;
 			}
 			/*if (new Vector2 (transform.position.x, transform.position.y) == currentWaypoint)

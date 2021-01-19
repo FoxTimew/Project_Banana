@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Controler : MonoBehaviour
 {
-    public float vitesse = 1f;
+    public float vitesse = 1f, dureeAnimationPousseeSpe, repostAnimationDelay;
 
     float dashingTimeElapsed;
 
-    public bool isDashing, isAttacking, isEjected, isTouched, isDie, refusDeLaMort, refusDeLaMortCheck, waitForDying, isInteracting, isSpecialing;
+    public bool isDashing, isAttacking, isEjected, isTouched, isDie, refusDeLaMort, refusDeLaMortCheck, waitForDying, isInteracting, isSpecialing, SpecialOn, isParrying, ejectionCancel, isReposting;
 
     public AnimationCurve dashCurve = AnimationCurve.Constant(0f, 0.25f, 1f);
 
@@ -42,6 +42,9 @@ public class Controler : MonoBehaviour
 
     public Vector2 direction;
 
+    public int combos {get { return attack.combos; } }
+    public bool attackBlocked {get { return attack.attackBlocked; } }
+
     void Start()
     {
         pcRB = this.GetComponent<Rigidbody2D>();
@@ -49,7 +52,7 @@ public class Controler : MonoBehaviour
 
     void Update()
     {
-        InputHandler();
+        if (!isEjected) InputHandler();
     }
 
     private void FixedUpdate()
@@ -77,26 +80,46 @@ public class Controler : MonoBehaviour
             AttackPointPosition();
             DashUpdate();
             AttackUpdate();
+            ParryUpdate();
             Move();
         }
         else Ejecting();
     }
 
-    void InputHandler()
+	private void LateUpdate()
+	{
+        ejectionCancel = false;
+	}
+
+	void InputHandler()
     {
         moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         movement = Vector3.Normalize(moveInput) * vitesse;
 
-        if (Input.GetButtonDown("Dash")) DashTest();
+        if (Input.GetButtonDown("Dash") && !isAttacking && !SpecialOn) DashTest();
 
-        if (Input.GetButtonDown("Attack")) AttackTest();
+        if (Input.GetButtonDown("Attack") && !SpecialOn) AttackTest();
 
-        if (Input.GetButtonDown("Interaction")) isInteracting = true;
+        if (Input.GetButtonDown("Interaction") && !isAttacking && !SpecialOn && !isDashing) isInteracting = true;
         else isInteracting = false;
 
-        if (Input.GetButtonDown("Special")) isSpecialing = true;
-        else if(Input.GetButtonUp("Special")) isSpecialing = false;
+        if (Input.GetButtonDown("Special") && !isAttacking && !SpecialOn) isSpecialing = true;
+        else if (Input.GetButtonUp("Special") && !SpecialOn)
+        {
+            isSpecialing = false;
+            StartCoroutine(pousseeAnimationDelay());
+        }
+
+        if (Input.GetButtonDown("Parade") && !isAttacking && !SpecialOn && !isDashing)
+        {
+            Debug.Log("lancerTest");
+            ParryTest();
+        }
+        else if (Input.GetButtonUp("Parade") && !isReposting)
+        {
+            isParrying = false;
+        }
 
     }
 
@@ -138,6 +161,7 @@ public class Controler : MonoBehaviour
     {
         if (isAttacking) return;
         AttackStart();
+        
     }
 
     void AttackStart()
@@ -153,7 +177,7 @@ public class Controler : MonoBehaviour
     void Move()
     {
         if (movement != new Vector3(0f, 0f, 0f)) currentDirection = Vector3.Normalize(movement * 10);
-        if (!isTouched && !isEjected) pcRB.velocity = movement * Time.fixedDeltaTime;
+        if (!isTouched && !isEjected && !isParrying) pcRB.velocity = movement * Time.fixedDeltaTime;
 
         //---------------------------------------
         //Modifier Animation
@@ -179,27 +203,27 @@ public class Controler : MonoBehaviour
                 ChangeAnimationState(animName[13]);
             }
         }
-        else if ((playerDirection.x > 0 && playerDirection.y <= 0.71f && playerDirection.y >= -0.71f))
+        else if ((playerDirection.x > 0 && playerDirection.y <= 0.71f && playerDirection.y >= -0.71f) && !attackBlocked && !SpecialOn &&!isEjected && !isParrying)
         {
             if (isDashing) ChangeAnimationState(animName[15]);
             else ChangeAnimationState(animName[1]);
         }
-        else if ((playerDirection.x < 0 && playerDirection.y <= 0.71f && playerDirection.y >= -0.71f))
+        else if ((playerDirection.x < 0 && playerDirection.y <= 0.71f && playerDirection.y >= -0.71f) && !attackBlocked == !SpecialOn && !isEjected && !isParrying)
         {
             if (isDashing) ChangeAnimationState(animName[17]);
             else ChangeAnimationState(animName[3]);
         }
-        else if ((playerDirection.y > 0 && playerDirection.x <= 0.71f && playerDirection.x >= -0.7f))
+        else if ((playerDirection.y > 0 && playerDirection.x <= 0.71f && playerDirection.x >= -0.7f) && !attackBlocked && !SpecialOn && !isEjected && !isParrying)
         {
             if (isDashing) ChangeAnimationState(animName[14]);
             else ChangeAnimationState(animName[0]);
         }
-        else if ((playerDirection.y < 0 && playerDirection.x <= 0.71f && playerDirection.x >= -0.71f))
+        else if ((playerDirection.y < 0 && playerDirection.x <= 0.71f && playerDirection.x >= -0.71f) && !attackBlocked && !SpecialOn && !isEjected && !isParrying)
         {
             if (isDashing) ChangeAnimationState(animName[16]);
             else ChangeAnimationState(animName[2]);
         }
-        else if (playerDirection == Vector2.zero)
+        else if (playerDirection == Vector2.zero && !attackBlocked && !SpecialOn && !isEjected && !isParrying)
         {
             if (lastDirectionState == animName[0])
             {
@@ -218,11 +242,68 @@ public class Controler : MonoBehaviour
                 ChangeAnimationState(animName[7]);
             }
         }
+        else if (attackBlocked && !SpecialOn && !isEjected && !isParrying)
+        {
+
+            pcRB.velocity = Vector2.zero;
+            if (lastDirectionState == animName[0])
+            {
+                // animationUP
+                if (combos == 0) ChangeAnimationState(animName[29]);
+                else if (combos == 1) ChangeAnimationState(animName[27]);
+                else if (combos == 2) ChangeAnimationState(animName[28]);
+            }
+            else if (lastDirectionState == animName[1])
+            {
+                // animationRight
+                if (combos == 0) ChangeAnimationState(animName[24]);
+                else if (combos == 1) ChangeAnimationState(animName[22]);
+                else if (combos == 2) ChangeAnimationState(animName[23]);
+            }
+            else if (lastDirectionState == animName[2])
+            {
+                // animationDown
+                if (combos == 0) ChangeAnimationState(animName[32]);
+                else if (combos == 1) ChangeAnimationState(animName[30]);
+                else if (combos == 2) ChangeAnimationState(animName[31]);
+            }
+            else if (lastDirectionState == animName[3])
+            {
+                // animationLeft
+                if (combos == 0) ChangeAnimationState(animName[21]);
+                else if (combos == 1) ChangeAnimationState(animName[19]);
+                else if (combos == 2) ChangeAnimationState(animName[20]);
+            }
+        }
+        else if (SpecialOn && !isEjected && !isParrying)
+        {
+            pcRB.velocity = Vector2.zero;
+            if (lastDirectionState == animName[0])
+            {
+                // animationUP
+                ChangeAnimationState(animName[33]);
+            }
+            else if (lastDirectionState == animName[1])
+            {
+                // animationRight
+                ChangeAnimationState(animName[26]);
+            }
+            else if (lastDirectionState == animName[2])
+            {
+                // animationDown
+                ChangeAnimationState(animName[34]);
+            }
+            else if (lastDirectionState == animName[3])
+            {
+                // animationLeft
+                ChangeAnimationState(animName[25]);
+            }
+        }
     }
 
     public void Ejecting()
     {
-        if (isDie) return;
+        if (isDie || ejectionCancel) return;
         if (knockBackForce.keys.Length == 0) return;
         isEjected = true;
         PousseeEnnemi();
@@ -234,6 +315,28 @@ public class Controler : MonoBehaviour
         {
             isEjected = false;
             knockBackTimeElapsed = 0f;
+        }
+
+        //Animation
+        if (pousseeDirection == Vector2.up || pousseeDirection == new Vector2(1, 1).normalized)
+        {
+            // animationUP
+            ChangeAnimationState(animName[35]);
+        }
+        else if (pousseeDirection == Vector2.left || pousseeDirection == new Vector2(1, -1).normalized)
+        {
+            // animationRight
+            ChangeAnimationState(animName[36]);
+        }
+        else if (pousseeDirection == Vector2.down || pousseeDirection == new Vector2(-1, -1).normalized)
+        {
+            // animationDown
+            ChangeAnimationState(animName[37]);
+        }
+        else if (pousseeDirection == Vector2.right || pousseeDirection == new Vector2(-1, 1).normalized)
+        {
+            // animationLeft
+            ChangeAnimationState(animName[38]);
         }
     }
 
@@ -307,5 +410,80 @@ public class Controler : MonoBehaviour
     float CalculArcTangante(Vector2 position)
     {
         return Mathf.Atan2(position.x, position.y) * Mathf.Rad2Deg;
+    }
+
+    IEnumerator pousseeAnimationDelay()
+    {
+        SpecialOn = true;
+        yield return new WaitForSeconds(dureeAnimationPousseeSpe);
+        SpecialOn = false;
+    }
+
+    void ParryTest()
+    {
+        if (isParrying) return;
+        ParryStart();
+    }
+
+    void ParryStart()
+    {
+        isParrying = true;
+    }
+
+    void ParryUpdate()
+    {
+        if (!isReposting && isParrying)
+        {
+        Debug.Log("parade");
+            pcRB.velocity = Vector2.zero;
+            if (lastDirectionState == animName[0])
+            {
+                // animationUP
+                ChangeAnimationState(animName[39]);
+            }
+            else if (lastDirectionState == animName[1])
+            {
+                // animationRight
+                ChangeAnimationState(animName[40]);
+            }
+            else if (lastDirectionState == animName[2])
+            {
+                // animationDown
+                ChangeAnimationState(animName[41]);
+            }
+            else if (lastDirectionState == animName[3])
+            {
+                // animationLeft
+                ChangeAnimationState(animName[42]);
+            }
+        }
+    }
+
+    public IEnumerator RepostAnimationDelay()
+    {
+        if (lastDirectionState == animName[0])
+        {
+            // animationUP
+            ChangeAnimationState(animName[43]);
+        }
+        else if (lastDirectionState == animName[1])
+        {
+            // animationRight
+            ChangeAnimationState(animName[44]);
+        }
+        else if (lastDirectionState == animName[2])
+        {
+            // animationDown
+            ChangeAnimationState(animName[45]);
+        }
+        else if (lastDirectionState == animName[3])
+        {
+            // animationLeft
+            ChangeAnimationState(animName[46]);
+        }
+        isReposting = true;
+        yield return new WaitForSeconds(repostAnimationDelay);
+        isReposting = false;
+        isParrying = Input.GetButton("Parade");
     }
 }

@@ -8,6 +8,9 @@ public class EnemyRoomDetector : MonoBehaviour
 	Core core;
 	bool playerIn;
 
+	[SerializeField]
+	List<GameObject> teleporteur = new List<GameObject>();
+
 	List<Collider2D> enemyInRoom = new List<Collider2D>();
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
@@ -42,6 +45,10 @@ public class EnemyRoomDetector : MonoBehaviour
 
 	void UnlockDoor()
 	{
-		Debug.Log("porte débloqué");
+		foreach (GameObject obj in teleporteur)
+		{
+			obj.GetComponent<Teleporteur>().isActive = true;
+			obj.GetComponent<Teleporteur>().StartAnimation();
+		}
 	}
 }

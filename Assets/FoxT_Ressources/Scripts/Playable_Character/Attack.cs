@@ -40,7 +40,14 @@ public class Attack : MonoBehaviour
 
     Health heal;
 
-    private bool attackBlocked;
+    public bool attackBlocked, ghostAttack;
+
+    public float dureeGhostAttack;
+
+    Coroutine ghostAttackCoroutine;
+
+    [SerializeField]
+    float animationDelay;
 
     private void Start()
     {
@@ -74,17 +81,53 @@ public class Attack : MonoBehaviour
         dammageBonus = new float[6];
     }
 
-    public void AttackSysteme()
+	private void Update()
+	{
+        if (ghostAttack) AttackSysteme();
+	}
+
+	public void AttackSysteme()
     {
-        if (attackBlocked) return;
+        if (attackBlocked && controler.isAttacking)
+        {
+            GhostAttack();
+            return;
+        }
+        else if (attackBlocked) return;
+        ghostAttack = false;
+        if (ghostAttackCoroutine != null) StopCoroutine(ghostAttackCoroutine);
         Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.position, range, enemyLayer);
         if (enemy == null) return;
         foreach (Collider2D enemyTouche in enemy)
         {
             int finalDamage = (damageCombos[combos] + force) + Mathf.RoundToInt((damageCombos[combos] + force) * dammageBonus[0]) + Mathf.RoundToInt((damageCombos[combos] + force) * dammageBonus[0]) * Mathf.RoundToInt(berzerkValue);
-            enemyTouche.gameObject.GetComponent<EnemySys>().TakeDamage(finalDamage, stunTime[combos]);
-            PousseeEnnemi(pousseeCombos[combos], enemyTouche.gameObject, attackPoint);
-            if (combosCharmEnable) if (combos == damageCombos.Count - 1) enemyTouche.gameObject.GetComponent<EnemySys>().TakeDamage(Mathf.RoundToInt(charmCombos), 0f);
+            if (enemyTouche.tag == "Enemy")
+            {
+                enemyTouche.gameObject.GetComponent<EnemySys>().TakeDamage(finalDamage, stunTime[combos]);
+                PousseeEnnemi(pousseeCombos[combos], enemyTouche.gameObject, attackPoint);
+            }
+            else if (enemyTouche.tag == "BossHand" && (enemyTouche.gameObject.name == "Main_1" || enemyTouche.gameObject.name == "Main_0"))
+            {
+                enemyTouche.gameObject.GetComponent<PoinAttaque>().TakeDammage(finalDamage);
+            }
+            else if (enemyTouche.tag == "BossHand" && (enemyTouche.gameObject.name == "Main_2" || enemyTouche.gameObject.name == "Main_3"))
+            {
+                enemyTouche.gameObject.GetComponent<SlapAttaque>().TakeDammage(finalDamage);
+            }
+            else if (enemyTouche.tag == "Barril" && pousseeCombos[combos].length != 0)
+            {
+                Debug.Log("action");
+                enemyTouche.GetComponent<Barril_Sys>().EjectingStart(pousseeCombos[combos], attackPoint.localPosition);
+            }
+            if (combosCharmEnable)
+            {
+                if (combos == damageCombos.Count - 1)
+                {
+                    if (enemyTouche.tag == "Enemy") enemyTouche.gameObject.GetComponent<EnemySys>().TakeDamage(Mathf.RoundToInt(charmCombos), 0f);
+                    if (enemyTouche.tag == "BossHand" && (enemyTouche.gameObject.name == "Main_1_Ombre" || enemyTouche.gameObject.name == "Main_0_Ombre")) enemyTouche.gameObject.GetComponent<PoinAttaque>().TakeDammage(Mathf.RoundToInt(charmCombos));
+                    if (enemyTouche.tag == "BossHand" && (enemyTouche.gameObject.name == "Main_2_Ombre" || enemyTouche.gameObject.name == "Main_3_Ombre")) enemyTouche.gameObject.GetComponent<SlapAttaque>().TakeDammage(Mathf.RoundToInt(charmCombos));
+                }
+            }
             if (volDeVieCharm)
             {
                 heal.Heal(finalDamage * (volDeVieValue / 100), false);
@@ -142,13 +185,7 @@ public class Attack : MonoBehaviour
         {
             direction = new Vector2(-1f, 1f).normalized;
         }
-        enemy.GetComponent<Ejecting>().direction = direction;
-        enemy.GetComponent<Ejecting>().pousseForce = force;
-        enemy.GetComponent<Ejecting>().bonusForce = forceBonus;
-        enemy.GetComponent<Ejecting>().forcePoussee = pousseeForce;
-        enemy.GetComponent<Ejecting>().mauditBonusPoussee = mCharmPousseeValue / 100;
-        enemy.GetComponent<Ejecting>().timeElapsed = 0f;
-        enemy.GetComponent<Ejecting>().enabled = true;
+        StartCoroutine(EjectingDelay(force, enemy, direction));
 
         //enemy.gameObject.GetComponent<Rigidbody2D>().velocity = direction * force.Evaluate();
     }
@@ -223,4 +260,29 @@ public class Attack : MonoBehaviour
 
         Gizmos.DrawWireSphere(attackPoint.position, range);
 	}
+
+    void GhostAttack()
+    {
+        ghostAttack = true;
+        if (ghostAttackCoroutine != null) StopCoroutine(ghostAttackCoroutine);
+        ghostAttackCoroutine = StartCoroutine(GhostAttackDelay());
+    }
+
+    IEnumerator GhostAttackDelay()
+    {
+        yield return new WaitForSeconds(dureeGhostAttack);
+        ghostAttack = false;
+    }
+
+    IEnumerator EjectingDelay(AnimationCurve force, GameObject enemy, Vector2 direction)
+    {
+        yield return new WaitForSeconds(animationDelay);
+        enemy.GetComponent<Ejecting>().direction = direction;
+        enemy.GetComponent<Ejecting>().pousseForce = force;
+        enemy.GetComponent<Ejecting>().bonusForce = forceBonus;
+        enemy.GetComponent<Ejecting>().forcePoussee = pousseeForce;
+        enemy.GetComponent<Ejecting>().mauditBonusPoussee = mCharmPousseeValue / 100;
+        enemy.GetComponent<Ejecting>().timeElapsed = 0f;
+        enemy.GetComponent<Ejecting>().enabled = true;
+    }
 }

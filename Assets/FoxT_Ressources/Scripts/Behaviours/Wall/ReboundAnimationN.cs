@@ -8,9 +8,6 @@ public class ReboundAnimationN : MonoBehaviour
     Animator anim;
     List<Collider2D> obj = new List<Collider2D>();
 
-    [SerializeField]
-    string shakeAnimationState;
-
     /*if(((collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(1, -1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(-1, -1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == Vector2.down) && wallPosition == "S") ||
                     ((collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(-1, 1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(-1, -1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == Vector2.left) && wallPosition == "W") ||
                     ((collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(1, 1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(1, -1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == Vector2.right) && wallPosition == "E") ||
@@ -33,6 +30,16 @@ public class ReboundAnimationN : MonoBehaviour
             if (collision.gameObject.GetComponent<Ejecting>().enabled == true)
             {
                 if (collision.gameObject.GetComponent<Ejecting>().direction == new Vector2(1, 1).normalized || collision.gameObject.GetComponent<Ejecting>().direction == new Vector2(-1, 1).normalized || collision.gameObject.GetComponent<Ejecting>().direction == Vector2.up)
+                {
+                    obj.Add(collision);
+                }
+            }
+        }
+        else if (collision.tag == "Barril")
+        {
+            if (collision.GetComponentInParent<Barril_Sys>().isEjected)
+            {
+                if (collision.GetComponentInParent<Barril_Sys>().direction == new Vector2(1, 1).normalized || collision.gameObject.GetComponentInParent<Barril_Sys>().direction == new Vector2(-1, 1).normalized || collision.gameObject.GetComponentInParent<Barril_Sys>().direction == Vector2.up)
                 {
                     obj.Add(collision);
                 }
@@ -85,11 +92,6 @@ public class ReboundAnimationN : MonoBehaviour
             anim.speed = 1;
         }
         else StartCoroutine(animationDelay());
-    }
-
-    void ChangeAnimationState(string newState)
-    { 
-    
     }
 }
 

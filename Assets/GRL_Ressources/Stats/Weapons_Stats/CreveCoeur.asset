@@ -87,6 +87,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   range: 1
-  vitesse: 0.5
+  vitesse: 0.6
   annulerCombosTemps: 1
   poids: 0

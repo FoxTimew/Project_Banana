@@ -145,7 +145,7 @@ public class _Dasher : MonoBehaviour
         if (pc == null) Debug.Log("Rien n'est detecte.");
         foreach (Collider2D pcTouche in pc)
         {
-            pcHealth.TakeDamage(attack);
+            //pcHealth.TakeDamage(attack);
         }
     }
 
