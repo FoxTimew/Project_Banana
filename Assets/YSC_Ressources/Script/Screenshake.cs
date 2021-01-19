@@ -44,7 +44,7 @@ public class Screenshake : MonoBehaviour
             transform.localPosition = initialPosition;
         }
 
-        //TestScreenshake();
+        TestScreenshake();
     }
 
     public void TriggerShake()
