@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d47608b7327ae6d40a13a1948849260a, type: 3}
   m_Name: New Resistance Amulette
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 92359b1b88cd916429f7d969f5a97bbf, type: 3}
   tauxSurCent: 10
   level:
   - pourcent: 0

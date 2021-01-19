@@ -46,7 +46,7 @@ public class EnemySys : MonoBehaviour
 
     public Rigidbody2D enemyRB;
 
-    public LayerMask pcLayer;
+    public LayerMask pcLayer, kamikazeLayer;
 
     private Coroutine stunCoroutine;
 
@@ -60,16 +60,32 @@ public class EnemySys : MonoBehaviour
 
     Animator anim;
 
-    public bool dying;
+    public bool dying, isEjected;
 
+    Controler controler;
+
+    bool playerisPoussing {get { return controler.isEjected; } }
+
+    [SerializeField]
+    bool isArmorGuardian, isSpawner, isKamikaze, spawnDone, dyingdone;
+
+    [SerializeField]
+    GameObject[] enemyToSpawn;
+    [SerializeField]
+    GameObject Spawner;
 
     //------------------------------------------
     //Anim 
     //------------------------------------------
     public string idleLeft, idleRight, runLeft, runRight, attackLeft, attackRight, deathLeft, deathRight;
 
+	private void OnEnable()
+	{
+        pcTransform = GameObject.Find("Playable_Character").transform;
+        controler = pcTransform.GetComponent<Controler>();
+	}
 
-    void Start()
+	void Start()
     {
         anim = GetComponent<Animator>();
         displacement = this.GetComponentInChildren<Unit>();
@@ -101,25 +117,41 @@ public class EnemySys : MonoBehaviour
         if (!dying)
         {
             if (stuned) return;
-            if (pcDeteced)
+            if (pcDeteced || isSpawner)
             {
                 displacement.enabled = true;
                 PCFocus();
                 if (currentDistance <= closedDistance) closed = true;
                 if (currentDistance >= unclosedDistance) closed = false;
-                if (closed) AttackTest();
-                //else 
+                if ((closed || isSpawner) && !playerisPoussing)
+                {
+                    AttackTest();
+                    if (lastDirectionState == runLeft || lastDirectionState == idleLeft) ChangeAnimationState(idleLeft);
+                    else ChangeAnimationState(idleRight);
+                }
             }
         }
     }
 
     private void FixedUpdate()
     {
-        if (!dying) MoveToPlayer();
+        if (!dying && !closed && !isEjected && !isSpawner)
+        {
+            MoveToPlayer();
+        }
         else enemyRB.velocity = Vector2.zero;
     }
 
-    public void TakeDamage(int damage, float stunTime)
+	private void LateUpdate()
+	{
+        if (spawnDone)
+        {
+            GameObject.Find("Core").GetComponent<Core>().updateEnemyVision = true;
+            spawnDone = false;
+        }
+	}
+
+	public void TakeDamage(int damage, float stunTime)
     {
         if (armor <= 0)
         {
@@ -138,7 +170,7 @@ public class EnemySys : MonoBehaviour
         else
         {
             if (stunCoroutine != null) StopCoroutine(stunCoroutine);
-            stunCoroutine = StartCoroutine(StunUpdate(stunTime));
+            stunCoroutine = StartCoroutine(StunUpdate(stunTime - stunReduction[0]));
         }
     }
 
@@ -170,6 +202,8 @@ public class EnemySys : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeDePop);
         Destroy(this.gameObject);
+        if (isArmorGuardian) this.GetComponent<GuardianInvok>().enabled = true;
+        dyingdone = true;
     }
 
     void PCFocus()
@@ -181,22 +215,44 @@ public class EnemySys : MonoBehaviour
 
     void CoupDroit()
     {
-        Collider2D[] pc = Physics2D.OverlapCircleAll(checkPoint.position, range, pcLayer);
-
-        if (pc == null) Debug.Log("Rien n'est detecte.");
-        foreach (Collider2D pcTouche in pc)
+        Debug.Log("test");
+        if (isKamikaze)
         {
-            pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus));
-            if (lastDirectionState == runLeft || lastDirectionState == idleLeft)
+            StartCoroutine(Explosion());
+            return;
+        }
+        if (!isSpawner)
+        {
+            Collider2D[] pc = Physics2D.OverlapCircleAll(checkPoint.position, range, pcLayer);
+            if (pc == null) Debug.Log("Rien n'est detecte.");
+            foreach (Collider2D pcTouche in pc)
             {
-                ChangeAnimationState(attackLeft);
-                currentState = idleLeft;
+                pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus));
             }
-            else
+        }
+        else
+        {
+            if (GameObject.Find("Core").GetComponent<Core>().EnemyPresent.Count <= 6)
             {
-                ChangeAnimationState(attackRight);
-                currentState = idleRight;
+                Object.Instantiate(enemyToSpawn[Random.Range(0, enemyToSpawn.Length)], Spawner.transform.position, transform.rotation);
+                spawnDone = true;
             }
+        }
+        if (lastDirectionState == runLeft || lastDirectionState == idleLeft)
+        {
+            ChangeAnimationState(attackLeft);
+            currentState = idleLeft;
+        }
+        else
+        {
+            ChangeAnimationState(attackRight);
+            currentState = idleRight;
+        }
+        if (poussee != null && pcHealth.health > 0)
+        {
+            pcHealth.GetComponent<Controler>().knockBackForce = poussee;
+            pcHealth.GetComponent<Controler>().pousseeDirection = VectorDirector;
+            pcHealth.GetComponent<Controler>().Ejecting();
         }
     }
 
@@ -218,12 +274,14 @@ public class EnemySys : MonoBehaviour
 
     void AttackTest()
     {
+        if (dying) return;
         if (isAttacking) return;
         AttackStart();
     }
 
     void AttackStart()
     {
+        Debug.Log(closed);
         isAttacking = true;
         StartCoroutine(AttackUpdate(attackDelay));
     }
@@ -258,5 +316,28 @@ public class EnemySys : MonoBehaviour
         stuned = true;
         yield return new WaitForSeconds(time);
         stuned = false;
+    }
+
+    IEnumerator Explosion()
+    {
+        //Anim chargement
+        yield return new WaitForSeconds(3f);
+        //AnimaExplosion
+
+        Collider2D[] pc = Physics2D.OverlapCircleAll(checkPoint.position, range, kamikazeLayer);
+        if (pc == null) Debug.Log("Rien n'est detecte.");
+        foreach (Collider2D pcTouche in pc)
+        {
+            if (pcTouche.gameObject.tag == "Player") pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus));
+            else pcTouche.GetComponent<EnemySys>().TakeDamage(attack + Mathf.RoundToInt(dammageBonus), 2f);
+        }
+        Destroy(this.gameObject);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+
+        Gizmos.DrawWireSphere(checkPoint.position, range);
     }
 }

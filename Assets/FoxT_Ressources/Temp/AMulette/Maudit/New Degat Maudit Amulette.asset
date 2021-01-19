@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5ed99e2723e6a044b23442c1ce1b810, type: 3}
   m_Name: New Degat Maudit Amulette
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: d4523c3087a211449a1e5f9da28522fa, type: 3}
   tauxSurCent: 25
   level:
   - valuePourcent: 0

@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: ea9b635c9be843d46891f5856b2de1b6
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Odium_resolution
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 8b1a401121f0e0b438da4f776b81b64f, type: 3}
+  - {fileID: 12800000, guid: a78eab42e296eea43bafc5a65316d054, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

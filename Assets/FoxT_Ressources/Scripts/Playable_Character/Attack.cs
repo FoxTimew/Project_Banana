@@ -16,7 +16,7 @@ public class Attack : MonoBehaviour
 
     public int damageSpecial;
 
-    public float pousseeSpecial;
+    public AnimationCurve pousseeSpecial;
 
     public float range;
 
@@ -81,7 +81,7 @@ public class Attack : MonoBehaviour
         if (enemy == null) return;
         foreach (Collider2D enemyTouche in enemy)
         {
-            int finalDamage = (damageCombos[combos] + force) + Mathf.RoundToInt((damageCombos[combos] + force) * dammageBonus[0]) + Mathf.RoundToInt((damageCombos[combos] + force) + Mathf.RoundToInt((damageCombos[combos] + force) * dammageBonus[0]) * berzerkValue);
+            int finalDamage = (damageCombos[combos] + force) + Mathf.RoundToInt((damageCombos[combos] + force) * dammageBonus[0]) + Mathf.RoundToInt((damageCombos[combos] + force) * dammageBonus[0]) * Mathf.RoundToInt(berzerkValue);
             enemyTouche.gameObject.GetComponent<EnemySys>().TakeDamage(finalDamage, stunTime[combos]);
             PousseeEnnemi(pousseeCombos[combos], enemyTouche.gameObject, attackPoint);
             if (combosCharmEnable) if (combos == damageCombos.Count - 1) enemyTouche.gameObject.GetComponent<EnemySys>().TakeDamage(Mathf.RoundToInt(charmCombos), 0f);
@@ -216,4 +216,11 @@ public class Attack : MonoBehaviour
             dammageBonus[i] = dammageBonus[0] * (i + 1);
         }
     }
+
+	private void OnDrawGizmos()
+	{
+        Gizmos.color = Color.green;
+
+        Gizmos.DrawWireSphere(attackPoint.position, range);
+	}
 }

@@ -13,12 +13,20 @@ public class Health : MonoBehaviour
     public int health;
     public Attack attack;
     Core core;
+    InventoryManager UI_Life;
 
     public int resistance;
-    void Start()
+
+	private void Awake()
+	{
+        UI_Life = GameObject.Find("Main Camera").GetComponentInChildren<InventoryManager>();
+	}
+
+	void Start()
     {
         maxHealth = stats.HP;
-        health = maxHealth; 
+        health = maxHealth;
+        UI_Life.HealthDisplay(health);
         resistance = stats.resitance;
         attack = this.GetComponent<Attack>();
         core = GameObject.Find("Core").GetComponent<Core>();
@@ -43,22 +51,24 @@ public class Health : MonoBehaviour
         if (tempResistance > damage) tempResistance = damage;
 
         health -= (damage - tempResistance);
-
+        this.GetComponent<Controler>().isTouched = true;
         BerzerkUpdate();
         //HUD update
 
         if (health <= 0)
         {
             //Tout bloquer
+            health = 0;
             if (!RefusDeLaMort) Die();
             else
             {
-                StartCoroutine(Rebirth(10));
-                //AnimationRefusDeLaMort
-
+                this.GetComponent<Controler>().refusDeLaMort = true;
+                this.GetComponent<Controler>().isDie = true;
+                //StartCoroutine(Rebirth(10)); 
             }
         }
         if (berzerkCharm) BerzerkUpdate();
+        UI_Life.HealthDisplay(health);
     }
 
     public void Heal(float value, bool pourcent)
@@ -67,6 +77,7 @@ public class Health : MonoBehaviour
         else health += Mathf.RoundToInt(value);
 
         if (health > maxHealth) health = maxHealth;
+        UI_Life.HealthDisplay(health);
     }
 
     public void BerzerkUpdate()
@@ -76,9 +87,7 @@ public class Health : MonoBehaviour
 
     void Die()
     {
-        //play animation
-        //changer de tableau
-        return;
+        this.GetComponent<Controler>().isDie = true;
     }
 
     IEnumerator Rebirth(float time)

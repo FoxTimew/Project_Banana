@@ -15,7 +15,7 @@ public class WeaponsInfos : ScriptableObject
 
 	public int damageSpecial;
 
-	public float pousseeSpecial;
+	public AnimationCurve pousseeSpecial;
 
 	public float range;
 

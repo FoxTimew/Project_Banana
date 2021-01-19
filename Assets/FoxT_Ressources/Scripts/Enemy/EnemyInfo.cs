@@ -10,5 +10,11 @@ public class EnemyInfo : MonoBehaviour
 public enum enemies
 { 
 	Guerrier,
-	Dasher
+	Dasher,
+	Golem,
+	Soufleur,
+	Kamikaze,
+	Armor_Guardian,
+	Guardian,
+	Spawner
 }

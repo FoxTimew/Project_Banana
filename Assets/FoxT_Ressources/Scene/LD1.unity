@@ -135,12 +135,12 @@ GameObject:
   - component: {fileID: 71687356}
   - component: {fileID: 71687359}
   m_Layer: 0
-  m_Name: Core
+  m_Name: Core__
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &71687356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +224,112 @@ MonoBehaviour:
   nombreDeDefiMin: 5
   nombreDeDefi: 2
   marge: 2
+  roomLayer:
+    serializedVersion: 2
+    m_Bits: 32768
+  refObj:
+  - {fileID: 3368452626328680430, guid: 1ca7ac2784c723a4da30e179a09f0f24, type: 3}
+  - {fileID: 3959917089536714577, guid: bd70d0adee045134f91d495cff992e1d, type: 3}
+--- !u!1001 &428592274
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8258843538585620014, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_Name
+      value: Core
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258843538585620017, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258843538585620017, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258843538585620017, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258843538585620017, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258843538585620017, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258843538585620017, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258843538585620017, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258843538585620017, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258843538585620017, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258843538585620017, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258843538585620017, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+--- !u!1 &718096394 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8258843538585620014, guid: 42c636b6ff26d8f43a7166a12c850c2e, type: 3}
+  m_PrefabInstance: {fileID: 428592274}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &718096395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718096394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00133306a3d2e0f41996cb3aa8d75ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomID: {fileID: 11400000, guid: 97a1b09146d9b27409466fc21c0b2fa0, type: 2}
+  distanceMinBoss: 10
+  distanceMaxBoss: 10
+  distanceBoss: 4
+  nombreMachandBossMin: 3
+  nombreMachandBossMax: 3
+  nombreMarchandBoss: 1
+  defiBossMin: 3
+  defiBossMax: 3
+  defiBoss: 1
+  nombreDeSalleMin: 40
+  nombreDeSalleMax: 50
+  nombreDeSalle: 0
+  nombreDeCoffreMin: 3
+  nombreDeCoffreMax: 3
+  nombreDeCoffre: 2
+  nombreDeMarchandMin: 3
+  nombreDeMarchandMax: 3
+  nombreDeMarchand: 1
+  nombreDeMarchandNoirMin: 1
+  nombreDeMarchandNoirMax: 1
+  nombreDeMarchandNoir: 1
+  nombreDeDefiMax: 5
+  nombreDeDefiMin: 5
+  nombreDeDefi: 2
+  marge: 20
   roomLayer:
     serializedVersion: 2
     m_Bits: 32768
