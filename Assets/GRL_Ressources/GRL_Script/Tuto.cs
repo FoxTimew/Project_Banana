@@ -8,6 +8,7 @@ public class Tuto : MonoBehaviour
     public GameObject deplacement, attaque, special, parade;
     public Animator animDeplacement, animAttaque, animSpecial, animParade;
     bool zoneDeplacement, zoneAttaque, zoneSpecial, zoneParade;
+    public DisableCanvas transition;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class Tuto : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && zoneAttaque == true)
+        if (Input.GetButtonDown("Interaction") && zoneAttaque == true)
         {
             animAttaque.SetBool("fin", true);
             zoneSpecial = true;
@@ -27,7 +28,7 @@ public class Tuto : MonoBehaviour
             special.SetActive(true);
         }
 
-        else if(Input.GetKeyDown(KeyCode.F) && zoneSpecial == true && zoneAttaque == false)
+        else if(Input.GetButtonDown("Interaction") && zoneSpecial == true && zoneAttaque == false)
         {
             animSpecial.SetBool("end", true);
             zoneSpecial = false;
@@ -35,9 +36,9 @@ public class Tuto : MonoBehaviour
             parade.SetActive(true);
         }
 
-        else if (Input.GetKeyDown(KeyCode.F) && zoneSpecial == false && zoneParade == true)
+        else if (Input.GetButtonDown("Interaction") && zoneSpecial == false && zoneParade == true)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            StartCoroutine(TransitionDelay());
         }
     }
 
@@ -53,5 +54,12 @@ public class Tuto : MonoBehaviour
         animDeplacement.SetBool("exit", true);
         attaque.SetActive(true);
         zoneAttaque = true;
+    }
+
+    IEnumerator TransitionDelay()
+    {
+        transition.TPTransition();
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

@@ -12,4 +12,6 @@ public class PlayableCharacterInfos : ScriptableObject
 	public int force;
 
 	public float pousseeForce;
+
+	public int reductionPrix;
 }

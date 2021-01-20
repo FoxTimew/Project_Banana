@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SellerDetector : MonoBehaviour
 {
+	[SerializeField] GameObject Enemy;
 	public bool playerIsHere;
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
@@ -23,5 +24,12 @@ public class SellerDetector : MonoBehaviour
 		{
 			playerIsHere = false;
 		}
+	}
+
+	private void Update()
+	{
+		if (Enemy == null) return;
+		if (!playerIsHere) Enemy.SetActive(false);
+		else Enemy.SetActive(true);
 	}
 }

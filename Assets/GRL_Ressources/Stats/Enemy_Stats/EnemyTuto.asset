@@ -10,34 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d0c68861927aff45a869bab79016c03, type: 3}
-  m_Name: Dasher
+  m_Name: EnemyTuto
   m_EditorClassIdentifier: 
   enemy: 1
   sprite: {fileID: 0}
-  hp: 5
-  attack: 10
-  range: 4
+  hp: 100
+  attack: 0
+  range: 1.5
   poussee:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -0.801769
-      outSlope: -0.801769
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.10192308
-    - serializedVersion: 3
-      time: 0.9942638
-      value: 0.00625
-      inSlope: -1.0254903
-      outSlope: -1.0254903
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.09807692
-      outWeight: 0.33333334
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -45,5 +27,5 @@ MonoBehaviour:
   hpArmor: 0
   stunReduction:
   - 0
-  vitesseDisplacement: 350
+  vitesseDisplacement: 0
   vitesseAttack: 3

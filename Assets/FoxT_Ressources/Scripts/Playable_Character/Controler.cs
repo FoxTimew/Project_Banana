@@ -9,7 +9,7 @@ public class Controler : MonoBehaviour
 
     float dashingTimeElapsed;
 
-    public bool isDashing, isAttacking, isEjected, isTouched, isDie, refusDeLaMort, refusDeLaMortCheck, waitForDying, isInteracting, isSpecialing, SpecialOn, isParrying, ejectionCancel, isReposting, isDebuging;
+    public bool isDashing, isAttacking, isEjected, isTouched, isDie, refusDeLaMort, refusDeLaMortCheck, waitForDying, isInteracting, isSpecialing, SpecialOn, isParrying, ejectionCancel, isReposting, isDebuging, isInAnimation, isTeleporting;
 
     public AnimationCurve dashCurve = AnimationCurve.Constant(0f, 0.25f, 1f);
 
@@ -56,11 +56,16 @@ public class Controler : MonoBehaviour
 
     void Update()
     {
-        if (!isEjected) InputHandler();
+        if (!isEjected && !isInAnimation || isTeleporting) InputHandler();
     }
 
     private void FixedUpdate()
     {
+        if (isInAnimation || isTeleporting)
+        {
+            pcRB.velocity = Vector2.zero;
+            return;
+        }
         if (isDie)
         {
             this.GetComponent<BoxCollider2D>().enabled = false;

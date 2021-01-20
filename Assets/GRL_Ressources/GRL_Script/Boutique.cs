@@ -7,7 +7,7 @@ public class Boutique : MonoBehaviour
 {
     public BoxCollider2D collider;
     bool Here = false;
-    bool Open = false;
+    bool Open = false, closed;
     public Animator anim;
     public GameObject menuPause;
     public GameObject boutique;
@@ -37,7 +37,12 @@ public class Boutique : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(Here == true && Input.GetKeyDown(KeyCode.M) && Open == false)
+        if (closed)
+        {
+            closed = false;
+            return;
+        }
+        if (Here == true && Input.GetButtonDown("Interaction") && Open == false)
         {
             boutique.SetActive(true);
             Open = true;
@@ -46,8 +51,7 @@ public class Boutique : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(firstOne);
         }
-
-        else if ( Input.GetKeyDown(KeyCode.Escape) && Here == true && Open == true)
+        else if (Input.GetButton("Cancel") && Here == true && Open == true)
         {
             boutique.SetActive(false);
             Open = false;
@@ -70,6 +74,7 @@ public class Boutique : MonoBehaviour
 
     public void Exit()
     {
+        closed = true;
         boutique.SetActive(false);
         Open = false;
         canvas.SetActive(false);

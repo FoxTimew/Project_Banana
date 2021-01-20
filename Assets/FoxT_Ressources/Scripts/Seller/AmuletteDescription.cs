@@ -40,8 +40,18 @@ public class AmuletteDescription : MonoBehaviour
 	{
 		if (!playerPresent) return;
 		if (!GameObject.Find("Playable_Character").GetComponent<Controler>().isInteracting) return;
+	}
 
-		BuyStart();
+	private void LateUpdate()
+	{
+		if (obj == null) return;
+		if (obj.GetComponent<InventoryUIManager>().Buying)
+		{
+			playerPresent = false;
+			this.GetComponent<SpriteRenderer>().enabled = false;
+			anim.SetFloat("direction", -1);
+			Destroy(this.gameObject);
+		}
 	}
 
 	void DesciptionUpDate()
@@ -64,8 +74,4 @@ public class AmuletteDescription : MonoBehaviour
 		anim = obj.GetComponent<Animator>();
 	}
 
-	void BuyStart()
-	{
-		Debug.Log("buy !! ");
-	}
 }

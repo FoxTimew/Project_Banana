@@ -68,7 +68,7 @@ public class EnemySys : MonoBehaviour
     bool playerisPoussing {get { return controler.isEjected; } }
 
     [SerializeField]
-    bool isArmorGuardian, isSpawner, isKamikaze, spawnDone, dyingdone, isExplosing;
+    bool isArmorGuardian, isSpawner, isKamikaze, spawnDone, dyingdone, isExplosing, enemyTuto;
 
     Ejecting eject;
 
@@ -180,7 +180,7 @@ public class EnemySys : MonoBehaviour
         {
             if (damage - resistance <= 0) damage = 0;
             else damage -= resistance;
-            health -= damage;
+            if (!enemyTuto) health -= damage;
 
         }
         else armor -= damage / 2;

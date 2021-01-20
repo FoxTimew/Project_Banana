@@ -15,5 +15,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: f95574013b2f83740a1bef9aace8e798, type: 3}
   tauxSurCent: 10
   level:
-  - pourcentOfMaxHP: 0
-    prix: 0
+  - pourcentOfMaxHP: 10
+    prix: 100
+  - pourcentOfMaxHP: 25
+    prix: 100
+  - pourcentOfMaxHP: 40
+    prix: 100

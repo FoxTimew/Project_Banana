@@ -15,5 +15,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: a640f1318edd1904ca4d0d41cace1f5e, type: 3}
   tauxSurCent: 10
   level:
-  - value: 0
-    prix: 0
+  - value: 10
+    prix: 100
+  - value: 20
+    prix: 100
+  - value: 30
+    prix: 100

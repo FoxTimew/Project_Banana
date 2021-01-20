@@ -11,7 +11,7 @@ public class EnemyRoomDetector : MonoBehaviour
 	[SerializeField]
 	List<GameObject> teleporteur = new List<GameObject>();
 
-	private void Start()
+	private void Awake()
 	{
 		core = GameObject.Find("Core").GetComponent<Core>();
 	}
@@ -27,7 +27,15 @@ public class EnemyRoomDetector : MonoBehaviour
 		else if(collision.gameObject.tag == "Enemy")
 		{
 			enemyInRoom.Add(collision);
-			if(playerIn) core.EnemyPresent = enemyInRoom;
+			if (playerIn)
+			{
+				core.EnemyPresent = new List<Collider2D>();
+				foreach (Collider2D obj in enemyInRoom)
+				{
+					core.EnemyPresent.Add(obj);
+
+				}
+			}
 		}
 	}
 
@@ -50,6 +58,8 @@ public class EnemyRoomDetector : MonoBehaviour
 
 	void UnlockDoor()
 	{
+		if (!GetComponent<SellerDetector>().playerIsHere) return;
+		Debug.Log("Teleporteur");
 		foreach (GameObject obj in teleporteur)
 		{
 			if (obj != null)

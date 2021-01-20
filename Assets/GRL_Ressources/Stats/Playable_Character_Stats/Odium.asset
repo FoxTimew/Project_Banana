@@ -16,3 +16,4 @@ MonoBehaviour:
   resitance: 0
   force: 0
   pousseeForce: 0
+  reductionPrix: 0

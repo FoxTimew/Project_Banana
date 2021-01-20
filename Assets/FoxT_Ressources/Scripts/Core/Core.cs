@@ -17,6 +17,7 @@ public class Core : MonoBehaviour
 
 	private void Start()
 	{
+		data.gold = 0;
 		AmuletteValueReset();
 		StartCoroutine(Test());
 	}
@@ -40,7 +41,6 @@ public class Core : MonoBehaviour
 	{
 		foreach (GameObject obj in seller)
 		{
-			Debug.Log("Appelé");
 			obj.GetComponentInParent<Seller>().RandomAwake();
 		}
 	}

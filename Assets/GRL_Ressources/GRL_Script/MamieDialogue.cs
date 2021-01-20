@@ -35,7 +35,13 @@ public class MamieDialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && ready == true && open == false)
+        if (open)
+        {
+            GameObject.Find("Playable_Character").GetComponent<Controler>().isInAnimation = true;
+        }
+        else 
+            GameObject.Find("Playable_Character").GetComponent<Controler>().isInAnimation = false;
+        if (Input.GetButtonDown("Interaction") && ready == true && open == false)
         {
             open = true;
             image.SetActive(true);
@@ -43,7 +49,7 @@ public class MamieDialogue : MonoBehaviour
             openText1 = true;
         }
 
-        else if (Input.GetKeyDown(KeyCode.F) && ready == true && open == true && openText1 == true)
+        else if (Input.GetButton("Interaction") && ready == true && open == true && openText1 == true)
         {
             text1.SetActive(false);
             text2.SetActive(true);
@@ -51,7 +57,7 @@ public class MamieDialogue : MonoBehaviour
             openText2 = true;
         }
 
-        else if (Input.GetKeyDown(KeyCode.F) && ready == true && open == true && openText2 == true)
+        else if (Input.GetButtonDown("Interaction") && ready == true && open == true && openText2 == true)
         {
             text2.SetActive(false);
             text3.SetActive(true);
@@ -59,7 +65,7 @@ public class MamieDialogue : MonoBehaviour
             openText3 = true;
         }
 
-        else if (Input.GetKeyDown(KeyCode.F) && ready == true && open == true && openText3 == true)
+        else if (Input.GetButtonDown("Interaction") && ready == true && open == true && openText3 == true)
         {
             text3.SetActive(false);
             text4.SetActive(true);
@@ -68,7 +74,7 @@ public class MamieDialogue : MonoBehaviour
             shopVirtualCam.Priority = 11;
         }
 
-        else if (Input.GetKeyDown(KeyCode.F) && open == true && openText4 == true)
+        else if (Input.GetButtonDown("Interaction") && open == true && openText4 == true)
         {
             open = false;
             image.SetActive(false);

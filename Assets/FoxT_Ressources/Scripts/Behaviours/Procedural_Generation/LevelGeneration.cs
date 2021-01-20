@@ -6,7 +6,7 @@ public class LevelGeneration : MonoBehaviour
 {
     Vector2 superStart, fromTo;
 
-    public GameObject player;
+    public GameObject player, grid;
 
     public RoomGenerationInfo roomID;
 
@@ -80,6 +80,8 @@ public class LevelGeneration : MonoBehaviour
     public int nombreDeDefiMax = 2;
     public int nombreDeDefiMin = 2;
     public int nombreDeDefi = 2;
+
+    public int xDirection = 1;
 
     public float marge = 2f;
 
@@ -202,10 +204,11 @@ public class LevelGeneration : MonoBehaviour
 
     void BossPathGeneration()
     {
-        int xDirection = 1, xPos, yPos, highPos = 1;
+        int xPos, yPos, highPos = 1;
 
-        if (TirageAuSort(0, 1) == 0) xDirection = -1;
         if (TirageAuSort(0, 1) == 0) highPos = 0;
+
+        grid.transform.position = new Vector3(grid.transform.position.x * xDirection, grid.transform.position.y, 0f);
 
         yPos = TirageAuSort(1, (distanceBoss + highPos)) - 1;
         xPos = ((distanceBoss) - yPos) * xDirection;
@@ -1211,7 +1214,7 @@ public class LevelGeneration : MonoBehaviour
         refPos[0] = GameObject.Find("RoomReference1(Clone)").GetComponent<Transform>();
         refPos[1] = GameObject.Find("RoomReference2(Clone)").GetComponent<Transform>();
 
-        //GameObject.Find("Playable_Character").transform.position = GameObject.Find("Spawn_Point").transform.position;
+        GameObject.Find("Playable_Character").transform.position = GameObject.Find("Spawn_Point").transform.position;
         player.SetActive(true);
     }
 
@@ -1282,7 +1285,6 @@ public class LevelGeneration : MonoBehaviour
 
     void RayCastDetection(Vector2 direction, Vector2 pos, Vector2 deep)
     {
-        Debug.Log("ok");
         Transform[] refPos = new Transform[2];
         refPos[0] = GameObject.Find("RoomReference1(Clone)").GetComponent<Transform>();
         refPos[1] = GameObject.Find("RoomReference2(Clone)").GetComponent<Transform>();
@@ -1354,7 +1356,6 @@ public class LevelGeneration : MonoBehaviour
 
     void Secoure()
     {
-        Debug.Log("ok");
         Transform[] refPos = new Transform[2];
         refPos[0] = GameObject.Find("RoomReference1(Clone)").GetComponent<Transform>();
         refPos[1] = GameObject.Find("RoomReference2(Clone)").GetComponent<Transform>();

@@ -8,7 +8,9 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject startFirst, optionFirst, closeOption;
     public GameObject option, mainMenu;
-
+    public float dureeAnimation;
+    public DisableCanvas SceneTransition;
+    public Animator anim;
 
     private void Start()
     {
@@ -22,7 +24,7 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(ChangeScene());
     }
 
     public void QuitGame()
@@ -45,5 +47,14 @@ public class MainMenu : MonoBehaviour
         option.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(closeOption);
+    }
+
+    IEnumerator ChangeScene()
+    {
+        anim.Play("UI_StartMenu");
+        yield return new WaitForSeconds(dureeAnimation);
+        SceneTransition.TPTransition();
+        yield return new WaitForSeconds(dureeAnimation);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

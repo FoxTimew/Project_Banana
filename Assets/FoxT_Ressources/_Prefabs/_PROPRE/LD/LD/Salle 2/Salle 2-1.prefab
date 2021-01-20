@@ -5630,6 +5630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50321737cbe94a847918949e26ef1e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enemy: {fileID: 1349536485211280207}
   playerIsHere: 0
 --- !u!114 &1133255386296335219
 MonoBehaviour:

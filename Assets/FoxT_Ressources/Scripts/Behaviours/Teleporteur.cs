@@ -53,10 +53,12 @@ public class Teleporteur : MonoBehaviour
 	IEnumerator TransitionOn(Collider2D col)
 	{
 		anim.Play(animationUse);
+		GameObject.Find("Playable_Character").GetComponent<Controler>().isTeleporting = true;
 		yield return new WaitForSeconds(.2f);
 		transition.TPTransition();
 		yield return new WaitForSeconds(1.2f);
 		col.transform.position = linkedTeleport.position;
+		GameObject.Find("Playable_Character").GetComponent<Controler>().isTeleporting = false;
 	}
 
 	public void StartAnimation()

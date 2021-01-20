@@ -101,8 +101,6 @@ public class Seller : MonoBehaviour
 		{
 			_random.Add(i);
 		}
-		Debug.Log(_random.Count);
-		Debug.Log(list.Count);
 		for (int i = list.Count - 1; i > -1; i--)
 		{
 			if (_random[i + 1] == 0)
@@ -116,13 +114,11 @@ public class Seller : MonoBehaviour
 		{
 			foreach (string name in list)
 			{
-				Debug.Log("testr " + name);
 				aVendre.Add(name);
 			}
 		}
 		else if (list.Count == 0)
 		{
-			Debug.Log("Here");
 			return;
 		}
 		else
@@ -334,6 +330,7 @@ public class Seller : MonoBehaviour
 				break;
 			case "Refus de la mort":
 				GameObject.Find("Playable_Character").GetComponent<Health>().charmValue = amulette.amuletteRefusDeLaMort.level[core.data.niveauRefus].pourcentOfMaxHP / 100;
+				GameObject.Find("Playable_Character").GetComponent<Health>().RefusDeLaMort = true;
 				core.data.niveauRefus++;
 
 				Debug.Log("Refus de la mort");

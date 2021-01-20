@@ -158,7 +158,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.43}
+    oldSize: {x: 2, y: 2.6875}
     newSize: {x: 0.32, y: 0.43}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -305,6 +305,7 @@ MonoBehaviour:
   spawnDone: 0
   dyingdone: 0
   isExplosing: 0
+  enemyTuto: 0
   enemyToSpawn: []
   Spawner: {fileID: 0}
   idleLeft: IDDLE_SIDE_LEFT_GuardianArmor
@@ -352,7 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3ece836d3332a42a60d72c7aed2486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GuardianObject: {fileID: 1888508254843535271, guid: a04b264fb96abd847bc3241340fdc0ef, type: 3}
+  GuardianObject: {fileID: 3287157450375726766, guid: a04b264fb96abd847bc3241340fdc0ef, type: 3}
 --- !u!1 &7738978232558369679
 GameObject:
   m_ObjectHideFlags: 0

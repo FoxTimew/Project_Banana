@@ -18,7 +18,7 @@ public class InventoryUIManager : MonoBehaviour
 	int niveau;
 
 	[SerializeField]
-	bool maudit;
+	bool maudit, refus, refusActived;
 
 	[SerializeField]
 	GameObject button;
@@ -34,10 +34,34 @@ public class InventoryUIManager : MonoBehaviour
 
 	public Seller seller;
 
+	public bool isActivated, Buying;
+
+	GameObject refusDeLaMort;
 	private void Awake()
 	{
 		core = GameObject.Find("Core").GetComponent<Core>();
 		priceText.text = price[niveau].ToString();
+	}
+
+	private void Update()
+	{
+		if (Buying) Buying = false;
+		if (isActivated && Input.GetButtonDown("Interaction"))
+		{
+			Debug.Log("BUYYYYYYY");
+			BuyStart();
+		}
+		if (refusActived)
+		{
+			if (niveau == 0)
+			{
+				refusDeLaMort.GetComponent<Image>().color = new Color(1, 1, 1, .3f);
+			}
+			else
+			{ 
+				refusDeLaMort.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+			}
+		}
 	}
 
 	public void OnClick()
@@ -47,12 +71,14 @@ public class InventoryUIManager : MonoBehaviour
 
 	void BuyStart()
 	{
+		Debug.Log("Appuiyé");
 		if (core.data.gold >= price[niveau])
 		{
 			core.data.gold -= price[niveau];
 			seller.objetChoisi = charmNameCode;
 			seller.ValueUpdate();
 			UpdateInventory();
+			Buying = true;
 		}
 	}
 
@@ -70,6 +96,11 @@ public class InventoryUIManager : MonoBehaviour
 					newObject.transform.localScale = scale;
 					Item[i].SetActive(true);
 					i = itemZone.Length;
+					if (refus)
+					{
+						refusDeLaMort = newObject;
+						refusActived = true;
+					}
 				}
 			}
 			if (maudit) button.SetActive(false);

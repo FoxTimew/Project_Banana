@@ -15,6 +15,6 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 074080b9ae5504a4d94484e884c8cf3e, type: 3}
   tauxSurCent: 25
   level:
-  - valueJoueurPourcent: 0
-    valueEnemiPourcent: 0
-    prix: 0
+  - valueJoueurPourcent: 40
+    valueEnemiPourcent: 20
+    prix: 100

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
@@ -81,7 +83,7 @@ public class Health : MonoBehaviour
             {
                 this.GetComponent<Controler>().refusDeLaMort = true;
                 this.GetComponent<Controler>().isDie = true;
-                //StartCoroutine(Rebirth(10)); 
+                StartCoroutine(Rebirth(10)); 
             }
         }
         if (berzerkCharm) BerzerkUpdate();
@@ -105,6 +107,7 @@ public class Health : MonoBehaviour
     void Die()
     {
         this.GetComponent<Controler>().isDie = true;
+        StartCoroutine(DieTP());
     }
 
     IEnumerator Rebirth(float time)
@@ -114,5 +117,15 @@ public class Health : MonoBehaviour
         RefusDeLaMort = false;
         core.data.niveauRefus = 0;
         charmValue = 0f;
+        UI_Life.HealthDisplay(health);
+        controler.refusDeLaMort = false;
+        GetComponent<BoxCollider2D>().enabled = true;
+    }
+
+    IEnumerator DieTP()
+    {
+        GetComponent<Animator>().SetBool("respawn", true);
+        yield return new WaitForSeconds(1.9f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }

@@ -16,5 +16,5 @@ MonoBehaviour:
   tauxSurCent: 25
   level:
   - pourcent: 0
-    value: 0
-    prix: 0
+    value: 50
+    prix: 100

@@ -9,6 +9,7 @@ public class Grid : MonoBehaviour
 	public Transform objectLinked;
 	public LayerMask obstacleMask;
 	public Vector2 gridWorldSize;
+	public LevelGeneration ld;
 	public float nodeRadius;
 	Node2D[,] grid;
 
@@ -17,6 +18,14 @@ public class Grid : MonoBehaviour
 
 	private void Awake()
 	{
+		if (ld != null)
+		{
+			if (Random.Range(0, 2) == 1)
+			{
+				ld.xDirection = -1;
+			}
+		}
+		transform.position = new Vector3(transform.position.x * ld.xDirection, transform.position.y, 0f);
 		nodeDiamater = nodeRadius * 2;
 		gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiamater);
 		gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiamater);
