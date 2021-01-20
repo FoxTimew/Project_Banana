@@ -36,10 +36,10 @@ public class Upgrade : MonoBehaviour
             //sinon annim refus
         }
 
-        if (index == price.Length)
+        /*if (index == price.Length)
         {
             boutton.SetActive(false);
-        }
+        }*/
     }
 
     

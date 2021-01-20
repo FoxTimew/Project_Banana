@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Boutique : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Boutique : MonoBehaviour
     public GameObject boutique;
     public GameObject press;
     public GameObject canvas;
+    public GameObject firstOne;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -41,7 +43,9 @@ public class Boutique : MonoBehaviour
             Open = true;
             canvas.SetActive(true);
             Time.timeScale = 0f;
-        } 
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(firstOne);
+        }
 
         else if ( Input.GetKeyDown(KeyCode.Escape) && Here == true && Open == true)
         {

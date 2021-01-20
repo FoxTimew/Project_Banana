@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public bool Open;
     public GameObject pauseMenuUI;
+    public GameObject firstOne, closeOption, openOption, closeExit, closeRestart, openRestart, openExit;
+    public GameObject pause, option, exit, restart;
 
     // Update is called once per frame
     void Update()
@@ -37,6 +40,9 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstOne);
+
     }
 
     public void LoadMenu()
@@ -48,5 +54,53 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void Option()
+    {
+        pause.SetActive(false);
+        option.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(openOption);
+    }
+
+    public void LeaveOption()
+    {
+        pause.SetActive(true);
+        option.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(closeOption);
+    }
+
+    public void Restart()
+    {
+        pause.SetActive(false);
+        restart.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(openRestart);
+    }
+
+    public void LeaveRestart()
+    {
+        pause.SetActive(true);
+        restart.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(closeRestart);
+    }
+
+    public void Exit()
+    {
+        pause.SetActive(false);
+        exit.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(openExit);
+    }
+
+    public void LeaveExit()
+    {
+        pause.SetActive(true);
+        exit.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(closeExit);
     }
 }

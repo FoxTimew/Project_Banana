@@ -369,7 +369,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.6132076, g: 0.43290913, b: 0.19958171, a: 1}
     m_PressedColor: {r: 0.6117647, g: 0.43137258, b: 0.20000002, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.6117647, g: 0.43137258, b: 0.20000002, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -557,6 +557,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408ab1b0573151e418a5bc8c88bda6c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startFirst: {fileID: 1824915754}
+  optionFirst: {fileID: 1426139485}
+  closeOption: {fileID: 1309211111}
+  option: {fileID: 47384603}
+  mainMenu: {fileID: 336296422}
 --- !u!1 &404445200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,7 +1111,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 52
   m_TargetDisplay: 0
 --- !u!224 &673502701
 RectTransform:
@@ -1969,7 +1974,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: 45c3708e52ad56e418c225172d257e87, type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 45c3708e52ad56e418c225172d257e87, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: a945f352722febf4ba26a0217bdaaddd, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 45c3708e52ad56e418c225172d257e87, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1982,10 +1987,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 336296422}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 336296427}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OptionMenu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1993,18 +1998,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 47384603}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1309211114
 MonoBehaviour:
@@ -2112,7 +2105,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: c8c6c9ed97bfe1c4bb9a0bf3c3cdc21d, type: 3}
     m_PressedSprite: {fileID: 21300000, guid: c8c6c9ed97bfe1c4bb9a0bf3c3cdc21d, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 21300000, guid: c8c6c9ed97bfe1c4bb9a0bf3c3cdc21d, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2125,22 +2118,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 336296422}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 47384603}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 336296427}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: Menu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2439,7 +2420,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.6117647, g: 0.43137255, b: 0.2, a: 1}
     m_PressedColor: {r: 0.6117647, g: 0.43137258, b: 0.20000002, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.6117647, g: 0.43137258, b: 0.20000002, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2729,7 +2710,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: cfdb5381eb51b8a4da93219265baed66, type: 3}
     m_PressedSprite: {fileID: 21300000, guid: cfdb5381eb51b8a4da93219265baed66, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 5c63add867cbe9e4792c6a6b06cddb85, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: cfdb5381eb51b8a4da93219265baed66, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2935,7 +2916,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: 7eb3badef72cea246a184a30eb139620, type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 7eb3badef72cea246a184a30eb139620, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 8f23d0dfb94245f4abedfe8cad99d516, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 7eb3badef72cea246a184a30eb139620, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
