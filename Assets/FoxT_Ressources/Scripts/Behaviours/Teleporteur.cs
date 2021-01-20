@@ -25,6 +25,8 @@ public class Teleporteur : MonoBehaviour
 	{
 		transition = GameObject.Find("SceneTransition").GetComponent<DisableCanvas>();
 		anim = GetComponent<Animator>();
+
+		StartCoroutine(ERASE());
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -34,6 +36,7 @@ public class Teleporteur : MonoBehaviour
 			if (!receive && isActive)
 			{
 				linkedTeleport.GetComponent<Teleporteur>().receive = true;
+				//collision.GetComponent<Controler>().isTeleporting = true;
 				StartCoroutine(TransitionOn(collision));
 			}
 		}
@@ -64,5 +67,11 @@ public class Teleporteur : MonoBehaviour
 			return;
 		}
 		anim.Play(animationStart);
+	}
+
+	IEnumerator ERASE()
+	{
+		yield return new WaitForSeconds(.1f);
+		if (linkedTeleport == null) Destroy(this.gameObject);
 	}
 }

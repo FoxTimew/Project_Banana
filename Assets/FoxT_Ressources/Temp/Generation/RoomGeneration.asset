@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: RoomGeneration
   m_EditorClassIdentifier: 
   start:
-  - {fileID: 5203525232007094757, guid: 1f89d964e068358458fa68f4cbd3c4ad, type: 3}
+  - {fileID: 7765409258363330902, guid: e72331ed2f8d05c4d830a1f5d3fc170f, type: 3}
   enemy:
-  - {fileID: 8936931973787130413, guid: f36d4f5ad4ab8474796baf354d0d061f, type: 3}
+  - {fileID: 7765409258363330902, guid: e72331ed2f8d05c4d830a1f5d3fc170f, type: 3}
   seller:
   - {fileID: 1763074410475140206, guid: e8eac74e232ba184daf8669c333465a5, type: 3}
   blackSeller:
   - {fileID: 1306087103224471686, guid: 91415fe51c14c4140b6307ccb98392c7, type: 3}
   chest:
-  - {fileID: 2743713124551171800, guid: 7673b3761a8f07344a564f7799d90c61, type: 3}
+  - {fileID: 7765409258363330902, guid: e72331ed2f8d05c4d830a1f5d3fc170f, type: 3}
   challenge:
-  - {fileID: 9107332984215411296, guid: 83597b7569b439447b0acacebd042a8b, type: 3}
+  - {fileID: 7765409258363330902, guid: e72331ed2f8d05c4d830a1f5d3fc170f, type: 3}
   boss:
-  - {fileID: 8138300038174113805, guid: 749815a81bd88974c8539a26e237f998, type: 3}
+  - {fileID: 1835425307708079097, guid: 80b9025d6b71aed4597db0c77e87993c, type: 3}

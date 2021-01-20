@@ -7,6 +7,12 @@ TagManager:
   - Wall
   - Door at North
   - Enemy
+  - Seller
+  - Repere
+  - BossHand
+  - Teleporteur
+  - Barril
+  - Pic
   layers:
   - Default
   - TransparentFX
@@ -25,12 +31,12 @@ TagManager:
   - Wall
   - Room
   - Rebond
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Repere
+  - BossHand
+  - Teleporteur
+  - Barril
+  - BarrilCol
+  - Pic
   - 
   - 
   - 

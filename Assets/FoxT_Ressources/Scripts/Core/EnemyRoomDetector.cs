@@ -11,6 +11,11 @@ public class EnemyRoomDetector : MonoBehaviour
 	[SerializeField]
 	List<GameObject> teleporteur = new List<GameObject>();
 
+	private void Start()
+	{
+		core = GameObject.Find("Core").GetComponent<Core>();
+	}
+
 	List<Collider2D> enemyInRoom = new List<Collider2D>();
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
@@ -47,8 +52,11 @@ public class EnemyRoomDetector : MonoBehaviour
 	{
 		foreach (GameObject obj in teleporteur)
 		{
-			obj.GetComponent<Teleporteur>().isActive = true;
-			obj.GetComponent<Teleporteur>().StartAnimation();
+			if (obj != null)
+			{
+				obj.GetComponent<Teleporteur>().isActive = true;
+				obj.GetComponent<Teleporteur>().StartAnimation();
+			}
 		}
 	}
 }

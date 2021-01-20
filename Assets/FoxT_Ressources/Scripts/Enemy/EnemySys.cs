@@ -25,7 +25,7 @@ public class EnemySys : MonoBehaviour
 
     public List<float> stunReduction = new List<float>();
 
-    public bool pause;
+    public bool pause, isHit;
 
     EnnemyLoot loot;
 
@@ -52,7 +52,7 @@ public class EnemySys : MonoBehaviour
 
     public string currentState, lastDirectionState;
 
-    public float attackDelay, explosionRadius;
+    public float attackDelay, explosionRadius, dureeAnimation;
 
     public Vector3 VectorDirector;
 
@@ -67,7 +67,9 @@ public class EnemySys : MonoBehaviour
     bool playerisPoussing {get { return controler.isEjected; } }
 
     [SerializeField]
-    bool isArmorGuardian, isSpawner, isKamikaze, spawnDone, dyingdone;
+    bool isArmorGuardian, isSpawner, isKamikaze, spawnDone, dyingdone, isExplosing;
+
+    Ejecting eject;
 
     [SerializeField]
     GameObject[] enemyToSpawn;
@@ -77,7 +79,7 @@ public class EnemySys : MonoBehaviour
     //------------------------------------------
     //Anim 
     //------------------------------------------
-    public string idleLeft, idleRight, runLeft, runRight, attackLeft, attackRight, deathLeft, deathRight;
+    public string idleLeft, idleRight, runLeft, runRight, attackLeft, attackRight, deathLeft, deathRight, hitRight, hitLeft, knockBackRight, knockBackLeft, explosionRight, explosionLeft;
 
 	private void OnEnable()
 	{
@@ -87,6 +89,7 @@ public class EnemySys : MonoBehaviour
 
 	void Start()
     {
+        eject = GetComponent<Ejecting>();
         anim = GetComponent<Animator>();
         displacement = this.GetComponentInChildren<Unit>();
         displacement.enabled = false;
@@ -126,8 +129,8 @@ public class EnemySys : MonoBehaviour
                 if ((closed || isSpawner) && !playerisPoussing)
                 {
                     AttackTest();
-                    if (lastDirectionState == runLeft || lastDirectionState == idleLeft) ChangeAnimationState(idleLeft);
-                    else ChangeAnimationState(idleRight);
+                    /*if (lastDirectionState == runLeft || lastDirectionState == idleLeft) ChangeAnimationState(idleLeft);
+                    else ChangeAnimationState(idleRight);*/
                 }
             }
         }
@@ -135,9 +138,27 @@ public class EnemySys : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!dying && !closed && !isEjected && !isSpawner)
+        if (isExplosing) return;
+        if (!dying && !closed && !isEjected && !isSpawner && !isHit)
         {
             MoveToPlayer();
+        }
+        else if (isEjected)
+        {
+            if (lastDirectionState == runLeft) ChangeAnimationState(knockBackLeft);
+            else ChangeAnimationState(knockBackRight);
+            enemyRB.velocity = Vector2.zero;
+        }
+        else if (isHit && !isEjected)
+        {
+            if (lastDirectionState == runLeft && !isEjected)
+            {
+                ChangeAnimationState(hitLeft);
+            }
+            else if (lastDirectionState == runRight && !isEjected)
+            {
+                ChangeAnimationState(hitRight);
+            }
         }
         else enemyRB.velocity = Vector2.zero;
     }
@@ -153,15 +174,16 @@ public class EnemySys : MonoBehaviour
 
 	public void TakeDamage(int damage, float stunTime)
     {
+        if (isExplosing) return;
         if (armor <= 0)
         {
             if (damage - resistance <= 0) damage = 0;
             else damage -= resistance;
             health -= damage;
-        }
-        else
-            armor -= damage / 2;
 
+        }
+        else armor -= damage / 2;
+        StartCoroutine(HitDelay(stunTime));
         if (health <= 0)
         {
             Die();
@@ -227,7 +249,17 @@ public class EnemySys : MonoBehaviour
             if (pc == null) Debug.Log("Rien n'est detecte.");
             foreach (Collider2D pcTouche in pc)
             {
-                pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus), this.GetComponent<BoxCollider2D>());
+                if (pcTouche.tag == "Player")
+                {
+                    pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus), this.GetComponent<BoxCollider2D>());
+                    if (poussee != null && pcHealth.health > 0)
+                    {
+                        Debug.Log("Attack");
+                        pcHealth.GetComponent<Controler>().knockBackForce = poussee;
+                        pcHealth.GetComponent<Controler>().pousseeDirection = VectorDirector;
+                        pcHealth.GetComponent<Controler>().Ejecting();
+                    }
+                }
             }
         }
         else
@@ -237,22 +269,6 @@ public class EnemySys : MonoBehaviour
                 Object.Instantiate(enemyToSpawn[Random.Range(0, enemyToSpawn.Length)], Spawner.transform.position, transform.rotation);
                 spawnDone = true;
             }
-        }
-        if (lastDirectionState == runLeft || lastDirectionState == idleLeft)
-        {
-            ChangeAnimationState(attackLeft);
-            currentState = idleLeft;
-        }
-        else
-        {
-            ChangeAnimationState(attackRight);
-            currentState = idleRight;
-        }
-        if (poussee != null && pcHealth.health > 0)
-        {
-            pcHealth.GetComponent<Controler>().knockBackForce = poussee;
-            pcHealth.GetComponent<Controler>().pousseeDirection = VectorDirector;
-            pcHealth.GetComponent<Controler>().Ejecting();
         }
     }
 
@@ -281,6 +297,7 @@ public class EnemySys : MonoBehaviour
 
     void AttackStart()
     {
+        if (isAttacking) return;
         isAttacking = true;
         StartCoroutine(AttackUpdate(attackDelay));
     }
@@ -304,9 +321,20 @@ public class EnemySys : MonoBehaviour
 
     IEnumerator AttackUpdate(float time)
     {
+        if (isEjected) yield return null;
+        if (lastDirectionState == runLeft || lastDirectionState == idleLeft)
+        {
+            ChangeAnimationState(attackLeft);
+        }
+        else
+        {
+            ChangeAnimationState(attackRight);
+        }
+        yield return new WaitForSeconds(dureeAnimation);
+        if (isEjected) yield return null;
         enemyRB.velocity = new Vector2(0f, 0f);
-        yield return new WaitForSeconds(time);
         CoupDroit();
+        yield return new WaitForSeconds(time);
         isAttacking = false;
     }
 
@@ -319,9 +347,10 @@ public class EnemySys : MonoBehaviour
 
     IEnumerator Explosion()
     {
-        //Anim chargement
-        yield return new WaitForSeconds(3f);
-        //AnimaExplosion
+        isExplosing = true;
+        if (lastDirectionState == runLeft) ChangeAnimationState(explosionLeft);
+        else ChangeAnimationState(explosionRight);
+        yield return new WaitForSeconds(dureeAnimation);
 
         Collider2D[] pc = Physics2D.OverlapCircleAll(checkPoint.position, range, kamikazeLayer);
         if (pc == null) Debug.Log("Rien n'est detecte.");
@@ -330,6 +359,7 @@ public class EnemySys : MonoBehaviour
             if (pcTouche.gameObject.tag == "Player") pcHealth.TakeDamage(attack + Mathf.RoundToInt(dammageBonus), this.GetComponent<BoxCollider2D>());
             else pcTouche.GetComponent<EnemySys>().TakeDamage(attack + Mathf.RoundToInt(dammageBonus), 2f);
         }
+        yield return new WaitForSeconds(.5f);
         Destroy(this.gameObject);
     }
 
@@ -338,5 +368,12 @@ public class EnemySys : MonoBehaviour
         Gizmos.color = Color.cyan;
 
         Gizmos.DrawWireSphere(checkPoint.position, range);
+    }
+
+    IEnumerator HitDelay(float time)
+    {
+        isHit = true;
+        yield return new WaitForSeconds(time);
+        isHit = false;
     }
 }

@@ -6,6 +6,8 @@ public class LevelGeneration : MonoBehaviour
 {
     Vector2 superStart, fromTo;
 
+    public GameObject player;
+
     public RoomGenerationInfo roomID;
 
     private List<GameObject> startRoom = new List<GameObject>();
@@ -86,6 +88,8 @@ public class LevelGeneration : MonoBehaviour
     public LayerMask roomLayer;
 
     public GameObject[] refObj;
+
+    public Transform SpawnPoint;
 
     void Start()
     {
@@ -177,13 +181,14 @@ public class LevelGeneration : MonoBehaviour
         
         blackList.Add(bossPath[0]);
         blackList.Add(bossPath[distanceBoss - 1]);
-        for (int i = 1; i <= nombreDeSalle; i++)
+        /*for (int i = 1; i <= nombreDeSalle; i++)
         {
             DungeonPathGeneration();
         }
-        DungeonPathGenerationStart();
+        DungeonPathGenerationStart();*/
 
         SortingVector();
+        Secoure();
     }
 
     int TirageAuSort(int min, int max)
@@ -1177,9 +1182,13 @@ public class LevelGeneration : MonoBehaviour
         //Trouver les salles les plus hautes
         for (float i = posX[0]; i <= posX[posX.Length - 1]; i++)
         {
-            RaycastHit2D[] hit = Physics2D.BoxCastAll(new Vector2(i, posY[posY.Length - 1]), new Vector2(0.1f, 0.1f), 0f, Vector2.down, nombreDeSalle, roomLayer);
+            
+            RaycastHit2D[] hit = Physics2D.BoxCastAll(new Vector2(i, posY[posY.Length - 1]), new Vector2(0.1f, 0.1f), 0f, Vector2.down, nombreDeSalle + 3000, roomLayer);
 
-            yExtremis.Add(hit[0].collider.gameObject);
+            if (hit.Length != 0)
+            {
+                yExtremis.Add(hit[0].collider.gameObject);
+            }
         }
 
         for (int i = 0; i < xExtremis.Count; i++)
@@ -1196,6 +1205,14 @@ public class LevelGeneration : MonoBehaviour
         {
             RayCastDetection(Vector2.down, yExtremis[i].transform.position, new Vector2(posX[posX.Length - 1], posY[0]));
         }
+        this.GetComponent<Core>().SellerStart();
+
+        Transform[] refPos = new Transform[2];
+        refPos[0] = GameObject.Find("RoomReference1(Clone)").GetComponent<Transform>();
+        refPos[1] = GameObject.Find("RoomReference2(Clone)").GetComponent<Transform>();
+
+        //GameObject.Find("Playable_Character").transform.position = GameObject.Find("Spawn_Point").transform.position;
+        player.SetActive(true);
     }
 
     void RoomInstantiate(string roomName, Vector3 pos)
@@ -1265,13 +1282,13 @@ public class LevelGeneration : MonoBehaviour
 
     void RayCastDetection(Vector2 direction, Vector2 pos, Vector2 deep)
     {
+        Debug.Log("ok");
         Transform[] refPos = new Transform[2];
         refPos[0] = GameObject.Find("RoomReference1(Clone)").GetComponent<Transform>();
         refPos[1] = GameObject.Find("RoomReference2(Clone)").GetComponent<Transform>();
 
 
-        RaycastHit2D[] hit = Physics2D.BoxCastAll(pos, new Vector2(0.1f, 0.1f), 0f, direction, nombreDeSalle, roomLayer);
-
+        RaycastHit2D[] hit = Physics2D.BoxCastAll(pos, new Vector2(0.1f, 0.1f), 0f, direction, nombreDeSalle + 3000, roomLayer);
         for (int i = 0; i < hit.Length - 1; i++)
         {
             float[] sizeX = new float[2], sizeY = new float[2], posX = new float[2], posY = new float[2];
@@ -1290,7 +1307,9 @@ public class LevelGeneration : MonoBehaviour
 
             if (direction == Vector2.right)
             {
-                if ((sizeX[0] + sizeX[1]) / 2 > Mathf.Abs(posX[1] - posX[0]))
+                hit[i].collider.GetComponent<tailleDeLaSalle>().teleporteurPosition[1].GetComponent<Teleporteur>().linkedTeleport = hit[i + 1].collider.GetComponent<tailleDeLaSalle>().teleporteurPosition[3];
+                hit[i + 1].collider.GetComponent<tailleDeLaSalle>().teleporteurPosition[3].GetComponent<Teleporteur>().linkedTeleport = hit[i].collider.GetComponent<tailleDeLaSalle>().teleporteurPosition[1];
+                /*if ((sizeX[0] + sizeX[1]) / 2 > Mathf.Abs(posX[1] - posX[0]))
                 {
                     Vector2 start = new Vector2((refPos[0].position.x - posX[0]) / 2 + posX[0], posY[0]);
                     Vector2 size = new Vector2(Mathf.Abs(refPos[0].position.x - posX[0]) + 0.1f, (refPos[0].position.y - deep.y) * 2 + 0.1f);
@@ -1305,11 +1324,13 @@ public class LevelGeneration : MonoBehaviour
                         }
                         refPos[0].position -= new Vector3(newDistance, 0f, 0f);
                     }
-                }
+                }*/
             }
             else
             {
-                if ((sizeY[0] + sizeY[1]) / 2 > Mathf.Abs(posY[1] - posY[0]))
+                hit[i].collider.GetComponent<tailleDeLaSalle>().teleporteurPosition[2].GetComponent<Teleporteur>().linkedTeleport = hit[i + 1].collider.GetComponent<tailleDeLaSalle>().teleporteurPosition[0];
+                hit[i + 1].collider.GetComponent<tailleDeLaSalle>().teleporteurPosition[0].GetComponent<Teleporteur>().linkedTeleport = hit[i].collider.GetComponent<tailleDeLaSalle>().teleporteurPosition[2];
+                /*if ((sizeY[0] + sizeY[1]) / 2 > Mathf.Abs(posY[1] - posY[0]))
                 {
                     Vector2 start = new Vector2(posX[0], (refPos[0].position.y - posY[0]) / 2 + posY[0]);
                     Vector2 size = new Vector2(Mathf.Abs(deep.x - refPos[0].position.x) * 2 + 0.1f, Mathf.Abs(refPos[0].position.y - posY[0]) + 0.1f);
@@ -1326,9 +1347,25 @@ public class LevelGeneration : MonoBehaviour
                         }
                         refPos[0].position += new Vector3(0f, newDistance, 0f);
                     }
-                }
+                }*/
             }
         }
-        this.GetComponent<Core>().SellerStart();
+    }
+
+    void Secoure()
+    {
+        Debug.Log("ok");
+        Transform[] refPos = new Transform[2];
+        refPos[0] = GameObject.Find("RoomReference1(Clone)").GetComponent<Transform>();
+        refPos[1] = GameObject.Find("RoomReference2(Clone)").GetComponent<Transform>();
+
+        float newDistance = (sizeX[0] + sizeX[1]) / 2 + marge;
+
+        Collider2D[] roomCol = Physics2D.OverlapBoxAll(transform.position, new Vector2(10000, 10000), 0f, roomLayer);
+
+        foreach (Collider2D room in roomCol)
+        {
+            room.transform.position *= marge;
+        }
     }
 }

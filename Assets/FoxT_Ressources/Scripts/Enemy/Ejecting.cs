@@ -5,11 +5,12 @@ using UnityEngine;
 public class Ejecting : MonoBehaviour
 {
     public AnimationCurve pousseForce;
+    public Transform spawnPoint;
     public Vector2 direction;
     public float timeElapsed, bonusForce, forcePoussee, mauditBonusPoussee, damage;
     Rigidbody2D rb;
     BoxCollider2D selfCol;
-    public bool pousseeCharmEnable;
+    public bool pousseeCharmEnable, isSpawner;
     [SerializeField]
     LayerMask enemyLayer, wallLayer;
 
@@ -32,6 +33,7 @@ public class Ejecting : MonoBehaviour
     }
 	void Update()
     {
+        if (isSpawner) spawnPoint.localPosition = -direction * 2;
         if (!this.GetComponent<EnemySys>().dying)
         {
             if (pousseForce.Evaluate(timeElapsed) <= 0)

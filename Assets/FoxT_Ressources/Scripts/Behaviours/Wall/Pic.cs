@@ -28,14 +28,14 @@ public class Pic : MonoBehaviour
 	IEnumerator AttackStupideThing(float time, Collider2D obj)
 	{
 
-		yield return new WaitForSeconds(time); //durer animation;
 		if (thing.Contains(obj))
 		{
 			int charmDamage = 0;
 			if (core.luckyCharm) charmDamage = Mathf.RoundToInt(charmDamageBackup);
 			if (obj.gameObject.tag == "Player") obj.GetComponent<Health>().TakeDamage(Mathf.RoundToInt(damage), null);
-			else obj.GetComponent<EnemySys>().TakeDamage(Mathf.RoundToInt(damage) + Mathf.RoundToInt(damage * charmDamage), 0f);
+			else obj.GetComponent<EnemySys>().TakeDamage(Mathf.RoundToInt(damage) + Mathf.RoundToInt(damage * charmDamage), 1f);
 			StartCoroutine(AttackStupideThing(time, obj));
 		}
+		yield return new WaitForSeconds(time); //durer animation;
 	}
 }

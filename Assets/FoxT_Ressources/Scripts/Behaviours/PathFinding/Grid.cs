@@ -20,6 +20,7 @@ public class Grid : MonoBehaviour
 		nodeDiamater = nodeRadius * 2;
 		gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiamater);
 		gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiamater);
+		objectLinked = GameObject.Find("Playable_Character").GetComponent<Transform>();
 		CreateGrid();
 	}
 

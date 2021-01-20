@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc14da8a0c17e5419ee6570a9e969de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sixeX: 1
-  sizeY: 1
+  sixeX: 10
+  sizeY: 10
 --- !u!61 &-9184303029026671263
 BoxCollider2D:
   m_ObjectHideFlags: 0

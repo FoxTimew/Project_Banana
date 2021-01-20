@@ -26,9 +26,9 @@ public class EnnemyLoot : MonoBehaviour
 		self = this.GetComponent<Transform>();
 	}
 
-	int chance;
 	public void Loot()
 	{
+		int chance;
 		Object.Instantiate(bourseObject, transform.position, transform.rotation);
 		
 		chance = Random.Range(1, 101);

@@ -35,7 +35,7 @@ public class Pic_Sys : MonoBehaviour
                 }
                 else
                 {
-                    collision.GetComponent<EnemySys>().TakeDamage(damage, 0f);
+                    collision.GetComponent<EnemySys>().TakeDamage(damage, 0.5f);
                     if (collision.GetComponent<EnemySys>().health == 0) obj.Remove(collision);
                 }
             }
@@ -84,7 +84,7 @@ public class Pic_Sys : MonoBehaviour
             }
             else
             {
-                obj[i].GetComponent<EnemySys>().TakeDamage(damage, 0f);
+                obj[i].GetComponent<EnemySys>().TakeDamage(damage, 0.5f);
                 if (obj[i].GetComponent<EnemySys>().health == 0)
                 {
                     obj.Remove(obj[i]);

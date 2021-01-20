@@ -17,6 +17,7 @@ public class CollectibleSys : MonoBehaviour
 			data.gold += gold;
 			data.cristal+= cristal;
 			data.meaudite += maudite;
+			GameObject.Find("UI_InGame").GetComponentInChildren<InventoryManager>().MoneyUpdateAnimation();
 			Destroy(this.gameObject);
 		}
 	}

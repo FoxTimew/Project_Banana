@@ -9,7 +9,7 @@ public class Controler : MonoBehaviour
 
     float dashingTimeElapsed;
 
-    public bool isDashing, isAttacking, isEjected, isTouched, isDie, refusDeLaMort, refusDeLaMortCheck, waitForDying, isInteracting, isSpecialing, SpecialOn, isParrying, ejectionCancel, isReposting;
+    public bool isDashing, isAttacking, isEjected, isTouched, isDie, refusDeLaMort, refusDeLaMortCheck, waitForDying, isInteracting, isSpecialing, SpecialOn, isParrying, ejectionCancel, isReposting, isDebuging;
 
     public AnimationCurve dashCurve = AnimationCurve.Constant(0f, 0.25f, 1f);
 
@@ -43,8 +43,11 @@ public class Controler : MonoBehaviour
 
     public Vector2 direction;
 
-    public int combos {get { return attack.combos; } }
-    public bool attackBlocked {get { return attack.attackBlocked; } }
+    public int combos { get { return attack.combos; } }
+    public bool attackBlocked { get { return attack.attackBlocked; } }
+
+    [SerializeField]
+    GameObject DebugCanvas;
 
     void Start()
     {
@@ -94,6 +97,20 @@ public class Controler : MonoBehaviour
 
 	void InputHandler()
     {
+        if (Input.GetKeyDown(KeyCode.Tab) && !isDebuging)
+        {
+            Time.timeScale = 0f;
+            isDebuging = true;
+            DebugCanvas.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab) && isDebuging)
+        {
+            Time.timeScale = 1f;
+            isDebuging = false;
+            DebugCanvas.SetActive(false);
+        }
+
         moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         movement = Vector3.Normalize(moveInput) * vitesse;

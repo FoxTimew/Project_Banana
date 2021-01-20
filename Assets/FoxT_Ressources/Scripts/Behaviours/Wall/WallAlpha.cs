@@ -39,7 +39,6 @@ public class WallAlpha : MonoBehaviour
         float alpha = sprite.color.a;
         if (alpha >= 0.39f)
         {
-            Debug.Log(alpha);
             sprite.color -= new Color(0f, 0f, 0f, transition * Time.deltaTime);
             StartCoroutine(AlphaTransitionOn());
         }
