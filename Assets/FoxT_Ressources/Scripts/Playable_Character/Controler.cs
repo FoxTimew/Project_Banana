@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class Controler : MonoBehaviour
 {
@@ -298,6 +299,7 @@ public class Controler : MonoBehaviour
                 // animationLeft
                 ChangeAnimationState(animName[25]);
             }
+
         }
     }
 

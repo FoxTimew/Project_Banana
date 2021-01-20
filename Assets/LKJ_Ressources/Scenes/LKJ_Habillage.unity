@@ -7400,7 +7400,7 @@ SpriteRenderer:
   m_Size: {x: 56, y: 34.75}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &424503926
@@ -9702,7 +9702,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -5
-  m_Sprite: {fileID: 21300000, guid: 6d8641075f638e8479d9598d069db040, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 06fd902c8fe4eee44866d21a1aef9ed6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -14578,15 +14578,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -5
-  m_Sprite: {fileID: 21300000, guid: de04afbfaed83b84fa94855cdfa311dd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6cd22e015278c2d47a36ef5346ea7f5c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 55, y: 34.75}
+  m_Size: {x: 56, y: 34.75}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &827063562
@@ -20217,7 +20217,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -5
-  m_Sprite: {fileID: 21300000, guid: 8d8f7fefe9fa8dd47a852acb45d5fabd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 886b9274ead2dcc4386794ab5b1d78b3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -32697,7 +32697,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -5
-  m_Sprite: {fileID: 21300000, guid: 32ff66739c9ad564490ff6097639a5ef, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 51f31faf037aaf6449d07520aa708564, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
