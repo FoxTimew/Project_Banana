@@ -9,16 +9,21 @@ public class SpeakBox : MonoBehaviour
     public string Dialogue;
     public bool DialogueActive;
     public int LettersPerSecond;
+    public GameObject sprite;
+    public Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        
+        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             DialogueActive = true;
+            anim.SetBool("ici", true);
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -27,6 +32,7 @@ public class SpeakBox : MonoBehaviour
         {
             DialogueActive = false;
             DialogueBox.SetActive(false);
+            anim.SetBool("ici", false);
         }
     }
 
@@ -43,7 +49,12 @@ public class SpeakBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && (DialogueActive = true))
+        if (DialogueActive == true)
+        {
+            Debug.Log("RIP");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && (DialogueActive == true))
         {
             if (DialogueBox.activeInHierarchy)
             {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Upgrade : MonoBehaviour
 {
     [SerializeField]
-    GameObject [] barre, barrePleine;
+    GameObject [] barre, barrePleine, prix;
     [SerializeField]
     int[] price;
     public int moula = 0;
@@ -18,6 +18,7 @@ public class Upgrade : MonoBehaviour
     public void OnClick()
     {
         IsPoorCheck();
+        Debug.Log("je click");
     }
 
     public void IsPoorCheck()
@@ -26,6 +27,8 @@ public class Upgrade : MonoBehaviour
         {
             moula -= price[index];
             barrePleine[index].SetActive(true);
+            prix[index].SetActive(false);
+            prix[index +1].SetActive(true);
             index++;
         }
         else
