@@ -99,12 +99,11 @@ public class Controler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab) && !isDebuging)
         {
+            DebugCanvas.SetActive(true);
             Time.timeScale = 0f;
             isDebuging = true;
-            DebugCanvas.SetActive(true);
         }
-
-        if (Input.GetKeyDown(KeyCode.Tab) && isDebuging)
+        else if (Input.GetKeyDown(KeyCode.Tab) && isDebuging)
         {
             Time.timeScale = 1f;
             isDebuging = false;
