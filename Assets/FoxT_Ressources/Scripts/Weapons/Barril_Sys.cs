@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class Barril_Sys : MonoBehaviour
 {
@@ -94,8 +95,10 @@ public class Barril_Sys : MonoBehaviour
     IEnumerator ExplosionDelay()
     {
         ChangeAnimationState(explosionState);
+        CameraShaker.Instance.ShakeOnce(3f, 5f, 0f, 2f);
         yield return new WaitForSeconds(dureeAnimation);
         Destroy(this.gameObject);
+        
     }
 
     void PousseeEnnemi()

@@ -138,6 +138,8 @@ public class Special_Attack : MonoBehaviour
         yield return new WaitForSeconds(animationDelay);
         EjectingOn(tag);
         enemy = null;
+       
+        CameraShaker.Instance.Shake(CameraShakePresets.CameraKick);
         control.isSpecialing = false;
     }
 

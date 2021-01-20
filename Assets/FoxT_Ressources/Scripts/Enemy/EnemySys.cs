@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class EnemySys : MonoBehaviour
 {
@@ -350,6 +351,7 @@ public class EnemySys : MonoBehaviour
         isExplosing = true;
         if (lastDirectionState == runLeft) ChangeAnimationState(explosionLeft);
         else ChangeAnimationState(explosionRight);
+        CameraShaker.Instance.ShakeOnce(3f, 5f, 0f, 2f);
         yield return new WaitForSeconds(dureeAnimation);
 
         Collider2D[] pc = Physics2D.OverlapCircleAll(checkPoint.position, range, kamikazeLayer);

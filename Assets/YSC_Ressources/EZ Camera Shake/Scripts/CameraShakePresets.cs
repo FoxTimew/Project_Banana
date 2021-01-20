@@ -107,7 +107,7 @@ namespace EZCameraShake
         {
             get
             {
-                CameraShakeInstance c = new CameraShakeInstance(2f, 1, 0.1f, 0.1f);
+                CameraShakeInstance c = new CameraShakeInstance(3f, 1, 0.1f, 0.1f);
                 c.PositionInfluence = GameObject.Find("Playable_Character").GetComponent<Controler>().currentDirection;
                 c.RotationInfluence = Vector3.zero;
                 return c;
