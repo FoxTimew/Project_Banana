@@ -24741,6 +24741,7 @@ MonoBehaviour:
   isParrying: 0
   ejectionCancel: 0
   isReposting: 0
+  isDebuging: 0
   dashCurve:
     serializedVersion: 2
     m_Curve:
@@ -24788,6 +24789,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   direction: {x: 0, y: 0}
+  DebugCanvas: {fileID: 0}
 --- !u!114 &6095708046509743476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24855,6 +24857,7 @@ MonoBehaviour:
   RefusDeLaMort: 0
   berzerkCharm: 0
   mLootCharm: 0
+  godeMode: 0
   charmValue: 0
   stats: {fileID: 11400000, guid: 8d6b9042323755644bef9f7f4a1aae14, type: 2}
   maxHealth: 0
