@@ -591,6 +591,7 @@ MonoBehaviour:
   spawnDone: 0
   dyingdone: 0
   isExplosing: 0
+  enemyTuto: 0
   enemyToSpawn: []
   Spawner: {fileID: 0}
   idleLeft: IDDLE_SIDE_LEFT_Kamikaze
@@ -919,6 +920,7 @@ MonoBehaviour:
   spawnDone: 0
   dyingdone: 0
   isExplosing: 0
+  enemyTuto: 0
   enemyToSpawn: []
   Spawner: {fileID: 0}
   idleLeft: IDDLE_SIDE_LEFT_Guardian
@@ -1207,6 +1209,7 @@ MonoBehaviour:
   spawnDone: 0
   dyingdone: 0
   isExplosing: 0
+  enemyTuto: 0
   enemyToSpawn: []
   Spawner: {fileID: 0}
   idleLeft: IDLE_SIDE_Left
@@ -1938,6 +1941,7 @@ MonoBehaviour:
   spawnDone: 0
   dyingdone: 0
   isExplosing: 0
+  enemyTuto: 0
   enemyToSpawn:
   - {fileID: 4684751923161462005, guid: a04b264fb96abd847bc3241340fdc0ef, type: 3}
   - {fileID: 4769159736453915945, guid: 345fadb831f26574293dc6b577026c90, type: 3}
@@ -2700,6 +2704,7 @@ MonoBehaviour:
   spawnDone: 0
   dyingdone: 0
   isExplosing: 0
+  enemyTuto: 0
   enemyToSpawn: []
   Spawner: {fileID: 0}
   idleLeft: IDDLE_SIDE_LEFT_GuardianArmor
@@ -4247,6 +4252,7 @@ MonoBehaviour:
   spawnDone: 0
   dyingdone: 0
   isExplosing: 0
+  enemyTuto: 0
   enemyToSpawn: []
   Spawner: {fileID: 0}
   idleLeft: IDDLE_SIDE_LEFT_Souffleur
@@ -7451,6 +7457,7 @@ MonoBehaviour:
   spawnDone: 0
   dyingdone: 0
   isExplosing: 0
+  enemyTuto: 0
   enemyToSpawn: []
   Spawner: {fileID: 0}
   idleLeft: IDLE_SIDE_LEFT_Guerrier
