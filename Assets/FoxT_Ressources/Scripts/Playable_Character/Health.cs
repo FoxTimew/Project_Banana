@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public bool RefusDeLaMort, berzerkCharm, mLootCharm;
+    public bool RefusDeLaMort, berzerkCharm, mLootCharm, godeMode;
     public float charmValue;
 
     public PlayableCharacterInfos stats;
@@ -40,6 +40,7 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage, Collider2D col)
     {
+        if (godeMode) return;
         if (isParrying)
         {
             if (damage > 0)
