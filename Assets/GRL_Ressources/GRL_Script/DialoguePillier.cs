@@ -43,7 +43,7 @@ public class DialoguePillier : MonoBehaviour
     {
         if (DialogueActive == true && (Parle == false))
         {
-            Aupif = Random.Range(1, 5);
+            Aupif = Random.Range(1, 12);
             Parle = true;
             Debug.Log(Aupif);
 
