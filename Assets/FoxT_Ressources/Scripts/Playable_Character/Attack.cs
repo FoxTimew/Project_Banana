@@ -81,12 +81,12 @@ public class Attack : MonoBehaviour
         dammageBonus = new float[6];
     }
 
-	private void Update()
-	{
+    private void Update()
+    {
         if (ghostAttack) AttackSysteme();
-	}
+    }
 
-	public void AttackSysteme()
+    public void AttackSysteme()
     {
         if (attackBlocked && controler.isAttacking)
         {
@@ -96,14 +96,18 @@ public class Attack : MonoBehaviour
         else if (attackBlocked) return;
         ghostAttack = false;
         if (ghostAttackCoroutine != null) StopCoroutine(ghostAttackCoroutine);
+        FindObjectOfType<AudioManager>().Play("SFX_PC_AttackCC1");
         Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.position, range, enemyLayer);
         if (enemy == null) return;
         foreach (Collider2D enemyTouche in enemy)
         {
-            int finalDamage = Mathf.RoundToInt((damageCombos[combos] + force +  dammageBonus[0]) + (damageCombos[combos] + force + dammageBonus[0]) * berzerkValue);
+            int finalDamage = Mathf.RoundToInt((damageCombos[combos] + force + dammageBonus[0]) + (damageCombos[combos] + force + dammageBonus[0]) * berzerkValue);
             if (enemyTouche.tag == "Enemy")
             {
                 enemyTouche.gameObject.GetComponent<EnemySys>().TakeDamage(finalDamage, stunTime[combos]);
+                FindObjectOfType<AudioManager>().Play("SFX_PC_AttackCC2");
+
+
                 PousseeEnnemi(pousseeCombos[combos], enemyTouche.gameObject, attackPoint);
             }
             else if (enemyTouche.tag == "BossHand" && (enemyTouche.gameObject.name == "Main_1" || enemyTouche.gameObject.name == "Main_0"))
@@ -197,7 +201,7 @@ public class Attack : MonoBehaviour
         if (enemyCharm == null) return;
         foreach (Collider2D obj in enemyCharm)
         {
-            if (causticCharmPourcent) obj.gameObject.GetComponent<EnemySys>().TakeDamage(Mathf.RoundToInt(damage * (charmCausticValue /100)), 0f);
+            if (causticCharmPourcent) obj.gameObject.GetComponent<EnemySys>().TakeDamage(Mathf.RoundToInt(damage * (charmCausticValue / 100)), 0f);
             else obj.gameObject.GetComponent<EnemySys>().TakeDamage(Mathf.RoundToInt(charmCausticValue), 0f);
         }
     }
@@ -249,12 +253,12 @@ public class Attack : MonoBehaviour
         Debug.Log(Mathf.RoundToInt((damageCombos[combos] + force + dammageBonus[0]) + (damageCombos[combos] + force + dammageBonus[0]) * berzerkValue));
     }
 
-	private void OnDrawGizmos()
-	{
+    private void OnDrawGizmos()
+    {
         Gizmos.color = Color.green;
 
         Gizmos.DrawWireSphere(attackPoint.position, range);
-	}
+    }
 
     void GhostAttack()
     {

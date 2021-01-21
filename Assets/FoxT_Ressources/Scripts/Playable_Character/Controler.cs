@@ -95,12 +95,12 @@ public class Controler : MonoBehaviour
         else Ejecting();
     }
 
-	private void LateUpdate()
-	{
+    private void LateUpdate()
+    {
         ejectionCancel = false;
-	}
+    }
 
-	void InputHandler()
+    void InputHandler()
     {
         if (Input.GetKeyDown(KeyCode.Tab) && !isDebuging)
         {
@@ -116,11 +116,9 @@ public class Controler : MonoBehaviour
         }
 
         moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
         movement = Vector3.Normalize(moveInput) * vitesse;
 
         if (Input.GetButtonDown("Dash") && !isAttacking && !SpecialOn) DashTest();
-
         if (Input.GetButtonDown("Attack") && !SpecialOn) AttackTest();
 
         if (Input.GetButtonDown("Interaction") && !isAttacking && !SpecialOn && !isDashing) isInteracting = true;
@@ -183,7 +181,7 @@ public class Controler : MonoBehaviour
     {
         if (isAttacking) return;
         AttackStart();
-        
+
     }
 
     void AttackStart()
@@ -225,25 +223,43 @@ public class Controler : MonoBehaviour
                 ChangeAnimationState(animName[13]);
             }
         }
-        else if ((playerDirection.x > 0 && playerDirection.y <= 0.71f && playerDirection.y >= -0.71f) && !attackBlocked && !SpecialOn &&!isEjected && !isParrying)
+        else if ((playerDirection.x > 0 && playerDirection.y <= 0.71f && playerDirection.y >= -0.71f) && !attackBlocked && !SpecialOn && !isEjected && !isParrying)
         {
             if (isDashing) ChangeAnimationState(animName[15]);
-            else ChangeAnimationState(animName[1]);
+
+            else
+            {
+                //  FindObjectOfType<AudioManager>().Play("SFX_PC_Dash");
+                ChangeAnimationState(animName[1]);
+                FindObjectOfType<AudioManager>().Play("SFX_PC_FootStepVrairet1");
+            }
         }
         else if ((playerDirection.x < 0 && playerDirection.y <= 0.71f && playerDirection.y >= -0.71f) && !attackBlocked == !SpecialOn && !isEjected && !isParrying)
         {
             if (isDashing) ChangeAnimationState(animName[17]);
-            else ChangeAnimationState(animName[3]);
+            else
+            {
+                ChangeAnimationState(animName[3]);
+                FindObjectOfType<AudioManager>().Play("SFX_PC_FootStepVrairet1");
+            }
         }
         else if ((playerDirection.y > 0 && playerDirection.x <= 0.71f && playerDirection.x >= -0.7f) && !attackBlocked && !SpecialOn && !isEjected && !isParrying)
         {
             if (isDashing) ChangeAnimationState(animName[14]);
-            else ChangeAnimationState(animName[0]);
+            else
+            {
+                ChangeAnimationState(animName[0]);
+                FindObjectOfType<AudioManager>().Play("SFX_PC_FootStepVrairet1");
+            }
         }
         else if ((playerDirection.y < 0 && playerDirection.x <= 0.71f && playerDirection.x >= -0.71f) && !attackBlocked && !SpecialOn && !isEjected && !isParrying)
         {
             if (isDashing) ChangeAnimationState(animName[16]);
-            else ChangeAnimationState(animName[2]);
+            else
+            {
+                ChangeAnimationState(animName[2]);
+                FindObjectOfType<AudioManager>().Play("SFX_PC_FootStepVrairet1");
+            }
         }
         else if (playerDirection == Vector2.zero && !attackBlocked && !SpecialOn && !isEjected && !isParrying)
         {
@@ -302,6 +318,7 @@ public class Controler : MonoBehaviour
             pcRB.velocity = Vector2.zero;
             if (lastDirectionState == animName[0])
             {
+
                 // animationUP
                 ChangeAnimationState(animName[33]);
             }
@@ -376,6 +393,7 @@ public class Controler : MonoBehaviour
 
     IEnumerator HitAnimation()
     {
+        FindObjectOfType<AudioManager>().Play("SFX_PC_GetDamage");
         yield return new WaitForSeconds(0.25f);
         isTouched = false;
     }
@@ -457,7 +475,7 @@ public class Controler : MonoBehaviour
     {
         if (!isReposting && isParrying)
         {
-        Debug.Log("parade");
+            Debug.Log("parade");
             pcRB.velocity = Vector2.zero;
             if (lastDirectionState == animName[0])
             {

@@ -20,15 +20,15 @@ public class Health : MonoBehaviour
     public int resistance, resistanceBonus;
 
     Controler controler;
-    bool isParrying {get{ return controler.isParrying; } }
+    bool isParrying { get { return controler.isParrying; } }
 
-	private void Awake()
-	{
+    private void Awake()
+    {
         UI_Life = GameObject.Find("Main Camera").GetComponentInChildren<InventoryManager>();
         controler = GetComponent<Controler>();
-	}
+    }
 
-	void Start()
+    void Start()
     {
         maxHealth = stats.HP;
         health = maxHealth;
@@ -47,7 +47,7 @@ public class Health : MonoBehaviour
         {
             if (damage > 0)
             {
-                if(col.tag == "Enemy") col.GetComponent<EnemySys>().TakeDamage(1, 0f);
+                if (col.tag == "Enemy") col.GetComponent<EnemySys>().TakeDamage(1, 0f);
                 else if (col.tag == "BossHand" && (col.gameObject.name == "Main_1" || col.gameObject.name == "Main_0")) col.gameObject.GetComponent<PoinAttaque>().TakeDammage(attack.force);
                 else if (col.tag == "BossHand" && (col.gameObject.name == "Main_2" || col.gameObject.name == "Main_3")) col.gameObject.GetComponent<SlapAttaque>().TakeDammage(attack.force);
                 controler.ejectionCancel = true;
@@ -83,7 +83,7 @@ public class Health : MonoBehaviour
             {
                 this.GetComponent<Controler>().refusDeLaMort = true;
                 this.GetComponent<Controler>().isDie = true;
-                StartCoroutine(Rebirth(10)); 
+                StartCoroutine(Rebirth(10));
             }
         }
         if (berzerkCharm) BerzerkUpdate();
@@ -107,6 +107,7 @@ public class Health : MonoBehaviour
     void Die()
     {
         this.GetComponent<Controler>().isDie = true;
+        FindObjectOfType<AudioManager>().Play("SFX_PC_Die");
         StartCoroutine(DieTP());
     }
 

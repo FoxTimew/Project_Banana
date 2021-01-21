@@ -17,7 +17,7 @@ public class Special_Attack : MonoBehaviour
     float slowdownFactor = .05f, backToNormalTransition, maxDuration;
 
     bool isSpecialing { get { return control.isSpecialing; } }
-    
+
     public bool isSlowMotion;
 
     [SerializeField]
@@ -41,6 +41,7 @@ public class Special_Attack : MonoBehaviour
         if (isSpecialing && !isSlowMotion)
         {
             Collider2D enemi = Physics2D.OverlapCircle(attackPoint.position, 2f, enemyLayer);
+            FindObjectOfType<AudioManager>().Play("SFX_PC_AttackCR1");
             if (enemi == null) return;
             enemy = enemi;
             SlowMotionStart();
@@ -138,7 +139,7 @@ public class Special_Attack : MonoBehaviour
         yield return new WaitForSeconds(animationDelay);
         EjectingOn(tag);
         enemy = null;
-       
+
         CameraShaker.Instance.Shake(CameraShakePresets.CameraKick);
         control.isSpecialing = false;
     }
@@ -148,12 +149,12 @@ public class Special_Attack : MonoBehaviour
         if (tag == "Enemy")
         {
             enemy.GetComponent<Ejecting>().direction = direction;
-        enemy.GetComponent<Ejecting>().pousseForce = this.GetComponent<Attack>().pousseeSpecial;
-        enemy.GetComponent<Ejecting>().bonusForce = this.GetComponent<Attack>().forceBonus;
-        enemy.GetComponent<Ejecting>().forcePoussee = this.GetComponent<Attack>().pousseeForce;
-        enemy.GetComponent<Ejecting>().mauditBonusPoussee = this.GetComponent<Attack>().mCharmPousseeValue / 100;
-        enemy.GetComponent<Ejecting>().timeElapsed = 0f;
-        enemy.GetComponent<Ejecting>().enabled = true;
+            enemy.GetComponent<Ejecting>().pousseForce = this.GetComponent<Attack>().pousseeSpecial;
+            enemy.GetComponent<Ejecting>().bonusForce = this.GetComponent<Attack>().forceBonus;
+            enemy.GetComponent<Ejecting>().forcePoussee = this.GetComponent<Attack>().pousseeForce;
+            enemy.GetComponent<Ejecting>().mauditBonusPoussee = this.GetComponent<Attack>().mCharmPousseeValue / 100;
+            enemy.GetComponent<Ejecting>().timeElapsed = 0f;
+            enemy.GetComponent<Ejecting>().enabled = true;
         }
         else enemy.GetComponent<Barril_Sys>().EjectingStart(this.GetComponent<Attack>().pousseeSpecial, direction);
     }
