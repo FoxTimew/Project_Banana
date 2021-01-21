@@ -350,36 +350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db24858f7e3b7045ac7dbd3fdd3bc1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vitesse: 400
-  isDashing: 0
-  isAttacking: 0
-  dashCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.25
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  attackPoint: {fileID: 2096525513}
-  attack: {fileID: 84708073}
-  anim: {fileID: 84708075}
 --- !u!114 &84708073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,15 +367,41 @@ MonoBehaviour:
   pousseeCombos: []
   stunTime: []
   damageSpecial: 0
-  pousseeSpecial: 0
+  pousseeSpecial:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   range: 0
   attackPoint: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
   annulerCombosTemps: 0
+  annulerCharmCombosTemps: 0
+  charmCausticRadius: 0
+  charmCausticValue: 0
+  berzerkValue: 0
   vitesse: 0
+  forceBonus: 0
+  pousseeForce: 0
+  charmCombosDamage: 0
+  mCharmPousseeValue: 0
+  volDeVieValue: 0
+  dammageBonus: []
   combos: 0
+  force: 0
+  charmCombos: 1
+  charmCombosEnable: 0
+  causticCharmEnable: 0
+  causticCharmPourcent: 0
+  combosCharmEnable: 0
+  volDeVieCharm: 0
+  attackBlocked: 0
+  ghostAttack: 0
+  dureeGhostAttack: 0
+  animationDelay: 0
 --- !u!50 &84708074
 Rigidbody2D:
   serializedVersion: 4
@@ -815,6 +811,8 @@ MonoBehaviour:
   Dialogue: "On d\xE9signe aussi plus famili\xE8rement le chat par minet"
   DialogueActive: 0
   LettersPerSecond: 40
+  sprite: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!61 &190990490
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -922,7 +920,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &214822222
 GameObject:
@@ -939,7 +937,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &214822223
 Transform:
   m_ObjectHideFlags: 0
@@ -1418,11 +1416,6 @@ Transform:
   m_Father: {fileID: 214822223}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &412406816 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1650877034394063057, guid: 24216d4cf15e1ae4e84a554bdbae8df0, type: 3}
-  m_PrefabInstance: {fileID: 608995636}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &474904463
 GameObject:
   m_ObjectHideFlags: 0
@@ -2254,6 +2247,56 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24216d4cf15e1ae4e84a554bdbae8df0, type: 3}
+--- !u!1 &612884779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 612884781}
+  - component: {fileID: 612884780}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &612884780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612884779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5917a5f73b54d4d8868355bbca866a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: gitan
+    clip: {fileID: 8300000, guid: 27909c534c519a6498710ac0a0b79184, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+--- !u!4 &612884781
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612884779}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.9291793, y: -0.107619174, z: -0.33955544}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &620902649
 GameObject:
   m_ObjectHideFlags: 0
@@ -3964,7 +4007,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8879796d5c41e2c4e8c77c8002eefd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 0}
 --- !u!4 &1131018143
 Transform:
   m_ObjectHideFlags: 0
@@ -5876,7 +5918,7 @@ GameObject:
   - component: {fileID: 1806739297}
   m_Layer: 0
   m_Name: Background
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7585,7 +7627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TeleportPoint: {fileID: 620902650}
-  Player: {fileID: 412406816}
+  Player: {fileID: 0}
 --- !u!4 &2050756936
 Transform:
   m_ObjectHideFlags: 0
@@ -7643,11 +7685,6 @@ Transform:
   m_Father: {fileID: 1396983952}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &2096525513 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1650877036363865711, guid: 24216d4cf15e1ae4e84a554bdbae8df0, type: 3}
-  m_PrefabInstance: {fileID: 608995636}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2145728364
 GameObject:
   m_ObjectHideFlags: 0

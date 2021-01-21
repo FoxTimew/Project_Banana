@@ -15,8 +15,8 @@ public class SpeakBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        
+
+       
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -24,6 +24,8 @@ public class SpeakBox : MonoBehaviour
         {
             DialogueActive = true;
             anim.SetBool("ici", true);
+            FindObjectOfType<AudioManager>().Play("gitan");
+            Debug.Log("ouiiii");
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -51,7 +53,7 @@ public class SpeakBox : MonoBehaviour
     {
         if (DialogueActive == true)
         {
-            Debug.Log("RIP");
+            
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && (DialogueActive == true))

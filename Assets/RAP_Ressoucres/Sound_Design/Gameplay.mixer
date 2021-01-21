@@ -53,7 +53,7 @@ AudioMixerController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NewAudioMixer
+  m_Name: Gameplay
   m_OutputGroup: {fileID: 0}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
@@ -121,7 +121,7 @@ AudioMixerSnapshotController:
   m_SnapshotID: aecf1f7d097ca494ca2dffff7a51d44b
   m_FloatValues:
     15bee4614e61aa94d916854e8890642d: -0.16685188
-    d82fc0368beaa3146bf27786defdf6af: 0.10800299
+    d82fc0368beaa3146bf27786defdf6af: 20
   m_TransitionOverrides: {}
 --- !u!243 &781873216544147650
 AudioMixerGroupController:
