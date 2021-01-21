@@ -15,7 +15,7 @@ MonoBehaviour:
   enemy: 6
   sprite: {fileID: 0}
   hp: 30
-  attack: 10
+  attack: 5
   range: 1
   poussee:
     serializedVersion: 2
@@ -46,4 +46,4 @@ MonoBehaviour:
   stunReduction:
   - 0
   vitesseDisplacement: 250
-  vitesseAttack: 1.5
+  vitesseAttack: 2.5

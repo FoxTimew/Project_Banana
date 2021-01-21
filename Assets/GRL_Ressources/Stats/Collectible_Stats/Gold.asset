@@ -17,6 +17,6 @@ MonoBehaviour:
   - bourse: 25
     probability: 50
   - bourse: 50
-    probability: 35
+    probability: 85
   - bourse: 75
-    probability: 15
+    probability: 100

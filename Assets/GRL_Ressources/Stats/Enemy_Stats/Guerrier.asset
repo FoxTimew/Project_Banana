@@ -15,7 +15,7 @@ MonoBehaviour:
   enemy: 0
   sprite: {fileID: 21300000, guid: 90e49b28e299ac34bb6c31b6fb7f175c, type: 3}
   hp: 30
-  attack: 5
+  attack: 2
   range: 0.75
   poussee:
     serializedVersion: 2
@@ -46,4 +46,4 @@ MonoBehaviour:
   stunReduction:
   - 0
   vitesseDisplacement: 250
-  vitesseAttack: 2
+  vitesseAttack: 3
