@@ -799,7 +799,7 @@ MonoBehaviour:
   - {fileID: 29742668}
   - {fileID: 1234327192}
   price: 280000003c00000050000000
-  value: 0a0000000500000005000000
+  value: 010000000100000001000000
   moula: 1000
   boutton: {fileID: 1469288944}
   save: {fileID: 11400000, guid: 1bf7ce190904319489dac686d7848b2e, type: 2}
@@ -10049,7 +10049,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +20
+  m_Text: +30%
 --- !u!222 &323239457
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10128,7 +10128,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +10
+  m_Text: +10%
 --- !u!222 &329160883
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11268,7 +11268,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: -15
+  m_Text: -20%
 --- !u!222 &560827422
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11798,7 +11798,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +15
+  m_Text: +20%
 --- !u!222 &717289826
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14352,6 +14352,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1169064162}
   m_CullTransparentMesh: 0
+--- !u!1001 &1169654080
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 671455514094779064, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: sounds.Array.data[3].volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779065, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.9291793
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779065, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.107619174
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779065, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.33955544
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779065, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779065, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779065, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779065, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779065, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779065, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779065, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779065, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671455514094779071, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
+      propertyPath: m_Name
+      value: AudioManager Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0e4dacf5216f65a448c1850172e586a5, type: 3}
 --- !u!1 &1234327192
 GameObject:
   m_ObjectHideFlags: 0
@@ -17375,7 +17436,7 @@ MonoBehaviour:
   - {fileID: 1839514103}
   - {fileID: 349392052}
   price: 1e0000003c00000050000000
-  value: 0a0000000500000005000000
+  value: 020000000300000005000000
   moula: 1000
   boutton: {fileID: 233224248}
   save: {fileID: 11400000, guid: 1bf7ce190904319489dac686d7848b2e, type: 2}
@@ -18417,7 +18478,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: -20
+  m_Text: -30%
 --- !u!222 &1782462234
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19324,7 +19385,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: -10
+  m_Text: -10%
 --- !u!222 &1920478289
 CanvasRenderer:
   m_ObjectHideFlags: 0
