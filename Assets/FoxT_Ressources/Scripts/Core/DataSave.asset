@@ -13,33 +13,33 @@ MonoBehaviour:
   m_Name: DataSave
   m_EditorClassIdentifier: 
   gold: 0
-  cristal: 99519
+  cristal: 99521
   meaudite: 1000
-  niveauCombos: 1
+  niveauCombos: 0
   niveauDash: 0
-  niveauDegatInflige: 0
+  niveauDegatInflige: 1
   niveauMDegatInflige: 0
   niveauExplosion: 0
-  niveauLoot: 1
+  niveauLoot: 0
   niveauMLoot: 0
-  niveauMaxHP: 1
-  niveauPoussee: 1
+  niveauMaxHP: 0
+  niveauPoussee: 0
   niveauMPoussee: 0
   niveauRefus: 0
-  niveauResistance: 2
+  niveauResistance: 0
   niveauMVoldeVie: 0
-  niveauVulnerabilite: 1
-  combienCombos: 0
+  niveauVulnerabilite: 0
+  combienCombos: 3
   combienDash: 0
-  combienDegatInflige: 0
+  combienDegatInflige: 1
   combienMDegatInfligee: 0
-  combienExplosion: 0
-  combienLoot: 0
+  combienExplosion: 1
+  combienLoot: 1
   combienMLoot: 0
-  combienMaxHP: 0
-  combienPoussee: 0
+  combienMaxHP: 1
+  combienPoussee: 1
   combienMPoussee: 0
-  combienRefus: 0
-  combienResistance: 0
+  combienRefus: 2
+  combienResistance: 1
   combienVolDeVie: 0
-  combienVulnerabilite: 0
+  combienVulnerabilite: 1

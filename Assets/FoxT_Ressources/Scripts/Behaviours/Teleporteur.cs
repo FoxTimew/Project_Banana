@@ -21,7 +21,7 @@ public class Teleporteur : MonoBehaviour
 
 	Animator anim;
 
-	private void Awake()
+	private void Start()
 	{
 		transition = GameObject.Find("SceneTransition").GetComponent<DisableCanvas>();
 		anim = GetComponent<Animator>();
