@@ -39,6 +39,7 @@ public class SlapAttaque : MonoBehaviour
 	private void Start()
 	{
 		endAnimation = false;
+		player = GameObject.Find("Playable_Character").GetComponent<Transform>();
 	}
 
 	private void FixedUpdate()

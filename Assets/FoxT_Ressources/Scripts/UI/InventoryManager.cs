@@ -46,11 +46,10 @@ public class InventoryManager : MonoBehaviour
 	{
 		text[0].text = data.gold.ToString();
 		text[1].text = data.cristal.ToString();
-		text[2].text = data.meaudite.ToString();
 	}
 
 	public void HealthDisplay(int health)
 	{
-		text[3].text = health.ToString();
+		text[2].text = health.ToString();
 	}
 }

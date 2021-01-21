@@ -15,7 +15,8 @@ public class WallReboundW : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<Controler>().isEjected)
             {
-                if(collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(-1, -1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(-1, 1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == Vector2.left)
+                collision.GetComponent<Health>().TakeDamage(5, null);
+                if (collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(-1, -1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == new Vector2(-1, 1).normalized || collision.gameObject.GetComponent<Controler>().pousseeDirection == Vector2.left)
                 {
                     DirectionAtribution(collision, 1);
                 }
@@ -27,6 +28,7 @@ public class WallReboundW : MonoBehaviour
             {
                 if (collision.gameObject.GetComponent<Ejecting>().direction == new Vector2(-1, -1).normalized || collision.gameObject.GetComponent<Ejecting>().direction == new Vector2(-1, 1).normalized || collision.gameObject.GetComponent<Ejecting>().direction == Vector2.left)
                 {
+                    collision.GetComponent<EnemySys>().TakeDamage(5, 0f);
                     DirectionAtribution(collision, 2);
                 }
             }
