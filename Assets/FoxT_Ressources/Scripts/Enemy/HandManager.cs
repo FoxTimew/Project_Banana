@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
 
 public class HandManager : MonoBehaviour
 {
@@ -52,7 +51,6 @@ public class HandManager : MonoBehaviour
 
 	void Start()
     {
-        canvas = GameObject.Find("SceneTransition").GetComponent<DisableCanvas>();
         detector = this.GetComponentInParent<SellerDetector>();
     }
 
@@ -116,7 +114,7 @@ public class HandManager : MonoBehaviour
     {
         //transition.transitionOn = true;
         yield return new WaitForSeconds(creditDelay);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(2);
     }
 
     void ChangeAnimationState(string newState)

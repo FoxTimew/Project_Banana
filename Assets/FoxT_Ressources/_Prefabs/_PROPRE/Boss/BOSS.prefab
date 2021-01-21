@@ -1838,7 +1838,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50321737cbe94a847918949e26ef1e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 0}
   playerIsHere: 0
 --- !u!114 &1913236728275979190
 MonoBehaviour:
@@ -2734,7 +2733,7 @@ MonoBehaviour:
   unit: []
   dureeSlap: 10
   dureePoing: 15
-  creditDelay: 5
+  creditDelay: 10
   detector: {fileID: 7718539085003603453}
   isSlaping: 0
   isKicking: 0

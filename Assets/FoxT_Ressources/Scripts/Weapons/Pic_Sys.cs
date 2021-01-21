@@ -64,6 +64,7 @@ public class Pic_Sys : MonoBehaviour
 
     IEnumerator ActivationDelay()
     {
+        yield return new WaitForSeconds(activationDelay);
         for (int i = 0; i < obj.Count; i++)//(Collider2D col in obj)
         {
             if (obj[i].tag == "Player")
@@ -93,7 +94,7 @@ public class Pic_Sys : MonoBehaviour
         }
         isActive = true;
         anim.SetBool("Active", true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(disableDelay);
         isActive = false;
         anim.SetBool("Active", false);
         if (obj.Count != 0)

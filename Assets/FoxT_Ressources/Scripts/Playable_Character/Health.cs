@@ -17,7 +17,7 @@ public class Health : MonoBehaviour
     Core core;
     InventoryManager UI_Life;
 
-    public int resistance, resistanceBonus;
+    public int resistance;
 
     Controler controler;
     bool isParrying {get{ return controler.isParrying; } }
@@ -55,7 +55,7 @@ public class Health : MonoBehaviour
             }
             return;
         }
-        int tempResistance = resistance + resistanceBonus;
+        int tempResistance = resistance;
         if (mLootCharm)
         {
             int gold = core.data.gold;

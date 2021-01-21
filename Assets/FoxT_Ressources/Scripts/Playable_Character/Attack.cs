@@ -100,7 +100,7 @@ public class Attack : MonoBehaviour
         if (enemy == null) return;
         foreach (Collider2D enemyTouche in enemy)
         {
-            int finalDamage = Mathf.RoundToInt((damageCombos[combos] + force +  dammageBonus[0]) + (damageCombos[combos] + force + dammageBonus[0]) * berzerkValue);
+            int finalDamage = (damageCombos[combos] + force) + Mathf.RoundToInt((damageCombos[combos] + force) * dammageBonus[0]) + Mathf.RoundToInt((damageCombos[combos] + force) * dammageBonus[0]) * Mathf.RoundToInt(berzerkValue);
             if (enemyTouche.tag == "Enemy")
             {
                 enemyTouche.gameObject.GetComponent<EnemySys>().TakeDamage(finalDamage, stunTime[combos]);
@@ -243,10 +243,15 @@ public class Attack : MonoBehaviour
         return Mathf.Atan2(position.localPosition.x, position.localPosition.y) * Mathf.Rad2Deg;
     }
 
-    public void BonusUpdate(int value)
+    public void BonusUpdate(float value, float timeCombos)
     {
-        dammageBonus[0] = value;
-        Debug.Log(Mathf.RoundToInt((damageCombos[combos] + force + dammageBonus[0]) + (damageCombos[combos] + force + dammageBonus[0]) * berzerkValue));
+        value /= 100;
+        dammageBonus[0] = 0;
+        dammageBonus[1] = value;
+        for (int i = 2; i < dammageBonus.Length; i++)
+        {
+            dammageBonus[i] = dammageBonus[0] * (i + 1);
+        }
     }
 
 	private void OnDrawGizmos()
