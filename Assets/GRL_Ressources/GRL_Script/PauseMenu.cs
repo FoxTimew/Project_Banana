@@ -54,6 +54,7 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+        Debug.Log("quit game");
     }
 
     public void Option()
@@ -102,5 +103,10 @@ public class PauseMenu : MonoBehaviour
         exit.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(closeExit);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }
