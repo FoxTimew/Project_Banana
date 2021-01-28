@@ -43,6 +43,7 @@ public class MamieDialogue : MonoBehaviour
             GameObject.Find("Playable_Character").GetComponent<Controler>().isInAnimation = false;
         if (Input.GetButtonDown("Interaction") && ready == true && open == false)
         {
+            FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
             open = true;
             image.SetActive(true);
             text1.SetActive(true);
@@ -52,6 +53,7 @@ public class MamieDialogue : MonoBehaviour
         else if (Input.GetButton("Interaction") && ready == true && open == true && openText1 == true)
         {
             text1.SetActive(false);
+            FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
             text2.SetActive(true);
             openText1 = false;
             openText2 = true;
@@ -59,7 +61,9 @@ public class MamieDialogue : MonoBehaviour
 
         else if (Input.GetButtonDown("Interaction") && ready == true && open == true && openText2 == true)
         {
+            FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
             text2.SetActive(false);
+            FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
             text3.SetActive(true);
             openText2 = false;
             openText3 = true;
@@ -67,7 +71,9 @@ public class MamieDialogue : MonoBehaviour
 
         else if (Input.GetButtonDown("Interaction") && ready == true && open == true && openText3 == true)
         {
+            
             text3.SetActive(false);
+            FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
             text4.SetActive(true);
             openText3 = false;
             openText4 = true;

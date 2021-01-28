@@ -29,17 +29,17 @@ MonoBehaviour:
   niveauResistance: 0
   niveauMVoldeVie: 0
   niveauVulnerabilite: 0
-  combienCombos: 0
+  combienCombos: 2
   combienDash: 0
-  combienDegatInflige: 0
+  combienDegatInflige: 2
   combienMDegatInfligee: 0
-  combienExplosion: 0
-  combienLoot: 0
+  combienExplosion: 1
+  combienLoot: 1
   combienMLoot: 0
-  combienMaxHP: 0
-  combienPoussee: 0
+  combienMaxHP: 2
+  combienPoussee: 1
   combienMPoussee: 0
   combienRefus: 0
-  combienResistance: 0
+  combienResistance: 2
   combienVolDeVie: 0
-  combienVulnerabilite: 0
+  combienVulnerabilite: 1

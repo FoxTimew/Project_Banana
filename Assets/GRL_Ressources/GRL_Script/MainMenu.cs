@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
     public float dureeAnimation;
     public DisableCanvas SceneTransition;
     public Animator anim;
+    public AudioSource FoxTimew;
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         StartCoroutine(ChangeScene());
+        FoxTimew.Play(0);
     }
 
     public void QuitGame()

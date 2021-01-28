@@ -12,7 +12,7 @@ public class ItemManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(ItemCreation());
+        //StartCoroutine(ItemCreation());
     }
 
     IEnumerator ItemCreation()

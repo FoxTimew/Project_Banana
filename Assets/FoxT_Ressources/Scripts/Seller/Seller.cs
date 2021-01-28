@@ -277,7 +277,7 @@ public class Seller : MonoBehaviour
 				Debug.Log("Dash");
 				break;
 			case "Degat inflige":
-				GameObject.Find("Playable_Character").GetComponent<Attack>().BonusUpdate(15);
+				GameObject.Find("Playable_Character").GetComponent<Attack>().BonusUpdate(10);
 				GameObject.Find("Playable_Character").GetComponent<Attack>().charmCombosEnable = true;
 
 				Debug.Log("Degat inflige");

@@ -93,7 +93,7 @@ public class LevelGeneration : MonoBehaviour
 
     public Transform SpawnPoint;
 
-    void Start()
+    void Awake()
     {
         foreach (GameObject obj in roomID.start)
         {
@@ -1186,7 +1186,7 @@ public class LevelGeneration : MonoBehaviour
         for (float i = posX[0]; i <= posX[posX.Length - 1]; i++)
         {
             
-            RaycastHit2D[] hit = Physics2D.BoxCastAll(new Vector2(i, posY[posY.Length - 1]), new Vector2(0.1f, 0.1f), 0f, Vector2.down, nombreDeSalle + 3000, roomLayer);
+            RaycastHit2D[] hit = Physics2D.BoxCastAll(new Vector2(i, posY[posY.Length - 1]), new Vector2(0.1f, 0.1f), 0f, Vector2.down, nombreDeSalle + 10000, roomLayer);
 
             if (hit.Length != 0)
             {
@@ -1290,7 +1290,7 @@ public class LevelGeneration : MonoBehaviour
         refPos[1] = GameObject.Find("RoomReference2(Clone)").GetComponent<Transform>();
 
 
-        RaycastHit2D[] hit = Physics2D.BoxCastAll(pos, new Vector2(0.1f, 0.1f), 0f, direction, nombreDeSalle + 3000, roomLayer);
+        RaycastHit2D[] hit = Physics2D.BoxCastAll(pos, new Vector2(0.2f, 0.2f), 0f, direction, nombreDeSalle + 20000, roomLayer);
         for (int i = 0; i < hit.Length - 1; i++)
         {
             float[] sizeX = new float[2], sizeY = new float[2], posX = new float[2], posY = new float[2];

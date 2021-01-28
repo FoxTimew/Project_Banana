@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectible: 2
   value:
-  - bourse: 10
+  - bourse: 5
     probability: 50
-  - bourse: 30
+  - bourse: 15
     probability: 85
-  - bourse: 50
+  - bourse: 30
     probability: 100

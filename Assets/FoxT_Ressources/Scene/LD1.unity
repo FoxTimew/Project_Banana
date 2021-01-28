@@ -336,6 +336,38 @@ PrefabInstance:
       propertyPath: DebugCanvas
       value: 
       objectReference: {fileID: 6044906547477587597}
+    - target: {fileID: 7397816821212625062, guid: fa8a5500ed59a7948b627e2978e5beb1, type: 3}
+      propertyPath: m_Size.x
+      value: 1.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397816821212625062, guid: fa8a5500ed59a7948b627e2978e5beb1, type: 3}
+      propertyPath: m_Size.y
+      value: 1.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397816821212625062, guid: fa8a5500ed59a7948b627e2978e5beb1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 4.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397816821212625062, guid: fa8a5500ed59a7948b627e2978e5beb1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 3.625
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397816821212625062, guid: fa8a5500ed59a7948b627e2978e5beb1, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397816821212625062, guid: fa8a5500ed59a7948b627e2978e5beb1, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397816821212625062, guid: fa8a5500ed59a7948b627e2978e5beb1, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.5263158
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397816821212625062, guid: fa8a5500ed59a7948b627e2978e5beb1, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.31034482
+      objectReference: {fileID: 0}
     - target: {fileID: 7397816821212625063, guid: fa8a5500ed59a7948b627e2978e5beb1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1533,7 +1565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4510247667865723046
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3585,7 +3617,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4510247668960629781
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4088,7 +4120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4510247669298457469
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4245,7 +4277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4510247669581816279
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4627,7 +4659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4510247669698485451
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11287,7 +11319,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.054901965, g: 0.054901965, b: 0.054901965, a: 0}
+  m_BackGroundColor: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

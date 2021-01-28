@@ -59,7 +59,7 @@ public class DialoguePillier : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType< AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -79,7 +79,7 @@ public class DialoguePillier : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -103,7 +103,7 @@ public class DialoguePillier : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -126,7 +126,7 @@ public class DialoguePillier : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -145,7 +145,7 @@ public class DialoguePillier : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -164,7 +164,7 @@ public class DialoguePillier : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -183,7 +183,7 @@ public class DialoguePillier : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -202,7 +202,7 @@ public class DialoguePillier : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -213,7 +213,7 @@ public class DialoguePillier : MonoBehaviour
 
             if (Aupif == 9)
             {
-
+                FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                 if (DialogueBox.activeInHierarchy)
                 {
                     DialogueBox.SetActive(false);
@@ -240,7 +240,7 @@ public class DialoguePillier : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -259,7 +259,7 @@ public class DialoguePillier : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();

@@ -23,6 +23,7 @@ public class DialogueNoir : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            
             DialogueActive = true;
         }
     }
@@ -59,7 +60,7 @@ public class DialogueNoir : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -71,6 +72,7 @@ public class DialogueNoir : MonoBehaviour
 
             if (Aupif == 2)
             {
+               
 
                 if (DialogueBox.activeInHierarchy)
                 {
@@ -79,7 +81,7 @@ public class DialogueNoir : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -93,7 +95,7 @@ public class DialogueNoir : MonoBehaviour
 
             if (Aupif == 3)
             {
-
+            
                 if (DialogueBox.activeInHierarchy)
                 {
                     DialogueBox.SetActive(false);
@@ -103,7 +105,7 @@ public class DialogueNoir : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();
@@ -126,7 +128,7 @@ public class DialogueNoir : MonoBehaviour
 
                 else
                 {
-
+                    FindObjectOfType<AudioManager>().Play("SFX_UI_Speak");
                     DialogueBox.SetActive(true);
                     DialogueText.text = Dialogue1;
                     StopAllCoroutines();

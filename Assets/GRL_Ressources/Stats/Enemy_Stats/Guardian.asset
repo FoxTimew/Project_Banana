@@ -46,4 +46,4 @@ MonoBehaviour:
   stunReduction:
   - 0
   vitesseDisplacement: 250
-  vitesseAttack: 2.5
+  vitesseAttack: 3

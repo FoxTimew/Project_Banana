@@ -14,7 +14,7 @@ public class Teleporteur : MonoBehaviour
 	[SerializeField]
 	Sprite sprite;
 
-	public bool receive, isActive;
+	public bool receive, isActive, seller;
 
 	[SerializeField]
 	DisableCanvas transition;
@@ -26,6 +26,11 @@ public class Teleporteur : MonoBehaviour
 		transition = GameObject.Find("SceneTransition").GetComponent<DisableCanvas>();
 		anim = GetComponent<Animator>();
 
+
+		if (seller)
+		{
+			StartAnimation();
+		}
 		StartCoroutine(ERASE());
 	}
 
@@ -47,6 +52,7 @@ public class Teleporteur : MonoBehaviour
 		if (collision.tag == "Player")
 		{
 			if (receive) receive = false;
+			if (seller) StartAnimation();
 		}
 	}
 

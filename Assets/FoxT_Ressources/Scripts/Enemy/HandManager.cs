@@ -107,15 +107,13 @@ public class HandManager : MonoBehaviour
         ChangeAnimationState(dieAnimation);
 
         canvas.EndTransition();
-        StopAllCoroutines();
         StartCoroutine(CreditDelay());
         Debug.Log("MORT");
     }
 
     IEnumerator CreditDelay()
     {
-        //transition.transitionOn = true;
-        yield return new WaitForSeconds(creditDelay);
+        yield return new WaitForSeconds(3);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
